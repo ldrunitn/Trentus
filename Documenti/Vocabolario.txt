@@ -1,0 +1,8 @@
+VOCABOLARIO DI PROGETTO
+
+Utente 				-> Utilizzatore dell'applicazione
+GDS (Gestore del servizio)	-> Colui che fornisce un servizio
+Sondaggio			-> Qualsiasi metodo per comunicazione utente=>gds
+Notifica			-> Qualsiasi metodo per comunicazione gds=>utente
+
+(ovviamente questi sono esempi)

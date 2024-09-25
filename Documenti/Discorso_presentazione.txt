@@ -1,0 +1,15 @@
+Oggigiorno usufruiamo di centinaia di servizi senza nemmeno rendercene conto, ma questi non sono infallibili
+Molto spesso capita che un serivzio, sito o no, sia in manutenzione, o abbia un malfunzionamento.
+Il cittadino può non saperlo ed essere colto impreparato, e magari volerlo segnalare
+Dall'altra parte, anche il comune non ha un metodo centralizzato per comunicare ai cittadini dei problemi,
+oppure può non essere cosciente di un proprio servizio inaccessibile.
+
+La nostra soluzione è Trentus, un'applicazione che permette di centralizzare le informazioni relative allo stato dei servizi online,
+aggiornata in tempo reale grazie ai feedback del cittadino, alle segnalazioni del comune
+
+il vantaggio è instaurare un rapporto diretto tra il gestore del servizio e l'utente.
+
+
+
+
+
