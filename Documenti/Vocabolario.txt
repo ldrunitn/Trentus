@@ -1,8 +1,16 @@
 VOCABOLARIO DI PROGETTO
 
-Utente 				-> Utilizzatore dell'applicazione
-GDS (Gestore del servizio)	-> Colui che fornisce un servizio
-Sondaggio			-> Qualsiasi metodo per comunicazione utente=>gds
-Notifica			-> Qualsiasi metodo per comunicazione gds=>utente
-
-(ovviamente questi sono esempi)
+Utente 				-> Colui che utilizza un servizio (sia registrato che non)
+Utente registrato 		-> Colui che utilizza un servizio e fa l'accesso
+GdS (Gestore del servizio)	-> Colui che fornisce un servizio
+Utilizzatore della WebApp	-> Colui che utilizza Trentus
+Servizio			-> Ciò che il GdS fornisce, sia questo un sito/app/ecc...
+Segnalazione			-> Qualsiasi metodo per comunicazione gds<=>utente
+Notifica			-> Qualsiasi metodo per l'app di notificare all'utilizzatore
+Sondaggio			-> Form compilabile dall'utente per identificare un problema
+On				-> Quando un servizio è accessibile
+Stato				-> Comportamento di un servizio
+Off				-> Quando un servizio non è accessibile
+Malfunzionante			-> Quando un servizio non è accessibile involontariamente	
+Disabilitato			-> Quando un servizio non è accessibile volontariamente
+la nostra WebApp\Trentus	-> La nostra applicazione, il servizio che vogliamo creare
