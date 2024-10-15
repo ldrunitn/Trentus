@@ -2,7 +2,7 @@ VOCABOLARIO DI PROGETTO
 
 Utente 				-> Colui che utilizza un servizio (sia registrato che non)
 Utente registrato 		-> Colui che utilizza un servizio e fa l'accesso
-GdS (Gestore del servizio)	-> Colui che fornisce un servizio
+GdS (Gestore del servizio)	-> Colui che fornisce un servizio (deve essere registrato)
 Utilizzatore della WebApp	-> Colui che utilizza Trentus
 Servizio			-> Ciò che il GdS fornisce, sia questo un sito/app/ecc...
 Segnalazione			-> Qualsiasi metodo per comunicazione gds<=>utente
