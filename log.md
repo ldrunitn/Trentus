@@ -14,4 +14,5 @@
 |Giovanni-Giuseppe|11/10/2024|2|lez gruppo (User flow)|
 |Giovanni|13/10/2024|16:00-18:00|Mockup classifica segnalazioni e info servizio|
 |Giovanni-Luca|15/10/2024|13:30-15:30|Lez (API)|
-|Luca|15/09/2024|2|User Flow|	
+|Luca|15/10/2024|2|User Flow|	
+|Giovanni-Giuseppe-Luca|22/10/2024|15:30-17:30|Mockup/api/userflow (recap)|
