@@ -16,3 +16,4 @@
 |Giovanni-Luca|15/10/2024|13:30-15:30|Lez (API)|
 |Luca|15/10/2024|2|User Flow|	
 |Giovanni-Giuseppe-Luca|22/10/2024|15:30-17:30|Mockup/api/userflow (recap)|
+|Luca|28/10/2024|3|Swagger API|
