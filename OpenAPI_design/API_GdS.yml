@@ -1,0 +1,183 @@
+openapi: '3.0.3'
+info:
+  title: API per la gestione dello stato dei servizi online del comune di trento (lato GdS)
+  license:
+    name: MIT
+  version: '1.0'
+servers:
+  - url: https://localhost:8000/api/v1
+    description: Server per le API del gestore del servizio
+paths:
+  /register/gds:
+    post:
+      summary: Manda una richiesta per registrare il servizio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  example: "OnOff Trento"
+                link:
+                  type: string 
+                  format: link
+                  example: "https://onofftrento.it"
+                email:
+                  type: string
+                  format: email
+                  example: "ofofftrento@trentino.trasporti.it"
+                azienda:
+                  type: string
+                  example: "Muoversi in Trentino"
+                password: 
+                  type: string
+                  format: password
+                  example: "Password1234"
+              required:
+                - nome
+                - cognome
+                - email
+                - password
+            
+      responses:
+        "201":
+          description: Richiesta di registrazione del servizio mandata
+          content:
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: Richiesta non valida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Errore nei dati forniti."
+        "500":
+          description: Richiesta non valida (servizio già presente)
+          content:
+            application/json:
+              schema:
+                type: string 
+  /segnalazione:
+    post:
+      summary: Manda una segnalazione di disservizio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tipo:
+                  type: string
+                  enum: ["manutenzione","problemi","offline"]
+                periodo:
+                  oneOf:
+                    - type: object
+                      properties:
+                        inizio: 
+                          type: string
+                          format: date
+                          example: "2024-01-01"
+                        fine:
+                          type: string
+                          format: date
+                          example: "2024-01-15"
+                    - type: string
+                      enum: ["indefinito"]
+                  description: "Periodo in cui persiste il disservizio"
+              required:
+                - tipo
+                - periodo
+      responses:
+        "201":
+          description: segnalazione mandata con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messaggio:
+                    type: string
+                    example: "Segnalazione mandata correttamente"
+                  senalazioneId:
+                    type: string
+                    example: "sn-3421"
+        "400":
+          description: Richiesta non valida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Errore nei dati forniti."
+  /commenti:
+    post:
+      summary: Ottiene una lista di commenti
+      description: Restituisce una lista di commenti
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema: 
+              type: string
+              properties:
+                token:
+                  type: string
+                  example: "xsfsd23skd12"
+      responses:
+        '200':
+          description: Lista di commenti recuperata con successo
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    commentoId:
+                      type: string
+                      example: "com-12345"
+                    autore:
+                      type: string
+                      example: "Mario Rossi"
+                    testo:
+                      type: string
+                      example: "Questo è un commento di esempio."
+                    data:
+                      type: string
+                      format: date-time
+                      example: "2024-01-01T12:00:00"
+        '400':
+          description: Richiesta non valida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Errore nei parametri forniti."
+        '404':
+          description: Commenti non trovati
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Nessun commento trovato per questo servizio."
+        
+
+
+                
