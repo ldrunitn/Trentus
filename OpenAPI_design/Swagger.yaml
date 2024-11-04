@@ -35,32 +35,6 @@ paths:
           $ref: '#/components/responses/UnauthorizedError'
   /user/password:
     summary: boh, bisogna vedere come gestire il cambio password ed il recupero password dell'utente
-  # GdS
-  /gds:
-    get:
-      summary: Ottiene informazioni gds
-      description: Restituisce DATI? di un gds (in modo da creare la sua home page o in modo da modificare le sue impostazioni?)
-      security:
-        - BearerAuth: [GdS]  
-      responses:
-        '200':
-          description: Dati gds prelevati con successo
-          content:
-            application/json:
-              schema:
-                type: object
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-    delete:
-      summary: Elimina un gds
-      description: Elimina il GdS autenticato
-      security:
-        - BearerAuth: [Admin]  
-      responses:
-      '200':
-          description: Utente eliminato
-      '401':
-          $ref: '#/components/responses/UnauthorizedError'
   # Servizi
   /servizi?{pagina}:
     get:
@@ -209,79 +183,8 @@ paths:
                   contenuto:
                     description: cosa è scritto nell'avviso
                     type: string
-  /avvisi/rilascia:
-    post:
-      summary: Scrive un avviso
-      description: Restituisce al server un avviso scritto dal GdS riguardo il suo servizio
-      security:
-        - BearerAuth: [GdS]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                  aid:
-                    description: id dell'avviso
-                    type: integer
-                  sid:
-                    description: id del servizio
-                    type: integer
-                  sname:
-                    description: nome del servizio
-                    type: string
+            type: string
                   contenuto:
-                    description: cosa è scritto nell'avviso
-                    type: string                
-      responses:
-        '200':
-          description: Avviso scritto con successo
-  /avvisi/lista/{avviso_id}:
-    delete:
-      summary: Elimina un avviso
-      description: Elimina un avviso specifico per il servizio indicato
-      security:
-        - BearerAuth: [GdS]
-      parameters:
-        - name: avviso_id
-          in: path
-          description: ID del servizio dell'avviso
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Avviso eliminato con successo
-    put:
-      summary: Modifica un avviso
-      description: Modifica un avviso specificato
-      security:
-        - BearerAuth: [GdS]
-      parameters:
-        - name: service_id
-          in: path
-          description: ID del servizio dell'avviso
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                titolo:
-                  type: string
-                  description: Nuovo titolo dell'avviso
-                messaggio:
-                  type: string
-                  description: Nuovo contenuto dell'avviso
-      responses:
-        '200':
-          description: Avviso modificato con successo
-
   # Segnalazioni
   /segnalazioni/{service_id}:
     get:
