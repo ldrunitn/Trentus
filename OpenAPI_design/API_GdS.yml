@@ -53,7 +53,7 @@ paths:
                 email:
                   type: string
                   format: email
-                  example: "ofofftrento@trentino.trasporti.it"
+                  example: "onofftrento@trentino.trasporti.it"
                 azienda:
                   type: string
                   example: "Muoversi in Trentino"
@@ -61,6 +61,9 @@ paths:
                   type: string
                   format: password
                   example: "Password1234"
+                immagine:
+                  type: string
+                  format: data
               required:
                 - nome
                 - cognome
