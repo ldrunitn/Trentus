@@ -8,6 +8,31 @@ servers:
   - url: https://localhost:8000/api/v1
     description: Server per le API del gestore del servizio
 paths:
+  /gds:
+    get:
+      summary: Ottiene informazioni gds
+      description: Restituisce DATI? di un gds (in modo da creare la sua home page o in modo da modificare le sue impostazioni?)
+      security:
+        - BearerAuth: [GdS]  
+      responses:
+        '200':
+          description: Dati gds prelevati con successo
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      summary: Elimina un gds
+      description: Elimina il GdS autenticato
+      security:
+        - BearerAuth: [Admin]  
+      responses:
+      '200':
+          description: Utente eliminato
+      '401':
+          $ref: '#/components/responses/UnauthorizedError'
   /register/gds:
     post:
       summary: Manda una richiesta per registrare il servizio
@@ -65,9 +90,11 @@ paths:
             application/json:
               schema:
                 type: string 
-  /segnalazione:
+  /avvisi/rilascia:
     post:
       summary: Manda una segnalazione di disservizio
+      security:
+        - BearerAuth: [GdS]
       requestBody:
         required: true
         content:
@@ -120,6 +147,51 @@ paths:
                   message:
                     type: string
                     example: "Errore nei dati forniti."
+  /avvisi/lista/{avviso_id}:
+    delete:
+      summary: Elimina un avviso
+      description: Elimina un avviso specifico per il servizio indicato
+      security:
+        - BearerAuth: [GdS]
+      parameters:
+        - name: avviso_id
+          in: path
+          description: ID del servizio dell'avviso
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Avviso eliminato con successo
+    put:
+      summary: Modifica un avviso
+      description: Modifica un avviso specificato
+      security:
+        - BearerAuth: [GdS]
+      parameters:
+        - name: service_id
+          in: path
+          description: ID del servizio dell'avviso
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titolo:
+                  type: string
+                  description: Nuovo titolo dell'avviso
+                messaggio:
+                  type: string
+                  description: Nuovo contenuto dell'avviso
+      responses:
+        '200':
+          description: Avviso modificato con successo
+
   /commenti:
     post:
       summary: Ottiene una lista di commenti
