@@ -1,0 +1,23 @@
+|Nomi|data 	  	|ore		|lavoro svolto|
+|----|----------|-------|-------------|
+|Giovanni-Giuseppe|16/09/2024|2|lez|
+|Giovanni-Giuseppe-Luca|17/09/2024|2|lez| 	
+|Giovanni-Giuseppe-Luca|20/09/2024|2|Presentazione|
+|Giovanni-Giuseppe|22/09/2024|2|Presentazione|
+|Luca|22/09/2024|2|Descrizione di progetto|
+|Giovanni-Giuseppe-Luca|25/09/2024|2|lez|
+|Giovanni-Giuseppe-Luca|27/09/2024|2|lez|
+|Giuseppe|30/09/2024|16:00-19:00|lavoro su mockup|
+|Luca|30/09/2024|2|Descrizione di progetto|
+|Giovanni-Giuseppe-Luca|01/10/2024|4|lez (prova pitch) + fine realizzazione slide + Descrizione di progetto|
+|Giovanni-Giuseppe-Luca|02/10/2024|4|pitch comune + lavoro su mockup + Descrizione di progetto|
+|Giovanni-Giuseppe|11/10/2024|2|lez gruppo (User flow)|
+|Giovanni|13/10/2024|16:00-18:00|Mockup classifica segnalazioni e info servizio|
+|Giovanni-Luca|15/10/2024|13:30-15:30|Lez (API)|
+|Luca|15/10/2024|2|User Flow|	
+|Giovanni-Giuseppe-Luca|22/10/2024|15:30-17:30|Mockup/api/userflow (recap)|
+|Luca|28/10/2024|3|Swagger API|
+|Luca|3/11/2024|1|Swagger API|
+|Giovanni-Giuseppe-Luca|4/11/2024|2|api/D1v2.0/ (recap)|
+|Luca|5/11/2024|2|Inizializzazione Backend|
+|Giovanni-Giuseppe-Luca|5/11/2024|2|user-case diagram (lez)|
