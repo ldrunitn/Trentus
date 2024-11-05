@@ -1,0 +1,337 @@
+openapi: 3.0.0
+info:
+  version: 1.1.0
+  title: Trentus
+  description: Trentus APIs
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/luca.dariz-1/Trentus/1.0.0
+paths:
+  # Utenti
+  /user:
+    get:
+      summary: Ottiene informazioni utente registrato
+      description: Restituisce DATI? di un utente (in modo da creare la sua home page o in modo da modificare le sue impostazioni?)
+      security:
+        - BearerAuth: [Utente]  
+      responses:
+        '200':
+          description: Dati utente prelevati con successo
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      summary: Elimina un utente
+      description: Elimina l'utente autenticato
+      security:
+        - BearerAuth: [Utente]  
+      responses:
+        '200':
+          description: Utente eliminato
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /user/password:
+    summary: boh, bisogna vedere come gestire il cambio password ed il recupero password dell'utente
+  # Servizi
+  /servizi:
+    get:
+      summary: Restituisce una lista di servizi 
+      description: Restituisce una lista di oggetti Servizio (i più visitati) con all'interno informazioni base
+      security:
+        - BearerAuth: [Utente]
+        - {}
+      parameters:
+        - name: pagina
+          in: query
+          description: carichiamo un tot di servizi al colpo
+          schema:
+            type: integer
+        - name: ALTRA ROBA PER FILTRARE!!!
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Servizi prelevati con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: id del servizio
+                    type: integer
+                  nome:
+                    description: nome del servizio
+                    type: string
+                  stato:
+                    description: stato del servizio
+                    type: integer
+                  logo:
+                    description: logo del servizio
+                    type: string
+                  preferito:
+                    description: se il servizio è tra i preferiti dell'utente (complicato, da capire)
+                    type: boolean
+  /servizi/{service_id}:
+    get:
+      summary: Restituisce i dati completi di un servizio
+      description: Restituisce i dati completi del servizio {service_id}
+      parameters:
+        - name: service_id
+          in: path
+          required: true
+          description: id del servizio da caricare
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Servizi prelevati con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cheproprietàmettiamo:
+  # Sondaggi
+  /sondaggi/compila/{service_id}:
+    get:
+      summary: Restituisce un sondaggio da compilare
+      description: Restituisce all'utente registrato un sondaggio da compilare sottoforma di form
+      security:
+        - BearerAuth: [Utente]
+      parameters:
+        - name: service_id
+          in: path
+          required: true
+          description: servizio del sondaggio da caricaere
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sondaggio prelevato con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cosaMetto?:
+    post:
+      summary: Compila un sondaggio
+      description: Restituisce al server un sondaggio compilato dall'utente
+      security:
+        - BearerAuth: [Utente]
+      parameters:
+        - name: service_id
+          in: path
+          required: true
+          description: servizio del sondaggio compilato
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                CosaMettoooooo????:
+      responses:
+        '200':
+          description: Sondaggio inviato con successo
+  /sondaggi/lista:
+    get:
+      summary: Restituisce una lista di sondaggi 
+      description: Restituisce una lista di oggetti sondaggi (alla buona) del servizio del gds
+      security:
+        - BearerAuth: [GdS]
+      responses:
+        '200':
+          description: Servizi prelevati con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sid:
+                    description: id del sondaggio
+                  uid:
+                    description: id del'utente che lo ha compilato
+                  conntenuto:
+                    description: cosa mostriamo? come lo rappresentiamo?
+  # Avvisi
+  /avvisi/lista:
+    get:
+      summary: Restituisce una lista di avvisi 
+      description: Restituisce una lista di oggetti Avviso in base a quali sono i servizi preferiti dell'utente/in base al servizio del gds
+      security:
+        - BearerAuth: [Utente,GdS]
+      responses:
+        '200':
+          description: Servizi prelevati con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  aid:
+                    description: id dell'avviso
+                    type: integer
+                  sid:
+                    description: id del servizio
+                    type: integer
+                  sname:
+                    description: nome del servizio
+                    type: string
+                  contenuto:
+                    description: cosa è scritto nell'avviso
+                    type: string
+  # Segnalazioni
+  /segnalazioni/{service_id}:
+    get:
+      summary: Ottiene una lista di segnalazioni
+      description: Restituisce una lista di segnalazioni relative al servizio specificato
+      parameters:
+        - name: service_id
+          in: path
+          description: ID del servizio
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Segnalazioni prelevate con successo
+    post:
+      summary: Crea una segnalazione
+      description: Permette di creare una segnalazione per un servizio specifico
+      parameters:
+        - name: service_id
+          in: path
+          description: ID del servizio
+          required: true
+          schema:
+            type: integer
+      security:
+        - BearerAuth: [Utente]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uid:
+                  description: id dell'utente
+                  type: integer
+                sid:
+                  description: id del servizio (da prendere nel path)
+                  type: integer
+                descrizione:
+                  description: Descrizione della segnalazione
+                  type: string
+      responses:
+        '201':
+          description: Segnalazione creata con successo
+
+  /segnalazioni/{service_id}/{segnalazione_id}:
+    get:
+      summary: Ottiene una segnalazione specifica
+      description: Restituisce i dettagli di una segnalazione specifica
+      parameters:
+        - name: service_id
+          in: path
+          description: ID del servizio
+          required: true
+          schema:
+            type: integer
+        - name: segnalazione_id
+          in: path
+          description: ID della segnalazione
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Segnalazione prelevata con successo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  segnalazione_id:
+                    description: id della segnalazione (da prendere nel path)
+                    type: integer
+                  servizio_id:
+                    description: id del servizio (da prendere nel path)
+                    type: integer
+                  descrizione:
+                    description: Descrizione della segnalazione
+                    type: string
+    delete:
+      summary: Elimina una segnalazione
+      description: Elimina una segnalazione specifica
+      parameters:
+        - name: service_id
+          in: path
+          description: ID del servizio
+          required: true
+          schema:
+            type: integer
+        - name: segnalazione_id
+          in: path
+          description: ID della segnalazione
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Segnalazione eliminata con successo
+    put:
+      summary: Modifica una segnalazione
+      description: Modifica una segnalazione specifica
+      parameters:
+        - name: service_id
+          in: path
+          description: ID del servizio
+          required: true
+          schema:
+            type: integer
+        - name: segnalazione_id
+          in: path
+          description: ID della segnalazione
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                segnalazione_id:
+                  description: id della segnalazione (da prendere nel path)
+                  type: integer
+                servizio_id:
+                  description: id del servizio (da prendere nel path)
+                  type: integer
+                descrizione:
+                  description: Nuova descrizione della segnalazione
+                  type: string
+      responses:
+        '200':
+          description: Segnalazione modificata con successo
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+    ForbiddenError:
+      description: Access denied due to insufficient permissions
