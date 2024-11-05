@@ -1,0 +1,10 @@
+Next we create routes for all the URLs needed by the LocalLibrary website, which will call the controller functions we defined in the previous sections.
+
+The skeleton already has a ./routes folder containing routes for the index and users. Create another route file — catalog.js — inside this folder, as shown.
+
+Ma se io ho gia messo le routes nel controller non serve... hmmmmmmmm
+
+
+
+Poi... ogni controller deve avere un async handler...
+Come mi connetto al db in modo efficace?
