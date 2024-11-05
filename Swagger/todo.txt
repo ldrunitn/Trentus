@@ -1,0 +1,69 @@
+dividere api per oggetto trattato (fare unfile per servizi, utenti, gds, segnalazioni, avvisi, sondaggi)
+
+gli errori li gestiamo come content in un altro file
+gli oggetti li gestiamo come content nello stesso file
+i parametri riguardano il path e la query (anche gli header ma non mi sembra li abbiamo usati)
+
+
+Formato del path delle nostre api (esempio):
+
+    get:
+      summary: 
+      description: 
+      security: (optional)
+        - BearerAuth: 
+      parameters: (optional) 
+      responses:
+	'200':
+	  description:
+	    content: 
+	      $ref: '#/components/object'
+	'401': (optional)
+          $ref: '../errors.yaml#/components/Unauthorized' 
+    delete:
+      summary: 
+      description: 
+      security: (optional)
+        - BearerAuth: 
+      parameters: (optional) 
+      responses:
+	'408':
+	  description:
+	'401': (optional)
+          $ref: '../errors.yaml#/components/Unauthorized' 
+    post:
+      summary: 
+      description:
+      security: (optional)
+        - BearerAuth: 
+      parameters: (optional) 
+      requestBody:
+        required: true
+        content: 
+	  $ref: '#/components/object' 	           
+      responses:
+        '201':
+	  description:
+	    content: 
+	      $ref: '#/components/object' 
+	'401': (optional)
+          $ref: '../errors.yaml#/components/Unauthorized' 
+	"400": (optional)
+          $ref: '../errors.yaml#/components/BadRequest' 
+    put:
+      summary: 
+      description: 
+      security: (optional)
+        - BearerAuth: 
+      parameters: (optional)
+      requestBody:
+        required: true
+        content:
+	  $ref: '#/components/object' 
+      responses:
+	'201':
+	  description:
+	    content: 
+	      $ref: '#/components/object'
+	'401': (optional)
+          $ref: '../errors.yaml#/components/Unauthorized' 

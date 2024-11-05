@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 1.0.0
+  version: 1.1.0
   title: Trentus
   description: Trentus APIs
 servers:
@@ -36,7 +36,7 @@ paths:
   /user/password:
     summary: boh, bisogna vedere come gestire il cambio password ed il recupero password dell'utente
   # Servizi
-  /servizi?{pagina}:
+  /servizi:
     get:
       summary: Restituisce una lista di servizi 
       description: Restituisce una lista di oggetti Servizio (i più visitati) con all'interno informazioni base
@@ -50,6 +50,9 @@ paths:
           schema:
             type: integer
         - name: ALTRA ROBA PER FILTRARE!!!
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: Servizi prelevati con successo
@@ -80,6 +83,7 @@ paths:
       parameters:
         - name: service_id
           in: path
+          required: true
           description: id del servizio da caricare
           schema:
             type: integer
@@ -102,6 +106,7 @@ paths:
       parameters:
         - name: service_id
           in: path
+          required: true
           description: servizio del sondaggio da caricaere
           schema:
             type: integer
@@ -122,6 +127,7 @@ paths:
       parameters:
         - name: service_id
           in: path
+          required: true
           description: servizio del sondaggio compilato
           schema:
             type: integer
@@ -183,8 +189,6 @@ paths:
                   contenuto:
                     description: cosa è scritto nell'avviso
                     type: string
-            type: string
-                  contenuto:
   # Segnalazioni
   /segnalazioni/{service_id}:
     get:
@@ -203,8 +207,15 @@ paths:
     post:
       summary: Crea una segnalazione
       description: Permette di creare una segnalazione per un servizio specifico
+      parameters:
+        - name: service_id
+          in: path
+          description: ID del servizio
+          required: true
+          schema:
+            type: integer
       security:
-        - BearerAuth: [GdS]
+        - BearerAuth: [Utente]
       requestBody:
         required: true
         content:
@@ -246,19 +257,19 @@ paths:
         '200':
           description: Segnalazione prelevata con successo
           content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                segnalazione_id:
-                  description: id della segnalazione (da prendere nel path)
-                  type: integer
-                servizio_id:
-                  description: id del servizio (da prendere nel path)
-                  type: integer
-                descrizione:
-                  description: Descrizione della segnalazione
-                  type: string
+            application/json:
+              schema:
+                type: object
+                properties:
+                  segnalazione_id:
+                    description: id della segnalazione (da prendere nel path)
+                    type: integer
+                  servizio_id:
+                    description: id del servizio (da prendere nel path)
+                    type: integer
+                  descrizione:
+                    description: Descrizione della segnalazione
+                    type: string
     delete:
       summary: Elimina una segnalazione
       description: Elimina una segnalazione specifica
@@ -313,3 +324,14 @@ paths:
       responses:
         '200':
           description: Segnalazione modificata con successo
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+    ForbiddenError:
+      description: Access denied due to insufficient permissions
