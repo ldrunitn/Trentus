@@ -1,0 +1,9 @@
+/avvisi:
+  get:
+  summary: Ottiene gli id e il titolo degli avvisi di un servizio
+/avvisi/rilascia:
+  post:
+  summary: Manda un'avviso agli utenti utente (utilizzabile solo da GdS)
+/avvisi/{id}:
+  get:
+  summary: Ottiene gli speicifici campi dell'avviso

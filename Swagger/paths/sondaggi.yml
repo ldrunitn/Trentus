@@ -1,0 +1,13 @@
+/servizi/{servizio_id}/sondaggi:
+  get:
+    summary: Ottiene gli id dei sondaggi rilasciati dal servizio specificato
+  post:
+    summary: Crea un nuovo sondaggio con la struttura passata
+/servizi/{servizio_id}/sondaggi/{sondaggio_id}/compila:
+  get:
+    summary: Restituisce la form dello specifico sondaggio
+  post:
+    summary: Prende il form compilato dall'utente
+/servizi/{servizio_id}/sondaggi/{sondaggio_id}/risultat:
+  get:
+    summary: Ottiene i risultati di un determinato sondaggio
