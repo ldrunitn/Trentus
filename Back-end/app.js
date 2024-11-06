@@ -12,7 +12,8 @@ const gdsRoutes = require('./routes/gds/gdsRoutes');
 const segnalazioniRoutes = require('./routes/segnalazioni/segnalazioniRoutes');
 const serviziRoutes = require('./routes/servizi/serviziRoutes');
 const sondaggiRoutes = require('./routes/sondaggi/sondaggiRoutes');
-const utentiRoutes = require('./routes/utenti/utentiRoutes');
+const utenteRoutes = require('./routes/utente/utenteRoutes');
+const loginRoutes = require('./routes/login/loginRoutes');
 const indexRouter = require('./routes/index');
 
 // impostazione della view
@@ -25,7 +26,8 @@ app.use('/gds', gdsRoutes);
 app.use('/segnalazioni', segnalazioniRoutes);
 app.use('/servizi', serviziRoutes);
 app.use('/sondaggi', sondaggiRoutes);
-app.use('/utenti', utentiRoutes);
+app.use('/utente', utenteRoutes);
+app.use('/login', loginRoutes);
 
 // cose dell'express-generator qui sotto
 app.use(logger('dev'));
