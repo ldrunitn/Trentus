@@ -1,5 +1,9 @@
+// Express setup
 const express = require('express');
 const app = express();
+
+// Database setup (for now to check whether everyhing works)
+const db = require('./model/db');
 
 const cookieParser = require('cookie-parser');
 
@@ -53,5 +57,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// Database connection check
 
 module.exports = app;
