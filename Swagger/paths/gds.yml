@@ -1,0 +1,3 @@
+/gds/registrazione/:
+  post:
+    summary: Richiesta di registrazione di un GdS

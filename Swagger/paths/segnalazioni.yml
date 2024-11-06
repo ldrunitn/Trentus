@@ -1,0 +1,32 @@
+/segnalazioni/form:
+  get:
+    summary: Restitusce un oggetto con la struttura della form di segnalazione
+  put:
+    summary: Aggiorna/crea la form di segnalazione dell'utente (usabile solo dal GdS)
+/segnalazioni/compila:
+  post:
+    summary: Manda i dati di un form compilato da un utente
+/segnalazioni/commenti:
+  get: 
+    summary: Restituisce una lista di commenti
+/segnalazioni/graficolinee:
+  get:
+    summary: Ottieni il numero di segnalazioni negli ultimi n giorni
+    parameters: 
+      - name: day
+        in: query
+        required: true
+        description: numero di giorni di cui si vuole avere il numero di segnalazioni
+        schema:
+          type: integer
+/segnalazioni/graficotorta:
+  get:
+    summary: Ottieni il grafico a torta delle motivazioni delle segnalazioni degli ultimi n giorni
+    parameters: 
+      - name: day
+        in: query
+        required: true
+        description: numero di giorni di cui si vuole tenere conto
+        schema:
+          type: integer
+

@@ -1,0 +1,43 @@
+openapi: '3.0.3'
+info:
+  title: API Title
+  version: '1.0'
+servers:
+  - url: https://api.server.test/v1
+paths:
+  /utente/registrazione:
+    $ref: './paths/utente.yml'
+  /utente/{utente_id}/preferiti:
+    $ref: './paths/utente.yml'
+  /servizi/{servizio_id}:
+    $ref: './paths/servizi.yml'
+  /servizi/classifica:
+    $ref: './paths/servizi.yml'
+  /servizi?nome="":
+    $ref: './paths/servizi.yml'
+  /segnalazioni/form:
+    $ref: './paths/segnalazioni.yml'  
+  /segnalazioni/compila:
+    $ref: './paths/segnalazioni.yml'  
+  /segnalazioni/commenti:
+    $ref: './paths/segnalazioni.yml'  
+  /segnalazioni/graficolinee:
+    $ref: './paths/segnalazioni.yml'  
+  /segnalazioni/graficotorta:
+    $ref: './paths/segnalazioni.yml'  
+  /avvisi:
+    $ref: './paths/avvisi.yml'  
+  /avvisi/rilascia:
+    $ref: './paths/avvisi.yml'  
+  /avvisi/{id}:
+    $ref: './paths/avvisi.yml'  
+  /servizi/{servizio_id}/sondaggi:
+    $ref: './paths/sondaggi.yml'  
+  /servizi/{servizio_id}/sondaggi/{sondaggio_id}/compila:
+    $ref: './paths/sondaggi.yml'  
+  /servizi/{servizio_id}/sondaggi/{sondaggio_id}/risultat:
+    $ref: './paths/sondaggi.yml'  
+
+
+
+  

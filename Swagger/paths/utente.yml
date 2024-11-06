@@ -1,0 +1,9 @@
+/utente/registrazione:
+  post:
+    summary: Crea un utente
+    description: Permette all'utente di creare un profilo
+/utente/{utente_id}/preferiti:
+  get:
+    summary: Ottiene i preferiti dell'utente specificato
+
+
