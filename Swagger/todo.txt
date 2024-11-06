@@ -4,6 +4,11 @@ gli errori li gestiamo come content in un altro file
 gli oggetti li gestiamo come content nello stesso file
 i parametri riguardano il path e la query (anche gli header ma non mi sembra li abbiamo usati)
 
+Note mentre faccio le api
+L'utente ed il gds non hanno bisogno del GET, poichè le loro info importanti sono salvate nel token
+Per loro gli aspetti da prelevare potrebbero essere Username/Nome e Cognome, ed una foto profilo... 
+  a meno che non vogliamo lasciare gli utenti anonimi
+
 
 Formato del path delle nostre api (esempio):
 

@@ -1,13 +1,14 @@
 openapi: 3.0.0
 info:
+  title: Trentus OpenAPIs
   version: 1.1.0
-  title: Trentus
-  description: Trentus APIs
+  description: API per gestire la centrazlizzazione dei servizi.
 servers:
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/luca.dariz-1/Trentus/1.0.0
+  - description: localhost
+    url: http://localhost:8000/api/v1
 paths:
-  # Utenti
+  # Utenti  
+  $ref: '../errors.yaml#/components/Unauthorized'
   /user:
     get:
       summary: Ottiene informazioni utente registrato

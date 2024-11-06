@@ -1,0 +1,30 @@
+/user:
+  delete:
+    summary: Elimina un utente
+    description: Permette ad un utente di eliminarsi utilizzando il suo token JWS
+    security:
+      - BearerAuth: [Utente]  
+    responses:
+      '408':
+        description: Utente eliminato con successo
+          content:
+            text/plain:
+              schema:
+                type: string
+      '401':
+        $ref: '../errors.yaml#/components/Unauthorized'
+/user/registrazione:
+  post:
+    summary: Crea un utente
+    description: Permette all'utente di creare un profilo
+    requestBody:
+      required: true
+      content: 
+	      $ref: '#/components/utente' 	           
+    responses:
+      '201':
+	      description:
+	        content: 
+	          $ref: '#/components/utente' 
+	    '400':
+        $ref: '../errors.yaml#/components/BadRequest'
