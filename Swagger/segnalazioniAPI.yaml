@@ -1,0 +1,93 @@
+/segnalazioni:
+  get:
+    summary: Lista segnalazioni fatte dall'utente
+    description: Restituisce una lista di oggetti segnalazione fatte dall'utente
+    security: 
+      - BearerAuth: [Utente]
+    parameters:
+      - name: pagina
+        in: query
+        description: serve poichè caricheremo solo n avvisi alla volta
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Avvisi prelevati con successo
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/ssegnalazione'
+/segnalazioni/{servizio_id}:
+  get:
+    summary: Lista segnalazioni al {servizio_id} 
+    description: Restituisce una lista di oggetti segnalazione fatti al servizio {servizio_id}
+    parameters:
+      - name: servizio_id
+        in: path
+        required: true
+        description: id del servizio di cui caricare lesegnalazioni
+        schema:
+          type: integer
+      - name: pagina
+        in: query
+        description: serve poichè caricheremo solo n segnalazioni alla volta
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: segalazioni prelevate con successo
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/segnalazione'
+  post:
+    summary: Crea una segnalazione
+    description: Permette all'utente di creare una segnalazione
+    security: 
+      - BearerAuth: [Utente]
+    parameters:
+      - name: servizio_id
+        in: path
+        required: true
+        description: id del servizio da segnalare
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content: 
+	      $ref: '#/components/segnalazione' 	           
+    responses:
+      '201':
+	      description:
+	        content: 
+	          $ref: '#/components/segnalazione' 
+	    '401':
+        $ref: '../errors.yaml#/components/Unauthorized' 
+	    '400':
+        $ref: '../errors.yaml#/components/BadRequest'
+/avvisi/{servizio_id}/{segnalazione_id}:
+  delete:
+    summary: Elimina una segnalazione
+    description: Permette all'utente di eliminare una segnalazione con l'id {segnalazione_id}
+    security:
+      - BearerAuth: [Utente]
+    parameters:
+      - name: segnalazione_id
+        in: path
+        required: true
+        description: id del servizio di cui caricare le segnalazioni
+        schema:
+          type: integer
+    responses:
+      '408':
+        description: segnalazione eliminato con successo
+          content:
+            text/plain:
+              schema:
+                type: string
+      '401':
+        $ref: '../errors.yaml#/components/Unauthorized'

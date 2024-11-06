@@ -1,0 +1,82 @@
+/servizi:
+  get:
+    summary: Lista servizi servizi 
+    description: Restituisce una lista di oggetti Servizio (filtrati su richiesta)
+    security:
+      - BearerAuth: [Utente]
+      - {}
+    parameters:
+      - name: pagina
+        in: query
+        description: serve poichè caricheremo solo n servizi alla volta
+        schema:
+          type: integer
+      - name: filtri
+        description: server per filtrare i servizi da ottenere
+        in: query
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Servizi prelevati con successo
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/servizio'
+  post:
+    summary: Crea un Servizio
+    description: Permette al SuperAdmin di creare un Servizio
+    security: 
+      - BearerAuth: [SuperAdmin]
+    requestBody:
+      required: true
+      content: 
+	      $ref: '#/components/servizio' 	           
+    responses:
+      '201':
+	      description:
+	        content: 
+	          $ref: '#/components/servizio' 
+	    '401':
+        $ref: '../errors.yaml#/components/Unauthorized' 
+	    '400':
+        $ref: '../errors.yaml#/components/BadRequest'
+/servizi/{service_id}:
+  get:
+    summary: Restituisce un servizio
+    description: Restituisce un oggetto Servizo del servizio {service_id}
+    parameters:
+      - name: service_id
+        in: path
+        required: true
+        description: id del servizio da caricare
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Servizio prelevato con successo
+        content:
+          $ref: '#/components/object'
+ delete:
+    summary: Elimina un Servizio
+    description: Permette al SuperAdmin di eliminare il servizio {service_id}
+    security:
+      - BearerAuth: [SuperAdmin]
+    parameters:
+      - name: server_id
+        in: path
+        required: true
+        description: id del GdS da eliminare
+        schema:
+          type: integer  
+    responses:
+      '408':
+        description: Servizio eliminato con successo
+          content:
+            text/plain:
+              schema:
+                type: string
+      '401':
+        $ref: '../errors.yaml#/components/Unauthorized'

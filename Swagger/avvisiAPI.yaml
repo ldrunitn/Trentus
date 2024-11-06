@@ -1,0 +1,93 @@
+/avvisi:
+  get:
+    summary: Lista annunci preferiti dell'utente
+    description: Restituisce una lista di oggetti Avviso dai servizi preferiti dell'utente
+    security: 
+      - BearerAuth: [GdS]
+    parameters:
+      - name: pagina
+        in: query
+        description: serve poichè caricheremo solo n avvisi alla volta
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Avvisi prelevati con successo
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/avviso'
+/avvisi/{service_id}:
+  get:
+    summary: Lista annunci di {service_id} 
+    description: Restituisce una lista di oggetti Avviso del servizio {service_id}
+    parameters:
+      - name: service_id
+        in: path
+        required: true
+        description: id del servizio di cui caricare gli avvisi
+        schema:
+          type: integer
+      - name: pagina
+        in: query
+        description: serve poichè caricheremo solo n avvisi alla volta
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Avvisi prelevati con successo
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/avviso'
+  post:
+    summary: Crea un Avviso
+    description: Permette al GdS di creare un avviso
+    security: 
+      - BearerAuth: [GdS]
+    parameters:
+      - name: service_id
+        in: path
+        required: true
+        description: id del servizio di cui caricare gli avvisi
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content: 
+	      $ref: '#/components/avviso' 	           
+    responses:
+      '201':
+	      description:
+	        content: 
+	          $ref: '#/components/avviso' 
+	    '401':
+        $ref: '../errors.yaml#/components/Unauthorized' 
+	    '400':
+        $ref: '../errors.yaml#/components/BadRequest'
+/avvisi/{service_id}/{avviso_id}:
+  delete:
+    summary: Elimina un Avviso
+    description: Permette al GdS di eliminare un avviso con l'id {avviso_id}
+    security:
+      - BearerAuth: [GdS]
+    parameters:
+      - name: service_id
+        in: path
+        required: true
+        description: id del servizio di cui caricare gli avvisi
+        schema:
+          type: integer
+    responses:
+      '408':
+        description: Avviso eliminato con successo
+          content:
+            text/plain:
+              schema:
+                type: string
+      '401':
+        $ref: '../errors.yaml#/components/Unauthorized'

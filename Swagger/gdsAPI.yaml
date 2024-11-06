@@ -1,0 +1,42 @@
+/gds:
+  delete:
+    summary: Elimina un GdS
+    description: Permette al SuperAdmin di eliminare il gds con l'id {gds_id}
+    parameters:
+        - name: gds_id
+          in: query
+          description: id del GdS da eliminare
+          schema:
+            type: integer
+    security:
+      - BearerAuth: [SuperAdmin]  
+    responses:
+      '408':
+        description: GdS eliminato con successo
+          content:
+            text/plain:
+              schema:
+                type: string
+      '401':
+        $ref: '../errors.yaml#/components/Unauthorized'
+/gds/registrazione:
+  post:
+    summary: Crea un GdS
+    description: Permette al SuperAdmin di creare un GdS
+    security: 
+      - BearerAuth: [SuperAdmin]
+    requestBody:
+      required: true
+      content: 
+	      $ref: '#/components/gds' 	           
+    responses:
+      '201':
+	      description:
+	        content: 
+	          $ref: '#/components/gds' 
+	    '401':
+        $ref: '../errors.yaml#/components/Unauthorized' 
+	    '400':
+        $ref: '../errors.yaml#/components/BadRequest'
+/gds/login:
+
