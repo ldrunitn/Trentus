@@ -1,17 +1,29 @@
-/segnalazioni/form:
+/servizi/{servizio_id}/segnalazioni/form:
   get:
-    summary: Restitusce un oggetto con la struttura della form di segnalazione
-  put:
-    summary: Aggiorna/crea la form di segnalazione dell'utente (usabile solo dal GdS)
-/segnalazioni/compila:
+    summary: Preleva form
+    description: Restitusce un oggetto con la struttura della form di segnalazione per il servizio {service_id}
   post:
-    summary: Manda i dati di un form compilato da un utente
-/segnalazioni/commenti:
+    summary: Crea form
+    description: Crea la form di segnalazione del servizio {service_id} per l'utente
+    security: 
+      - BearerAuth: [GdS]
+  put:
+    summary: Aggiorna form
+    description: Aggiorna la form di segnalazione del servizio {service_id} per l'utente
+    security: 
+      - BearerAuth: [GdS]
+/servizi/{servizio_id}/segnalazioni/compila:
+  post:
+    summary: Compila segnalazione
+    description: Salva i dati del form di segnalazione del servizio {service_id} compilato dall'utente
+/servizi/{servizio_id}/segnalazioni/commenti:
   get: 
-    summary: Restituisce una lista di commenti
-/segnalazioni/graficolinee:
+    summary: Preleva commenti
+    description: Restituisce una lista di commenti rilasciati nelle segnalazioni
+/servizi/{servizio_id}/segnalazioni/graficolinee:
   get:
-    summary: Ottieni il numero di segnalazioni negli ultimi n giorni
+    summary: Preleva dati da graficare
+    description: Ottieni il numero di segnalazioni negli ultimi n giorni
     parameters: 
       - name: day
         in: query
@@ -19,9 +31,10 @@
         description: numero di giorni di cui si vuole avere il numero di segnalazioni
         schema:
           type: integer
-/segnalazioni/graficotorta:
+/servizi/{servizio_id}/segnalazioni/graficotorta:
   get:
-    summary: Ottieni il grafico a torta delle motivazioni delle segnalazioni degli ultimi n giorni
+    summary: Preleva dati da graficare
+    description: Ottieni il grafico a torta delle motivazioni delle segnalazioni degli ultimi n giorni
     parameters: 
       - name: day
         in: query

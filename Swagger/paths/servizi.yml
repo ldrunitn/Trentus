@@ -1,12 +1,12 @@
-openapi: '3.0.3'
-info:
-  title: API Title
-  version: '1.0'
-servers:
-  - url: https://api.server.test/v1
-paths:
-  /test:
-    get:
-      responses:
-        '200':
-          description: OK
+/servizi/{servizio_id}:
+  get:
+    summary: Preleva servizio
+    description: Restituisce i dati del servizio {service_id} 
+/servizi/classifica:
+  get:
+    summary: Classifica servizi
+    description: Restituisce la classifica dei servizi più segnalati del giorno
+/servizi?nome="": 
+  get:
+    summary: Filtra servizi
+    description: Restituisce una lista di id filtrati dei servizi

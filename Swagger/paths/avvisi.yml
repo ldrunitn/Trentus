@@ -1,9 +1,13 @@
-/avvisi:
+/servizi/{servizio_id}/avvisi:
   get:
-  summary: Ottiene gli id e il titolo degli avvisi di un servizio
-/avvisi/rilascia:
+    summary: Preleva gli avvisi di un servizio
+    description: Ottiene gli id e il titolo degli avvisi del servizio {ervizio_id}
   post:
-  summary: Manda un'avviso agli utenti utente (utilizzabile solo da GdS)
-/avvisi/{id}:
+    summary: Rilascia un avviso
+    descrption: Permette al GdS di creare un avviso per il servizio {servizio_id} se lo possiede
+    security: 
+      - BearerAuth: [GdS]
+/servizi/{servizio_id}/avvisi/{avviso_id}:
   get:
-  summary: Ottiene gli speicifici campi dell'avviso
+    summary: Preleva un avviso
+    descrpition: Ottiene gli specifici campi dell'avviso {avviso_id}
