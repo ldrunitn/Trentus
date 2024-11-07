@@ -1,3 +1,6 @@
 /gds/registrazione/:
   post:
-    summary: Richiesta di registrazione di un GdS
+    summary: Richiesta di registrazione di un GdS e del suo servizio
+    description: |
+      Permette ad un GdS di mandare al superadmin la richiesta della 
+      creazione di un profilo e del suo servizio associato

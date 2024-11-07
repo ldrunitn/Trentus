@@ -1,13 +1,24 @@
 /servizi/{servizio_id}/sondaggi:
   get:
-    summary: Ottiene gli id dei sondaggi rilasciati dal servizio specificato
+    summary: Preleva sondaggi
+    description: Ottiene gli id dei sondaggi rilasciati per il servizio {service_id}
   post:
-    summary: Crea un nuovo sondaggio con la struttura passata
+    summary: Rilascia sondaggio
+    description: Crea un nuovo sondaggio con la struttura passata
+    security: 
+      - BearerAuth: [GdS]
 /servizi/{servizio_id}/sondaggi/{sondaggio_id}/compila:
   get:
-    summary: Restituisce la form dello specifico sondaggio
-  post:
-    summary: Prende il form compilato dall'utente
-/servizi/{servizio_id}/sondaggi/{sondaggio_id}/risultat:
+    summary: Preleva sondaggio
+    description: Restituisce la form del sondaggio {sondaggio_id}
+  post: 
+    summary: Compila sondaggio
+    description: Salva i dati del sondaggio compilato dall'utente
+    security: 
+      - BearerAuth: [Utente]
+/servizi/{servizio_id}/sondaggi/{sondaggio_id}/risultati:
   get:
-    summary: Ottiene i risultati di un determinato sondaggio
+    summary: Preleva risultati
+    description: Ottiene i risultati del sondaggio {sondaggio_id}
+    security: 
+        - BearerAuth: [GdS]
