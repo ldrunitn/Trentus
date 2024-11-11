@@ -2,46 +2,168 @@
   get:
     summary: Preleva form
     description: Restitusce un oggetto con la struttura della form di segnalazione per il servizio {service_id}
+    parameters:
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Form prelevato con successo
+        content:
+          $ref: "#/components/schemas/Form"
   post:
     summary: Crea form
     description: Crea la form di segnalazione del servizio {service_id} per l'utente
     security: 
       - BearerAuth: [GdS]
+    parameters:
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content:
+        $ref: "#/components/schemas/Form"
+    responses:
+      '201':
+        description: Form creato con successo 
   put:
     summary: Aggiorna form
     description: Aggiorna la form di segnalazione del servizio {service_id} per l'utente
     security: 
       - BearerAuth: [GdS]
+    parameters:
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content:
+        $ref: "#/components/schemas/Form"
+    responses:
+      '201':
+        description: Form modificato con successo 
 /servizi/{servizio_id}/segnalazioni/compila:
   post:
     summary: Compila segnalazione
     description: Salva i dati del form di segnalazione del servizio {service_id} compilato dall'utente
     security: 
       - BearerAuth: [Utente]
+    parameters:
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content:
+        $ref: "#/components/schemas/Segnalazione"
+    responses:
+      '201':
+        description: Form modificato con successo
 /servizi/{servizio_id}/segnalazioni/commenti:
   get: 
     summary: Preleva commenti
     description: Restituisce una lista di commenti rilasciati nelle segnalazioni
+    parameters:
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: commenti prelevati con successo
+        content:
+          $ref: "#/components/schemas/Commenti"
 /servizi/{servizio_id}/segnalazioni/graficolinee:
   get:
     summary: Preleva dati da graficare
     description: Ottieni il numero di segnalazioni negli ultimi n giorni
     parameters: 
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
       - name: day
         in: query
         required: true
         description: numero di giorni di cui si vuole avere il numero di segnalazioni
         schema:
           type: integer
+    responses:
+      '200':
+        description: grafico prelevato con successo
 /servizi/{servizio_id}/segnalazioni/graficotorta:
   get:
     summary: Preleva dati da graficare
     description: Ottieni il grafico a torta delle motivazioni delle segnalazioni degli ultimi n giorni
     parameters: 
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
       - name: day
         in: query
         required: true
         description: numero di giorni di cui si vuole tenere conto
         schema:
           type: integer
-
+    responses:
+      '200':
+        description: grafico prelevato con successo
+# COMPONENTS
+components:
+  schemas:
+    Form:
+      type: object
+      properties:
+        servizio_id: 
+          description: id del servizio
+          type: integer
+        corpo:
+          description: corpo del form
+          type: array
+          items:
+            type: string
+    Segnalazione:
+      type: object
+      properties:
+        segnalazione_id:
+          description: id della segnalazione
+          type: integer
+          required: false
+        utente_id:
+          description: id dell'utente compilatore
+          type: string
+        servizio_id: 
+          description: id del servizio
+          type: integer
+        risposte:
+          descrpition: array di boolean come check per ogni domanda
+          type: array
+          items:
+            type: boolean
+        commento:
+          description: commento al sondaggio
+          type: string
+    Commenti:
+      type: array
+      items: 
+        type: object
+        properties:
+          email:
+            description: email dell'utente compilatore
+            type: string
+          commento:
+            description: commento al sondaggio
+            type: string

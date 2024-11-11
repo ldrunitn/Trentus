@@ -1,13 +1,86 @@
+# PATHS
 /servizi/{servizio_id}/avvisi:
   get:
     summary: Preleva gli avvisi di un servizio
-    description: Ottiene gli id e il titolo degli avvisi del servizio {ervizio_id}
+    description: Ottiene gli id e il titolo degli avvisi del servizio {servizio_id}
+    parameters:
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Lista prelevata con successo
+        content:
+          type: array
+          items:
+            type: integer
   post:
     summary: Rilascia un avviso
     descrption: Permette al GdS di creare un avviso per il servizio {servizio_id} se lo possiede
     security: 
       - BearerAuth: [GdS]
+    parameters:
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content: 
+        $ref: '#/components/schemas/Avviso'
+    responses:
+      '201':
+        description: Annuncio creato con successo 
 /servizi/{servizio_id}/avvisi/{avviso_id}:
   get:
     summary: Preleva un avviso
     descrpition: Ottiene gli specifici campi dell'avviso {avviso_id}
+    parameters:
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Avviso prelevato con successo
+        content:
+          $ref: "#/components/schemas/Avviso"
+# COMPONENTS
+components:
+  schemas:
+    Avviso:
+      type: object
+      properties:
+        avviso_id: 
+          description: id dell'avviso
+          type: integer
+          required: false
+        service_id:
+          description: id del servizio della descrizione
+          type: integer
+        titolo:
+          description: titolo dell'avviso
+          type: string
+          maxLength: 64
+        contenuto:
+          description: contenuto dell'avviso
+          type: string
+          maxLength: 255
+        inizio:
+          description: inizio dell'avviso
+          type: string
+          format: date-time
+          required: false
+        fine:
+          description: fine dell'avviso
+          type: string
+          format: date-time
+          required: false
+        tipo:
+          description: tipo di avviso
+          type: enum
+          enum: [manutenzione, problemi, down]

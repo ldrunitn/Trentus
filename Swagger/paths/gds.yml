@@ -4,3 +4,9 @@
     description: |
       Permette ad un GdS di mandare al superadmin la richiesta della 
       creazione di un profilo e del suo servizio associato
+# COMPONENTS
+components:
+  schemas:
+    GdS:
+      type: object
+      properties:
