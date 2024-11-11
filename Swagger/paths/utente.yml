@@ -4,7 +4,7 @@
     description: Permette all'utente di creare un profilo
 /utente/{utente_id}/preferiti:
   get:
-    summary: Servizi preferiti utente
+    summary: Preleva preferiti utente
     description: Ottiene gli id dei servizi preferiti dall'utente {utente_id}
     security: 
       - BearerAuth: [Utente]

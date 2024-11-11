@@ -16,6 +16,8 @@
   post:
     summary: Compila segnalazione
     description: Salva i dati del form di segnalazione del servizio {service_id} compilato dall'utente
+    security: 
+      - BearerAuth: [Utente]
 /servizi/{servizio_id}/segnalazioni/commenti:
   get: 
     summary: Preleva commenti

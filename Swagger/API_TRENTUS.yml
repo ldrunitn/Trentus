@@ -15,21 +15,21 @@ paths:
     $ref: './paths/servizi.yml'
   /servizi?nome="":
     $ref: './paths/servizi.yml'
-  /segnalazioni/form:
+  /servizi/{servizio_id}/segnalazioni/form:
     $ref: './paths/segnalazioni.yml'  
-  /segnalazioni/compila:
+  /servizi/{servizio_id}/segnalazioni/compila:
     $ref: './paths/segnalazioni.yml'  
-  /segnalazioni/commenti:
+  /servizi/{servizio_id}/segnalazioni/commenti:
     $ref: './paths/segnalazioni.yml'  
-  /segnalazioni/graficolinee:
+  /servizi/{servizio_id}/segnalazioni/graficolinee:
     $ref: './paths/segnalazioni.yml'  
-  /segnalazioni/graficotorta:
+  /servizi/{servizio_id}/segnalazioni/graficotorta:
     $ref: './paths/segnalazioni.yml'  
-  /avvisi:
+  /servizi/{servizio_id}/avvisi:
     $ref: './paths/avvisi.yml'  
-  /avvisi/rilascia:
+  /servizi/{servizio_id}/avvisi/rilascia:
     $ref: './paths/avvisi.yml'  
-  /avvisi/{id}:
+  /servizi/{servizio_id}/avvisi/{id}:
     $ref: './paths/avvisi.yml'  
   /servizi/{servizio_id}/sondaggi:
     $ref: './paths/sondaggi.yml'  
