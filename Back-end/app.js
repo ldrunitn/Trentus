@@ -57,7 +57,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+const server = app.listen(8080, function(){
+  console.log("Funziona!");
+})
 // Database connection check
 
 module.exports = app;
