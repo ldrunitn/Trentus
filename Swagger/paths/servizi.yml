@@ -1,12 +1,82 @@
+# PATHS
 /servizi/{servizio_id}:
   get:
     summary: Preleva servizio
     description: Restituisce i dati del servizio {service_id} 
+    parameters:
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Servizio prelevato con successo
+        content:
+          $ref: "#/components/schemas/Servizio"
 /servizi/classifica:
   get:
     summary: Classifica servizi
     description: Restituisce la classifica dei servizi più segnalati del giorno
+    parameters:
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Classifica prelevata con successo
+        content:
+          type: array
+          items:
+            type: object
+            properties:
+              sid: 
+                description: Id del servizio
+                type: integer
+              s_count:
+                description: Numero di segnalazioni del servizio 
+                type: integer
 /servizi?nome="": 
   get:
     summary: Filtra servizi
-    description: Restituisce una lista di id filtrati dei servizi
+    description: Restituisce una lista di id filtrati dei servizi (semza filtri->ordine alfabetico)
+    parameters:
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
+      - name: filters
+        in: query
+        description: filtri sulla ricerca di un servizio
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Lista prelevata con successo
+        content:
+          type: array
+          items:
+            type: integer
+# COMPONENTS
+components:
+  schemas:
+    Servizio:
+      type: object
+      properties:
+        service_id:
+          description: id del servizio
+          type: integer
+        titolo: 
+          description: nome del servizio
+          type: string
+        logo:
+          description: logo del servizio
+          type: string
+          format: blob
+        url:
+          description: sito del servizio
+          type: string
+        

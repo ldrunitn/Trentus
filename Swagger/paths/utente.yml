@@ -1,12 +1,43 @@
+# PATHS
 /utente/registrazione:
   post:
     summary: Crea un utente
     description: Permette all'utente di creare un profilo
+    requestBody:
+        required: true
+        content: 
+          $ref: '#/components/schemas/Utente'
 /utente/{utente_id}/preferiti:
   get:
     summary: Preleva preferiti utente
     description: Ottiene gli id dei servizi preferiti dall'utente {utente_id}
     security: 
       - BearerAuth: [Utente]
+    responses:
+      '200':
+        description: Lista di servizi preferiti prelevata con successo
+        content:
+          type: array
+          items:
+            type: integer
+# COMPONENTS
+components:
+  schemas:
+    Servizio:
+      type: object
+      properties:
+        utente_id:
+          description: id dell'utente
+          type: integer
+          required: false
+        email:
+          description: email dell'utente
+          type: string
+          format: email
+        password:
+          description: password dell'utente (hash)
+          type: string
+          format: password
+
 
 

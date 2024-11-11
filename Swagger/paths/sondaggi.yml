@@ -7,6 +7,12 @@
     description: Crea un nuovo sondaggio con la struttura passata
     security: 
       - BearerAuth: [GdS]
+    parameters:
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
 /servizi/{servizio_id}/sondaggi/{sondaggio_id}/compila:
   get:
     summary: Preleva sondaggio
@@ -16,9 +22,35 @@
     description: Salva i dati del sondaggio compilato dall'utente
     security: 
       - BearerAuth: [Utente]
+    parameters:
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
 /servizi/{servizio_id}/sondaggi/{sondaggio_id}/risultati:
   get:
     summary: Preleva risultati
     description: Ottiene i risultati del sondaggio {sondaggio_id}
     security: 
         - BearerAuth: [GdS]
+    parameters:
+      - name: servizio_id
+        in: path
+        description: id del servizio 
+        schema:
+          type: integer
+# COMPONENTS
+components:
+  schemas:
+    Sondaggio:
+      type: object
+      properties:
+        sondaggio_id: 
+          description: id del sondaggio 
+          type: integer
+          required: false
+        servizio_id:
+          description: id del servizio
+          type: integer
+        
