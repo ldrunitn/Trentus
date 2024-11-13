@@ -18,11 +18,20 @@ const serviziRoutes = require('./routes/servizi/serviziRoutes');
 const sondaggiRoutes = require('./routes/sondaggi/sondaggiRoutes');
 const utenteRoutes = require('./routes/utente/utenteRoutes');
 const loginRoutes = require('./routes/login/loginRoutes');
+const registerRoutes = require('./routes/register/registerRoutes')
 const indexRouter = require('./routes/index');
 
 // impostazione della view
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+// cose dell'express-generator qui
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', indexRouter);
 
 // impostazione delle routes
 app.use('/avvisi', avvisiRoutes);
@@ -32,15 +41,10 @@ app.use('/servizi', serviziRoutes);
 app.use('/sondaggi', sondaggiRoutes);
 app.use('/utente', utenteRoutes);
 app.use('/login', loginRoutes);
+app.use('/registrazione', registerRoutes);
 
-// cose dell'express-generator qui sotto
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -61,5 +65,9 @@ const server = app.listen(8080, function(){
   console.log("Funziona!");
 })
 // Database connection check
+
+const listEndpoints = require('express-list-endpoints');
+
+console.log(listEndpoints(app)); // rotte attive
 
 module.exports = app;
