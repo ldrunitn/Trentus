@@ -10,18 +10,16 @@ const schemaUtente = new mongoose.Schema({
   passwordHash: {
     type: String,
     required: true
+  },
+  role: {
+    type: String,
+    required: false,
+    default: "user"
   }
 }, {
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
 });
 
-// Middleware per hashare le password
-// schemaUtente.pre('save', async function (next) {
-//   if (!this.isModified('passwordHash')) return next();
-//   const salt = await bcrypt.genSalt(10);
-//   this.passwordHash = await bcrypt.hash(this.passwordHash, salt);
-//   next();
-// });
 
 //metodo per confrontare le password
 schemaUtente.methods.comparePassword = async function(passwordCandidata){

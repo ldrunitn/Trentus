@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const schemaOpzione = require('./opzione.schema');
 
-const schemaServizio = new mongoose.Schema({
+const schemaSondaggio = new mongoose.Schema({
   titolo: {
     type: String,
     required: [true, "Il titolo è obbligatorio"],
@@ -20,5 +20,5 @@ const schemaServizio = new mongoose.Schema({
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
 });
 
-const Servizio = mongoose.model('Servizio', schemaServizio);
-module.exports = Servizio;
+const Sondaggio = mongoose.model('Sondaggio', schemaSondaggio);
+module.exports = Sondaggio;

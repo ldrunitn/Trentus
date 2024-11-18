@@ -17,8 +17,6 @@ const segnalazioniRoutes = require('./routes/segnalazioni/segnalazioniRoutes');
 const serviziRoutes = require('./routes/servizi/serviziRoutes');
 const sondaggiRoutes = require('./routes/sondaggi/sondaggiRoutes');
 const utenteRoutes = require('./routes/utente/utenteRoutes');
-const loginRoutes = require('./routes/login/loginRoutes');
-const registerRoutes = require('./routes/register/registerRoutes')
 const indexRouter = require('./routes/index');
 
 // impostazione della view
@@ -40,9 +38,6 @@ app.use('/segnalazioni', segnalazioniRoutes);
 app.use('/servizi', serviziRoutes);
 app.use('/sondaggi', sondaggiRoutes);
 app.use('/utente', utenteRoutes);
-app.use('/login', loginRoutes);
-app.use('/registrazione', registerRoutes);
-
 
 
 
