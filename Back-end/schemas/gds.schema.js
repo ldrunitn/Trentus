@@ -1,28 +1,30 @@
 const mongoose = require('mongoose');
-const schemaOpzione = require('./opzione.schema');
-
-const schemaServizio = new mongoose.Schema({
-  titolo: {
+const bcrypt = require('bcryptjs');
+const { schemaServizio } = require('./servizio.schema');
+require
+const schemaGdS = new mongoose.Schema({
+  email: {
     type: String,
-    required: [true, "Il titolo è obbligatorio"],
-    maxlength: [64, "Il titolo può avere massimo 64 caratteri"]
+    required: [true, 'L\'email è obbligatoria'], // Campo obbligatorio con messaggio di errore
+    unique: true, // Garantisce l'unicità dell'email
+    match: [/.+\@.+\..+/, 'Inserire un indirizzo email valido'] // Valida il formato dell'email
   },
-  url: {
-    type: String,
-    required: false,
-    maxlength: [255, "Il contenuto può avere massimo 255 caratteri"]
-  },
-  foto: {
+  passwordHash: {
     type: String,
     required: true
   },
-  opzioniForm: {
-    type: [schemaOpzione.schemaOpzioneSingola],
-    required: [true, "È necessario fornire un lista di opzioni"]
-  },
+  servizio:{
+    type: schemaServizio,
+    required: true
+  }
 }, {
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
 });
 
-const Servizio = mongoose.model('Servizio', schemaServizio);
-module.exports = Servizio;
+schemaGdS.methods.comparePassword = async function(passwordCandidata){
+  console.log(`${passwordCandidata}: ${this.passwordHash}`)
+  return bcrypt.compare(passwordCandidata, this.passwordHash);
+}
+
+const GdS = mongoose.model('GdS', schemaGdS);
+module.exports = GdS;

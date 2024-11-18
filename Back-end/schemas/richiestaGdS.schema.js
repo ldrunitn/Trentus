@@ -1,7 +1,15 @@
 const mongoose = require('mongoose');
-const schemaOpzione = require('./opzione.schema');
-
-const schemaServizio = new mongoose.Schema({
+const schemaRichiestaGdS = new mongoose.Schema({
+  email: {
+    type: String,
+    required: [true, 'L\'email è obbligatoria'], // Campo obbligatorio con messaggio di errore
+    unique: true, // Garantisce l'unicità dell'email
+    match: [/.+\@.+\..+/, 'Inserire un indirizzo email valido'] // Valida il formato dell'email
+  },
+  passwordHash: {
+    type: String,
+    required: true
+  },
   titolo: {
     type: String,
     required: [true, "Il titolo è obbligatorio"],
@@ -26,16 +34,14 @@ const schemaServizio = new mongoose.Schema({
     required: false,
     maxlength: [255, "Il contenuto può avere massimo 255 caratteri"]
   },
-  opzioniForm: {
-    type: [schemaOpzione.schemaOpzioneSingola],
-    required: [false, "È necessario fornire un lista di opzioni"]
-  },
+  confermata: {
+    type: Boolean,
+    required: false,
+    default: false
+  }
 }, {
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
 });
 
-const Servizio = mongoose.model('Servizio', schemaServizio);
-module.exports = {
-  Servizio,
-  schemaServizio
-};
+const RichiestaGdS = mongoose.model('RichiestaGdS', schemaRichiestaGdS);
+module.exports = RichiestaGdS;
