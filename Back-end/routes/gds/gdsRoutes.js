@@ -68,6 +68,7 @@ router.post('/registrazione', async (req, res) => {
 //devo confermare la richiesta quindi
 //1) Creare il gds nel database
 //2) Creare anche il servizio corrispondente
+//3) Mettere la richiesta a confermata
 router.get('/:id/conferma', verifyToken, checkRole(['superadmin']), async (req,res)=>{
   const requestID = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(requestID)) {
