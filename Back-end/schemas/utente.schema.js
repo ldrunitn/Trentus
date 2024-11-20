@@ -11,6 +11,14 @@ const schemaUtente = new mongoose.Schema({
     type: String,
     required: true
   },
+  preferiti:{
+    type: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'service'
+    }],
+    required: false,
+    default: [],
+  },
   role: {
     type: String,
     required: false,
@@ -27,5 +35,4 @@ schemaUtente.methods.comparePassword = async function(passwordCandidata){
   return bcrypt.compare(passwordCandidata, this.passwordHash);
 }
 
-const Utente = mongoose.model('Utente', schemaUtente);
-module.exports = Utente;
+module.exports = schemaUtente;

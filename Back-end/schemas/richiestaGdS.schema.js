@@ -43,5 +43,4 @@ const schemaRichiestaGdS = new mongoose.Schema({
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
 });
 
-const RichiestaGdS = mongoose.model('RichiestaGdS', schemaRichiestaGdS);
-module.exports = RichiestaGdS;
+module.exports = schemaRichiestaGdS;
