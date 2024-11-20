@@ -20,5 +20,4 @@ const schemaSondaggio = new mongoose.Schema({
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
 });
 
-const Sondaggio = mongoose.model('Sondaggio', schemaSondaggio);
-module.exports = Sondaggio;
+module.exports = schemaSondaggio;

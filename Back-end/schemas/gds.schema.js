@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const { schemaServizio } = require('./servizio.schema');
-require
 const schemaGdS = new mongoose.Schema({
   email: {
     type: String,
@@ -14,7 +12,8 @@ const schemaGdS = new mongoose.Schema({
     required: true
   },
   servizio:{
-    type: schemaServizio,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'service',
     required: true
   }
 }, {
@@ -26,5 +25,4 @@ schemaGdS.methods.comparePassword = async function(passwordCandidata){
   return bcrypt.compare(passwordCandidata, this.passwordHash);
 }
 
-const GdS = mongoose.model('GdS', schemaGdS);
-module.exports = GdS;
+module.exports = schemaGdS;

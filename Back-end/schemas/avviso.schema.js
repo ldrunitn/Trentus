@@ -44,5 +44,4 @@ const schemaAvviso = new mongoose.Schema({
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
 });
 
-const Avviso = mongoose.model('Avviso', schemaAvviso);
-module.exports = Avviso;
+module.exports = schemaAvviso;

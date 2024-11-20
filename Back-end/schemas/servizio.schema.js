@@ -34,8 +34,4 @@ const schemaServizio = new mongoose.Schema({
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
 });
 
-const Servizio = mongoose.model('Servizio', schemaServizio);
-module.exports = {
-  Servizio,
-  schemaServizio
-};
+module.exports = schemaServizio

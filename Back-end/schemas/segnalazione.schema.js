@@ -30,5 +30,4 @@ const schemaSegnalazione = new mongoose.Schema({
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
 });
 
-const Segnalazione = mongoose.model('Segnalazione', schemaSegnalazione);
-module.exports = Segnalazione;
+module.exports = schemaSegnalazione;
