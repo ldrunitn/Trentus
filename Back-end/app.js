@@ -57,7 +57,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 const server = app.listen(8080, function(){
-  console.log("Funziona!");
+  console.log("App attiva sulla porta 8080");
 })
 // Database connection check
 
