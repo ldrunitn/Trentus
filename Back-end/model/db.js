@@ -17,5 +17,6 @@ async function run() {
   }
 }
 run().catch(console.dir);
+// mongoose.set('debug', true);
 let db = mongoose.connection;
 module.exports = db; // You can export the connection if you need to use it elsewhere
