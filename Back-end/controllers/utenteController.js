@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../model/utente.model');
 const { generateToken } = require('../middleware/authMiddleware');
+const { mongoose } = require('mongoose');
 exports.createUser = async (req, res, role) => {
   const { email, password } = req.body;
 
@@ -52,4 +53,30 @@ exports.verifyCredentials = async (req,res,role) => {
   } catch (err) {
     res.status(500).json({ message: 'Errore del server', error: err.message });
   }
+}
+exports.getFavorites = async (req,res) => {
+  //trovo l'utente con l'id
+  id = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: 'ID non valido' });
+  }
+  const user = await User.findById(id).select('preferiti');
+  if(!user){
+    return res.status(404).json({ message: 'Utente non trovato'});
+  }
+  console.log(user.preferiti);
+  return res.status(200).json({preferiti: user.preferiti});
+}
+exports.getUserById = async (req,res) => {
+  //trovo l'utente con l'id
+  id = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: 'ID non valido' });
+  }
+  const user = await User.findById(id).select('_id email preferiti');
+  if(!user){
+    return res.status(404).json({ message: 'Utente non trovato'});
+  }
+  console.log(user);
+  return res.status(200).json(user);
 }
