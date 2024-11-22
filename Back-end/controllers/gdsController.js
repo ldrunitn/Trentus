@@ -61,5 +61,16 @@ exports.confirmRequest = async (requestID, res) => {
   finally{
     session.endSession();
   }
-
+}
+exports.getService = async (req,res) =>{
+  id = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: 'ID non valido' });
+  }
+  const service_id = await GdS.findById(id).select('servizio');
+  if(!user){
+    return res.status(404).json({ message: 'Utente non trovato'});
+  }
+  console.log(user);
+  return res.status(200).json(user);
 }
