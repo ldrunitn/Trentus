@@ -2,7 +2,8 @@ const express = require('express');
 // const gdsController = require(process.cwd()+'/controllers/gds/gdsController');
 const { verifyToken, checkRole } = require('../../middleware/authMiddleware');
 const router = express.Router();
-const { generateRequest, validateCredential, confirmRequest } = require('../../controllers/gdsController');
+const { validateCredentials, confirmRequest } = require('../../controllers/gdsController');
+const { createRequest } = require('../../controllers/richiestaGdSController');
 
 // login GdS
 router.post('/login', async (req, res) => {
@@ -10,7 +11,7 @@ router.post('/login', async (req, res) => {
 });
 //pai per mandare la richiesta di registrazione
 router.post('/registrazione', async (req, res) => {
-  generateRequest(req,res);
+  createRequest(req,res);
 });
 //devo confermare la richiesta quindi
 //1) Creare il gds nel database
