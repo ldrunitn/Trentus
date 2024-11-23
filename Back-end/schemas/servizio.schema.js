@@ -28,7 +28,7 @@ const schemaServizio = new mongoose.Schema({
   },
   opzioniForm: {
     type: [schemaOpzione.schemaOpzioneSingola],
-    required: [false, "È necessario fornire un lista di opzioni"]
+    required: false
   },
 }, {
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt

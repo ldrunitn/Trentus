@@ -23,7 +23,6 @@ exports.validateCredentials = async (req,res) => {
   }
 }
 exports.confirmRequest = async (requestID, res) => {
-  console.log("inizio funzione");
   if (!mongoose.Types.ObjectId.isValid(requestID)) {
     return res.status(400).json({ message: 'ID non valido' });
   }
@@ -50,10 +49,8 @@ exports.confirmRequest = async (requestID, res) => {
 
     //confermo la transazione
     await session.commitTransaction();
-    console.log('committata')
 
     res.status(201).json({ message: 'GdS creato con successo'});
-    console.log('finito');
   } catch (err) {
     await session.abortTransaction();
     res.status(500).json({ message: 'Errore del server', error: err.message });
@@ -61,16 +58,4 @@ exports.confirmRequest = async (requestID, res) => {
   finally{
     session.endSession();
   }
-}
-exports.getService = async (req,res) =>{
-  id = req.params.id;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ message: 'ID non valido' });
-  }
-  const service_id = await GdS.findById(id).select('servizio');
-  if(!user){
-    return res.status(404).json({ message: 'Utente non trovato'});
-  }
-  console.log(user);
-  return res.status(200).json(user);
 }
