@@ -2,7 +2,8 @@ const express = require('express');
 // const serviziController = require(process.cwd()+'/controllers/servizi/serviziController');
 const Servizio = require('../../model/servizio.model');
 const { getServiceByGdSId } = require('../../controllers/servizioController');
-const {verifyTokenAndCheckId, checkRole} = require('../../middleware/authMiddleware');
+const {verifyTokenAndCheckId, checkRole, verifyTokenAndCheckServiceId} = require('../../middleware/authMiddleware');
+const segnalazioneController = require('../../controllers/segnalazioneController');
 const router = express.Router();
 
 //ritorna tutti i servizi
@@ -24,6 +25,21 @@ router.get('/:id', verifyTokenAndCheckId, checkRole(['gds']), async (req,res)=>{
     return res.status(400).json({ message: 'ID mancante' }); // Validazione di base
   }
   getServiceByGdSId(res,req);
+});
+
+//riceve un array di stringhe e compone la form di segnalazione
+router.post('/:id/segnalazioni/form', verifyTokenAndCheckServiceId, checkRole(['gds']), async (req,res) => {
+  if(!req.params.id){
+    return res.status(400).json({ message: 'ID mancante' }); // Validazione di base
+  }
+  segnalazioneController.createForm(req, res);
+});
+//restituisce   
+router.get('/:id/segnalazioni/form', async (req,res) => {
+  if(!req.params.id){
+    return res.status(400).json({ message: 'ID mancante' }); // Validazione di base
+  }
+  segnalazioneController.getForm(req, res);
 });
 
 module.exports = router;
