@@ -4,7 +4,7 @@ const { verifyToken, checkRole, verifyTokenAndCheckId } = require('../../middlew
 const router = express.Router();
 const { validateCredentials, confirmRequest } = require('../../controllers/gdsController');
 const { createRequest } = require('../../controllers/richiestaGdSController');
-
+const { getServiceByGdSId } = require('../../controllers/servizioController')
 // login GdS
 router.post('/login', async (req, res) => {
   validateCredentials(req,res);
@@ -19,6 +19,15 @@ router.get('/:id/conferma', verifyToken, checkRole(['superadmin']), async (req,r
   const requestID = req.params.id;
   confirmRequest(requestID, res);
 });
+
+//ottiene dati del servizio associato al GdS
+router.get('/:id/servizio', verifyTokenAndCheckId, checkRole(['gds']), async (req,res)=>{
+  if (!req.params.id) {
+    return res.status(400).json({ message: 'ID mancante' }); // Validazione di base
+  }
+  getServiceByGdSId(req,res);
+});
+
 
 
 module.exports = router;
