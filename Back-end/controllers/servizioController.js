@@ -13,6 +13,19 @@ exports.createService = async (request, session) => {
   const service_id = await servizio.save({session}); //salvo il servizio ottenendo l'id
   return service_id;
 }
+exports.getService = async (req,res) => {
+  id = req.params.id;
+  if(!mongoose.Types.ObjectId.isValid(id)){
+    return res.status(400).json({message: 'ID non valido'});
+  }
+  try{
+    let s = await Servizio.findById(id);
+    return res.status(200).json(s);
+  } 
+  catch(err){
+    return res.status(500).json({message: "Errore del server"});
+  }
+}
 exports.getServiceByGdSId = async (req,res) =>{
   id = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -40,9 +53,9 @@ exports.getServiceByGdSId = async (req,res) =>{
       }
     ]);
     if(!result){
-      return res.status(404).json({ message: 'GdS non trovato'});
+      return res.status(404).json({ message: 'Servizio non trovato'});
     }
-    return res.status(200).json(result);
+    return res.status(200).json({servizio: result[0].servizi});
   }catch(err){
     console.log(err.message);
     return res.status(500).json({message: 'Errore del server'});

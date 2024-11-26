@@ -18,13 +18,12 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: 'Errore nel recupero dei dati', error: error.message });
   }
 })
-
-//ottiene dati del servizio associato al GdS
-router.get('/:id', verifyTokenAndCheckId, checkRole(['gds']), async (req,res)=>{
-  if (!req.params.id) {
-    return res.status(400).json({ message: 'ID mancante' }); // Validazione di base
+router.get('/:id', async (req,res)=>{
+  if(!req.params.id){
+    return res.status(400).json({message: "ID mancante"});
   }
-  getServiceByGdSId(res,req);
+  let servizio = await Servizio.findById(req.params.id)
+  
 });
 
 //riceve un array di stringhe e compone la form di segnalazione (id del servizio)
