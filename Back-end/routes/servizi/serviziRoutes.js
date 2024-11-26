@@ -27,14 +27,14 @@ router.get('/:id', verifyTokenAndCheckId, checkRole(['gds']), async (req,res)=>{
   getServiceByGdSId(res,req);
 });
 
-//riceve un array di stringhe e compone la form di segnalazione
+//riceve un array di stringhe e compone la form di segnalazione (id del servizio)
 router.post('/:id/segnalazioni/form', verifyTokenAndCheckServiceId, checkRole(['gds']), async (req,res) => {
   if(!req.params.id){
     return res.status(400).json({ message: 'ID mancante' }); // Validazione di base
   }
   segnalazioneController.createForm(req, res);
 });
-//restituisce   
+//restituisce la form del servizio specificato
 router.get('/:id/segnalazioni/form', async (req,res) => {
   if(!req.params.id){
     return res.status(400).json({ message: 'ID mancante' }); // Validazione di base
