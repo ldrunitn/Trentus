@@ -16,7 +16,7 @@ export default{
 </script>
 
 <template> 
-    <nav class="w-full bg-gray-200 p-2 flex" id="navbar">
+    <nav class="border-b border-gray-500 w-full p-2 flex items-center" id="navbar">
         <router-link to="/" class="ml-2" id="logo"><img src="/src/assets/logo.svg" alt="logo_trentus"></router-link>
         <search-button></search-button>
         <div class="flex flex-nowrap ml-auto" id="buttons">
@@ -30,6 +30,6 @@ export default{
 </template>
 <style scoped>
 #navbar{
-    max-height: 100px ;
+    background-color: #F6F8FA;
 }
 </style>
