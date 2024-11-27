@@ -1,10 +1,10 @@
 const express = require('express');
+const router = express.Router();
 // const serviziController = require(process.cwd()+'/controllers/servizi/serviziController');
 const Servizio = require('../../model/servizio.model');
 const { getServiceByGdSId } = require('../../controllers/servizioController');
 const {verifyTokenAndCheckId, checkRole, verifyTokenAndCheckServiceId} = require('../../middleware/authMiddleware');
 const segnalazioneController = require('../../controllers/segnalazioneController');
-const router = express.Router();
 
 //ritorna tutti i servizi
 router.get('/', async (req, res) => {

@@ -20,18 +20,13 @@ const schemaAvviso = new mongoose.Schema({
   inizio: {
     type: Date,
     required: false,
-    validate:{
-      validator: function(value){ //controlla che la data inserita non sia nel passato
-        return value <= new Date();
-      }
-    }
   },
   fine: {
     type: Date,
     required: false,
     validate:{
       validator: function(value){ //controlla che la data inserita non sia nel passato
-        return value <= new Date();
+        return value >= new Date();
       }
     }
   },

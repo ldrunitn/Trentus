@@ -1,10 +1,17 @@
 const express = require('express');
+const router = express.Router();
+
 // const gdsController = require(process.cwd()+'/controllers/gds/gdsController');
 const { verifyToken, checkRole, verifyTokenAndCheckId } = require('../../middleware/authMiddleware');
-const router = express.Router();
 const { validateCredentials, confirmRequest } = require('../../controllers/gdsController');
 const { createRequest } = require('../../controllers/richiestaGdSController');
 const { getServiceByGdSId } = require('../../controllers/servizioController')
+
+// Routing test
+router.get('/', (req,res)=>{
+  res.render('index', { title: 'GdS' });
+});
+
 // login GdS
 router.post('/login', async (req, res) => {
   validateCredentials(req,res);

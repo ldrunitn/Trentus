@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 
-// Database setup (for now to check whether everyhing works)
+// Database setup (per vedere se tutto funziona)
 const db = require('./model/db');
 
 const cookieParser = require('cookie-parser');
@@ -32,11 +32,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 
 // impostazione delle routes
-app.use('/avvisi', avvisiRoutes);
+app.use('/servizi/:id/avvisi', (req, res, next) => {
+  req.serviceID = req.params.id; // Save the `id` parameter to the `req` object
+  next(); // Pass control to the next middleware (avvisiRoutes)
+}, avvisiRoutes);
+app.use('/servizi/:id/sondaggi', (req, res, next) => {
+  req.serviceID = req.params.id; // Save the `id` parameter to the `req` object
+  next(); // Pass control to the next middleware (avvisiRoutes)
+}, sondaggiRoutes);
+app.use('/servizi/:id/segnalazioni', (req, res, next) => {
+  req.serviceID = req.params.id; // Save the `id` parameter to the `req` object
+  next(); // Pass control to the next middleware (avvisiRoutes)
+}, segnalazioniRoutes);
 app.use('/gds', gdsRoutes);
-app.use('/segnalazioni', segnalazioniRoutes);
 app.use('/servizi', serviziRoutes);
-app.use('/sondaggi', sondaggiRoutes);
 app.use('/utente', utenteRoutes);
 
 
