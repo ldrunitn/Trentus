@@ -54,6 +54,7 @@ exports.verifyTokenAndCheckServiceId = async (req, res, next) => {
   const id = req.params.id;
 
   if(!id){
+    console.log(req.originalUrl);
     return res.status(401).json({ message: 'ID mancante' });
   }
 
