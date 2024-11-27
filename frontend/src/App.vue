@@ -3,12 +3,14 @@ import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import Navbar from './components/Navbar.vue';
 import ServicesCards from './components/ServicesCards.vue';
+import SidebarLeft from './components/SidebarLeft.vue';
 </script>
 
 <template>
   <Navbar />
   <ServicesCards />
   <RouterView />
+  <SidebarLeft />
 
 </template>
 
