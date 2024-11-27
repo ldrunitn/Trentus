@@ -10,15 +10,11 @@
 </template>
 <script>
 export default{
-  props: [
-    logo,
-    reportNumber
-  ],
-  data(){
-    return{
-      logo: File,
-      reportNumber: 0
-    }
-  }
+  props: {
+    logo: File,
+    reportNumber: Number,
+  },
+    
+  
 }
 </script>

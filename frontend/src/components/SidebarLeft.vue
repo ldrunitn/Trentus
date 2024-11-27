@@ -14,7 +14,7 @@
 </template> -->
 
 <template>
-  <div class="w-64 bg-gray-100 p-4">
+  <div class="w-64 flex-col bg-gray-100 p-4 shadow-md mr-4 max-w-prose h-full">
     <!-- Ciclo sulle sezioni -->
     <div v-for="(section, index) in sections" :key="index" class="mb-6">
       <!-- Titolo sezione -->
@@ -68,5 +68,4 @@ export default {
 </script>
 
 <style>
-/* Tailwind CSS gestisce gli stili */
 </style>
