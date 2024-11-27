@@ -4,13 +4,19 @@ import HelloWorld from './components/HelloWorld.vue'
 import Navbar from './components/Navbar.vue';
 import ServicesCards from './components/ServicesCards.vue';
 import SidebarLeft from './components/SidebarLeft.vue';
+import SidebarRight from './components/SidebarRight.vue';
 </script>
 
 <template>
   <Navbar />
-  <ServicesCards />
+  <div class="flex flex-row">
+    <div class="basis-1/4"><SidebarLeft /></div>
+    <div class="basis-1/2"><ServicesCards /></div>
+    <div class="basis-1/4"><SidebarRight /></div>
+  </div>
+  
   <RouterView />
-  <SidebarLeft />
+  
 
 </template>
 
