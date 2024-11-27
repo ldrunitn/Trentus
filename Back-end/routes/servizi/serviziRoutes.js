@@ -22,8 +22,9 @@ router.get('/:id', async (req,res)=>{
   if(!req.params.id){
     return res.status(400).json({message: "ID mancante"});
   }
-  let servizio = await Servizio.findById(req.params.id)
-  
+  let servizio = await Servizio.findById(req.params.id);
+  return res.status(200).json(servizio);
+
 });
 
 //riceve un array di stringhe e compone la form di segnalazione (id del servizio)

@@ -37,12 +37,7 @@ const sidebarSections = [ //prova sidebar
 
 <template>
   <Navbar />
-  <div class="flex flex-row">
-    <div class="basis-1/4"><SidebarLeft :sections="sidebarSections"/></div>
-    <div class="basis-1/2"><ServicesCards /></div>
-  </div>
-  
-  
+  <ServicesCards />
   <RouterView />
   
 
