@@ -8,9 +8,14 @@ import SidebarLeft from './components/SidebarLeft.vue';
 
 <template>
   <Navbar />
-  <ServicesCards />
+  <div class="flex flex-row">
+    <div class="basis-1/4"><SidebarLeft /></div>
+    <div class="basis-1/2"><ServicesCards /></div>
+  </div>
+  
+  
   <RouterView />
-  <SidebarLeft />
+  
 
 </template>
 
