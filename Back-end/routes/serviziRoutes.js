@@ -7,9 +7,6 @@ const Servizio = require('../models/servizio.model');
 // Controllers
 // const serviziController = require(process.cwd()+'/controllers/servizi/serviziController');
 
-// Middleware
-const { checkRole, verifyTokenAndCheckServiceId } = require('../middleware/authMiddleware');
-
 // Restituisce tutti i servizi
 router.get('/', async (req, res) => {
   try {

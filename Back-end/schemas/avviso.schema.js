@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const schemaAvviso = new mongoose.Schema({
   titolo: {
     type: String,

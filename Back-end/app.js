@@ -34,16 +34,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 
 // Funzione per mantenere il :service_id tra le routes
-const paramSave = (req, res, next) => {
+const SIDSave = (req, res, next) => {
   req.service_id = req.params.id;
   next();
 };
 // Impostazione delle routes (l'ordinamento è importante)
-app.use('/servizi/:id/avvisi', paramSave, avvisiRoutes);
-app.use('/servizi/:id/sondaggi', paramSave, sondaggiRoutes);
-app.use('/servizi/:id/segnalazioni', paramSave, segnalazioniRoutes);
-app.use('/gds', gdsRoutes);
+app.use('/servizi/:id/avvisi', SIDSave, avvisiRoutes);
+app.use('/servizi/:id/sondaggi', SIDSave, sondaggiRoutes);
+app.use('/servizi/:id/segnalazioni', SIDSave, segnalazioniRoutes);
 app.use('/servizi', serviziRoutes);
+app.use('/gds', gdsRoutes);
 app.use('/utente', utenteRoutes);
 
 // Gestore errore 404
