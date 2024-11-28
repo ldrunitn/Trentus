@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const schemaOpzioneSingola = new mongoose.Schema({ //l'opzione può essere una checkbox o un radio button
   testo: {
     type: String,

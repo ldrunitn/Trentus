@@ -34,7 +34,7 @@ exports.getService = async (req,res) => {
 
 // Restituisce il servizio gestito dal GdS 
 exports.getServiceByGdSId = async (req,res) =>{
-  id = req.params.id;
+  id = req.user.id;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: 'ID non valido' });
   }
