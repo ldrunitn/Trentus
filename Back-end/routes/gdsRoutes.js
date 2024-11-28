@@ -8,7 +8,7 @@ const { getServiceByGdSId } = require('../controllers/servizioController');
 // const gdsController = require(process.cwd()+'/controllers/gds/gdsController');
 
 // Middleware 
-const { verifyToken, checkRole, verifyTokenAndCheckId } = require('../middleware/authMiddleware');
+const { usingToken, checkRole, CheckServiceGdSConnection } = require('../middleware/authMiddleware');
 
 // Login GdS
 router.post('/login', async (req, res) => {
@@ -21,16 +21,17 @@ router.post('/registrazione', async (req, res) => {
 });
 
 // Conferma della richiesta di registrazione 
-router.get('/:id/conferma', verifyToken, checkRole(['superadmin']), async (req,res)=>{
-  const requestID = req.params.id;
+router.get('/conferma/:gds_id', usingToken, checkRole(['superadmin']), async (req,res)=>{
+  const requestID = req.params.gds_id;
   confirmRequest(requestID, res);
 });
 
 // Restituisce dati del servizio associato al GdS
-router.get('/:id/servizio', verifyTokenAndCheckId, checkRole(['gds']), async (req,res)=>{
-  if (!req.params.id) {
-    return res.status(400).json({ message: 'ID mancante' }); // Validazione di base
-  }
+// Non trovo il senso di questa api
+// Serve  per trovare il servizio del gds ma per farlo serve l'id del servizio?
+// Ma allora se abbiamo l'id del gds, che è già nel token, non possiamo controllare
+// Che un servizio sia suo prima di averlo??
+router.get(':service_id/servizio', usingToken, CheckServiceGdSConnection, checkRole(['gds']), async (req,res)=>{
   getServiceByGdSId(req,res);
 });
 

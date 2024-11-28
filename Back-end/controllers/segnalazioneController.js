@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 // Model
-const Servizio = require('../models/servizio.model');
+const Segnalazione = require('../models/segnalazione.model');
 
-// Crea una form compilabile per rilasciare una segnalazione
-exports.createForm = async (req,res) => {
+exports.generateForm = async (req,res) => {
   //recupero l'array di opzioni (stringhe)
-  const { options } = req.body;
+  const { options, commento } = req.body;
+  id = req.servizio_id;
   if(!options){
     return res.status(400).json({message: "Opzioni non presenti; impossibile creare la form"});
   }
@@ -14,20 +14,21 @@ exports.createForm = async (req,res) => {
     return res.status(400).json({message: 'ID non valido'});
   }
 
-  // 
   try{
-    let service = await Servizio.findById(req.params.id);
-    // creo le opzioni
-    let opzioniForm = [];
+    let opzioniSegnalazione = [];
     options.forEach(t => {
-      opzioniForm.push({
+      opzioniSegnalazione.push({
         testo: t,
         check: false,
         tipo: 'check'
       })
     });
-    // ora lo metto nel campo 'opzioniForm' del servizio
-    service.opzioniForm = opzioniForm;
+    let segnalazione = new Segnalazione({
+      opzioniSegnalazione,
+      commento,
+      undefined,
+      id
+    });
     // infine lo salvo
     await service.save();
     return res.status(201).json({message: 'Form creata con successo'});
@@ -38,21 +39,3 @@ exports.createForm = async (req,res) => {
   }
 }
 
-// Restituisce una form
-exports.getForm = async (req,res) => {
-  if(!mongoose.Types.ObjectId.isValid(req.params.id)){
-    return res.status(400).json({message: 'ID non valido'});
-  }
-
-  // ottengo la form di uno specifico servizio
-  try{
-    let form = await Servizio.findById(req.params.id).select('opzioniForm');
-    if(!form){
-      return res.status(404).json({message:'Form non trovata'});
-    }
-    return res.status(200).json(form);
-  }
-  catch(err){
-    return res.status(500).json({message:'Errore del server'});
-  }
-}
