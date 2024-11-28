@@ -1,14 +1,35 @@
-<script setup>
-
+<script>
+import navButton from './navbar/navButton.vue';
+import SearchButton from './navbar/searchButton.vue';
+export default{
+    components:{
+        navButton,
+        SearchButton
+    },
+    data(){
+        return{
+            logoUrl: "/src/assets/logo.svg",
+            favUrl: "/src/assets/favorite.svg"
+        }
+    }
+}
 </script>
 
 <template> 
-    <nav class="bg-gray-500">
-        <div class="container mx-auto flex justify-between items-center p-4">
-            <router-link to="/" class="text-red font-bold">Home</router-link>
-            <router-link to="/preferiti" class="text-white font-bold">Preferiti</router-link>
-            <router-link to="/impostazioni" class="text-white font-bold">Impostazioni</router-link>
-            <router-link to="/profilo" class="text-white font-bold">Profilo</router-link>
+    <nav class="border-b border-gray-500 w-full p-2 flex items-center" id="navbar">
+        <router-link to="/" class="ml-2" id="logo"><img src="/src/assets/logo.svg" alt="logo_trentus"></router-link>
+        <search-button></search-button>
+        <div class="flex flex-nowrap ml-auto" id="buttons">
+            <ul class="flex space-x-4 flex-nowrap items-center mr-4">
+                <li><nav-button to="/preferiti"><img src="/src/assets/favorite.svg" alt="Preferiti"></nav-button></li>
+                <li><nav-button><img src="/src/assets/settings.svg" alt=""></nav-button></li>
+                <li><nav-button><img src="/src/assets/theme.svg" alt=""></nav-button></li>
+            </ul>
         </div>
     </nav>
 </template>
+<style scoped>
+#navbar{
+    background-color: #F6F8FA;
+}
+</style>
