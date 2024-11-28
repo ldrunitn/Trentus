@@ -1,14 +1,19 @@
-const jwt = require('jsonwebtoken');
-const Servizio = require('../model/servizio.model');
-require('dotenv').config();
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+
+// Preleva la chiave 
+require('dotenv').config();
 const SECRET_KEY = process.env.JWT_SECRET
 
-// Funzione per generare un token JWT
+// Model
+const Servizio = require('../models/servizio.model');
+
+// Genera un token JWT dalla durata di 3h
 exports.generateToken = (user, ruolo) => {
   return jwt.sign({ id: user._id, username: user.username, role: ruolo }, SECRET_KEY, { expiresIn: '3h' });
 };
 
+// Verifico la correttezza di un token JWT
 exports.verifyToken = (req, res, next) => {
   const token = req.headers['authorization'];
   if (!token) {
@@ -22,6 +27,8 @@ exports.verifyToken = (req, res, next) => {
     return res.status(401).json({ message: 'Token non valido' });
   }
 };
+
+// Verifico la correttezza di un token JWT e controllo l'id di che cosa?
 exports.verifyTokenAndCheckId = async (req, res, next) => {
   const token = req.headers['authorization'];
   if (!token) {
@@ -44,6 +51,7 @@ exports.verifyTokenAndCheckId = async (req, res, next) => {
     return res.status(401).json({ message: 'Token non valido' });
   }
 };
+
 //come quella sopra, ma per le rotte che includono l'id del servizio
 //quindi bisogna recuperare l'id del gds associato a quel servizio
 exports.verifyTokenAndCheckServiceId = async (req, res, next) => {
@@ -51,8 +59,8 @@ exports.verifyTokenAndCheckServiceId = async (req, res, next) => {
   if (!token) {
     return res.status(401).json({ message: 'Token mancante' });
   }
-  const id = req.params.id;
-
+  const id = req.params.id || req.service_id;
+  console.log(id);
   if(!id){
     console.log(req.originalUrl);
     return res.status(401).json({ message: 'ID mancante' });
@@ -102,7 +110,8 @@ exports.verifyTokenAndCheckServiceId = async (req, res, next) => {
     return res.status(401).json({ message: 'Token non valido' });
   }
 };
-//middleware che controlla che il ruolo dell'utente che cerca di accedere sia quello specificato
+
+// Controlla che il ruolo dell'utente che cerca di accedere sia quello specificato
 exports.checkRole = (roles) => { 
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
