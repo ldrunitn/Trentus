@@ -42,9 +42,9 @@ const SIDSave = (req, res, next) => {
 app.use('/servizi/:id/avvisi', SIDSave, avvisiRoutes);
 app.use('/servizi/:id/sondaggi', SIDSave, sondaggiRoutes);
 app.use('/servizi/:id/segnalazioni', SIDSave, segnalazioniRoutes);
-app.use('/servizi', serviziRoutes);
 app.use('/gds', gdsRoutes);
 app.use('/utente', utenteRoutes);
+app.use('/servizi', serviziRoutes);
 
 // Gestore errore 404
 app.use(function (req, res, next) {

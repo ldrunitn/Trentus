@@ -45,10 +45,10 @@ exports.checkRole = (roles) => {
 
 // Verifico che l'user sia il possessore del servizio utilizzato
 exports.CheckServiceGdSConnection = async (req, res, next) => {
-  const id = req.service_id;
+  const id = req.params.service_id;
   if(!id){
     console.log(req.originalUrl);
-    return res.status(401).json({ message: 'ID mancante' });
+    return res.status(401).json({ message: 'ID mancante' }); //quale iddddddd
   }
 
   //recupero il gds associato
