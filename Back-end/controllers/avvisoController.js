@@ -1,11 +1,12 @@
-const GdS = require('../model/gds.model');
-const Servizio = require('../model/servizio.model');
-const Avviso = require('../model/avviso.model');
 const mongoose = require('mongoose');
 
+// Model
+const Avviso = require('../models/avviso.model');
+
+// Crea un avviso
 exports.createAvviso = async (req,  res) => {
     //creo il servizio
-    const {titolo, contenuto, tipo, inizio, fine, servizio_id} = req.body;
+    const { titolo, contenuto, tipo, inizio, fine, servizio_id } = req.body;
     const avviso = new Avviso({
       titolo,
       contenuto,

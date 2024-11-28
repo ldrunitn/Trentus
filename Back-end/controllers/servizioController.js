@@ -1,8 +1,11 @@
-const GdS = require('../model/gds.model');
-const Servizio = require('../model/servizio.model');
 const mongoose = require('mongoose');
+
+// Models
+const GdS = require('../models/gds.model');
+const Servizio = require('../models/servizio.model');
+
+// Crea un servizio
 exports.createService = async (request, session) => {
-  //creo il servizio
   const servizio = new Servizio({
     titolo: request['titolo'],
     azienda: request['azienda'],
@@ -13,6 +16,8 @@ exports.createService = async (request, session) => {
   const service_id = await servizio.save({session}); //salvo il servizio ottenendo l'id
   return service_id;
 }
+
+// Restituisce un servizio specifico
 exports.getService = async (req,res) => {
   id = req.params.id;
   if(!mongoose.Types.ObjectId.isValid(id)){
@@ -26,6 +31,8 @@ exports.getService = async (req,res) => {
     return res.status(500).json({message: "Errore del server"});
   }
 }
+
+// Restituisce il servizio gestito dal GdS 
 exports.getServiceByGdSId = async (req,res) =>{
   id = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -42,16 +49,15 @@ exports.getServiceByGdSId = async (req,res) =>{
         },
       },
       {
-        
         $lookup: {
           from: 'services', // Nome della collezione "secondaria"
           localField: 'servizio', // Campo nella collezione principale
           foreignField: '_id', // Campo nella collezione "secondaria"
           as: 'servizi' // Nome dell'array con i dati uniti
         }
-        
       }
     ]);
+    
     if(!result){
       return res.status(404).json({ message: 'Servizio non trovato'});
     }

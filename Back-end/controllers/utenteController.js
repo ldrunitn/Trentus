@@ -1,10 +1,15 @@
 const bcrypt = require('bcryptjs');
-const User = require('../model/utente.model');
+const mongoose = require('mongoose');
+
+// Model
+const User = require('../models/utente.model');
+
+// Middleware
 const { generateToken } = require('../middleware/authMiddleware');
-const { mongoose } = require('mongoose');
+
+// Crea un utente
 exports.createUser = async (req, res, role) => {
   const { email, password } = req.body;
-
   try {
     // Verifica se l'utente esiste già
     const existingUser = await User.findOne({ email });
@@ -22,6 +27,7 @@ exports.createUser = async (req, res, role) => {
       passwordHash: hashedPassword, // Salva l'hash della password
       role
     });
+
     // Salva l'utente nel database
     await user.save();
 
@@ -31,6 +37,8 @@ exports.createUser = async (req, res, role) => {
     res.status(500).json({ message: 'Errore del server', error: err.message });
   }
 }
+
+// Verifica le credenziali dell'utente
 exports.verifyCredentials = async (req,res,role) => {
   const { email, password } = req.body;
 
@@ -54,6 +62,8 @@ exports.verifyCredentials = async (req,res,role) => {
     res.status(500).json({ message: 'Errore del server', error: err.message });
   }
 }
+
+// Restituisce i preferiti dell'utente
 exports.getFavorites = async (req,res) => {
   //trovo l'utente con l'id
   id = req.params.id;
@@ -67,6 +77,8 @@ exports.getFavorites = async (req,res) => {
   console.log(user.preferiti);
   return res.status(200).json({preferiti: user.preferiti});
 }
+
+// Restituisce un utente
 exports.getUserById = async (req,res) => {
   //trovo l'utente con l'id
   id = req.params.id;
