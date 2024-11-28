@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const Avviso = require('../models/avviso.model');
 
 // Controllers
-const avvisoController = require('../controllers/avvisoController');
+const { createAvviso } = require('../controllers/avvisoController');
 
 // Middleware
 const { checkRole, verifyTokenAndCheckServiceId } = require('../middleware/authMiddleware');
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 
 // Crea un avviso
 router.post('/', verifyTokenAndCheckServiceId, checkRole(['gds']), async (req, res) => {
-  avvisoController.createAvviso(req, res);
+  createAvviso(req, res);
 });
 
 // Restituisce l'avviso in base all'id

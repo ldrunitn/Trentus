@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 const schemaOpzione = require('./opzione.schema');
 
 const schemaSegnalazione = new mongoose.Schema({
-  titolo: {
-    type: String,
-    required: [true, "Il titolo è obbligatorio"],
-    maxlength: [64, "Il titolo può avere massimo 64 caratteri"]
-  },
   opzioni: {
     type: [schemaOpzione],
     required: [true, "È necessario fornire un lista di opzioni"]
@@ -19,12 +14,12 @@ const schemaSegnalazione = new mongoose.Schema({
   utente_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Utente',
-    required: false
+    required: true
   },
   servizio_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Servizio',
-    required: false
+    required: true
   }
 }, {
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
