@@ -9,7 +9,7 @@ const Avviso = require('../models/avviso.model');
 const { createAvviso } = require('../controllers/avvisoController');
 
 // Middleware
-const { checkRole, verifyTokenAndCheckServiceId } = require('../middleware/authMiddleware');
+const { checkRole, usingToken, checkServiceId } = require('../middleware/authMiddleware');
 
 // Restituisce tutti gli avvisi
 router.get('/', async (req, res) => {
@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 });
 
 // Crea un avviso
-router.post('/', verifyTokenAndCheckServiceId, checkRole(['gds']), async (req, res) => {
+router.post('/', usingToken, checkServiceId, checkRole(['gds']), async (req, res) => {
   createAvviso(req, res);
 });
 

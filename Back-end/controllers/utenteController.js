@@ -66,7 +66,7 @@ exports.verifyCredentials = async (req,res,role) => {
 // Restituisce i preferiti dell'utente
 exports.getFavorites = async (req,res) => {
   //trovo l'utente con l'id
-  id = req.params.id;
+  id = req.user.id;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: 'ID non valido' });
   }
@@ -81,7 +81,7 @@ exports.getFavorites = async (req,res) => {
 // Restituisce un utente
 exports.getUserById = async (req,res) => {
   //trovo l'utente con l'id
-  id = req.params.id;
+  id = req.user.id;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: 'ID non valido' });
   }

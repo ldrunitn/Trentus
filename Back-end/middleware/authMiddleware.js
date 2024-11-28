@@ -13,12 +13,9 @@ exports.generateToken = (user, ruolo) => {
   return jwt.sign({ id: user._id, username: user.username, role: ruolo }, SECRET_KEY, { expiresIn: '3h' });
 };
 
-// Verifico la correttezza di un token JWT
-exports.verifyToken = (req, res, next) => {
+// Verifico la correttezza di un token JWT e ne salvo i dati
+exports.usingToken = (req, res, next) => {
   const token = req.headers['authorization'];
-  if (!token) {
-    return res.status(403).json({ message: 'Token mancante' });
-  }
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
     req.user = decoded; // Aggiunge i dati dell'utente alla richiesta
@@ -28,39 +25,27 @@ exports.verifyToken = (req, res, next) => {
   }
 };
 
-// Verifico la correttezza di un token JWT e controllo l'id di che cosa?
-exports.verifyTokenAndCheckId = async (req, res, next) => {
-  const token = req.headers['authorization'];
-  if (!token) {
-    return res.status(401).json({ message: 'Token mancante' });
+// Verifico l'esistenza del servizio
+exports.checkServiceId = (req, res, next) => {
+  if(!mongoose.Types.ObjectId.isValid(req.service_id)){
+    return res.status(400).json({ message: 'Servizio inesistente' });
   }
-  const id = req.params.id;
-  if(!id){
-    return res.status(401).json({ message: 'ID mancante' });
-  }
-  try {
-    const decoded = jwt.verify(token, SECRET_KEY);
-    if(decoded.id !== id){
-      return res.status(403).json({ message: 'Accesso non autorizzato' });
+  next();
+}
+
+// Controlla che il ruolo dell'utente che cerca di accedere sia quello specificato
+exports.checkRole = (roles) => { 
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({ message: 'Accesso negato. Non hai i permessi per questa azione.' });
     }
-    // Prosegui con il middleware successivo
-    req.user = decoded; // Passo l'utente verificato al prossimo middleware
-    next();
-  } catch (err) {
-    console.log(err.message)
-    return res.status(401).json({ message: 'Token non valido' });
-  }
+    next(); // Passa al prossimo middleware o al controller della rotta
+  };
 };
 
-//come quella sopra, ma per le rotte che includono l'id del servizio
-//quindi bisogna recuperare l'id del gds associato a quel servizio
-exports.verifyTokenAndCheckServiceId = async (req, res, next) => {
-  const token = req.headers['authorization'];
-  if (!token) {
-    return res.status(401).json({ message: 'Token mancante' });
-  }
-  const id = req.params.id || req.service_id;
-  console.log(id);
+// Verifico che l'user sia il possessore del servizio utilizzato
+exports.CheckServiceGdSConnection = async (req, res, next) => {
+  const id = req.service_id;
   if(!id){
     console.log(req.originalUrl);
     return res.status(401).json({ message: 'ID mancante' });
@@ -87,7 +72,7 @@ exports.verifyTokenAndCheckServiceId = async (req, res, next) => {
     }
   ]);
   if(!result){
-    return res.status(404).json({message: 'Nessun gestrore associato al servizio trovato'});
+    return res.status(404).json({message: 'Nessun gestore associato al servizio trovato'});
   }
   let gds = result[0].gds; // ora ho tutti i gds registrati a questo servizio
 
@@ -109,14 +94,4 @@ exports.verifyTokenAndCheckServiceId = async (req, res, next) => {
     console.log(err.message)
     return res.status(401).json({ message: 'Token non valido' });
   }
-};
-
-// Controlla che il ruolo dell'utente che cerca di accedere sia quello specificato
-exports.checkRole = (roles) => { 
-  return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ message: 'Accesso negato. Non hai i permessi per questa azione.' });
-    }
-    next(); // Passa al prossimo middleware o al controller della rotta
-  };
 };

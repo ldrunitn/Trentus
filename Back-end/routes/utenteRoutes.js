@@ -6,7 +6,12 @@ const { createUser, verifyCredentials, getFavorites, getUserById } = require('..
 // const utentiController = require(process.cwd()+'/controllers/utente/utenteController');
 
 // Middleware 
-const { verifyTokenAndCheckId, checkRole } = require('../middleware/authMiddleware');
+const { usingToken, checkRole } = require('../middleware/authMiddleware');
+
+// Rotta protetta... wut?
+router.get('/', usingToken, checkRole(['user']), (req, res) => {
+  getUserById(req,res);
+});
 
 // Login utente
 router.post('/login', async (req, res) => {
@@ -19,19 +24,8 @@ router.post('/registrazione', async (req, res) => {
 });
 
 // Restituisce i preferiti dell'utente con id specificato
-router.get('/:id/preferiti', verifyTokenAndCheckId, checkRole(['user']), (req,res)=>{
-  if (!req.params.id) {
-    return res.status(400).json({ message: 'ID mancante' }); // Validazione di base
-  }
+router.get('/preferiti', usingToken, checkRole(['user']), (req,res)=>{
   getFavorites(req,res);
-});
-
-// Rotta protetta
-router.get('/:id', verifyTokenAndCheckId, checkRole(['user']), (req, res) => {
-  if (!req.params.id) {
-    return res.status(400).json({ message: 'ID mancante' }); // Validazione di base
-  }
-  getUserById(req,res);
 });
 
 module.exports = router;
