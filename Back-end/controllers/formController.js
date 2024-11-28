@@ -10,12 +10,9 @@ exports.generateForm = async (req,res) => {
   if(!options){
     return res.status(400).json({message: "Opzioni non presenti; impossibile creare la form"});
   }
-  if(!mongoose.Types.ObjectId.isValid(req.params.id)){ //id del servizio?
-    return res.status(400).json({message: 'ID non valido'});
-  }
 
   try{
-    let service = await Servizio.findById(req.params.id);
+    let service = await Servizio.findById(req.service_id);
     // creo le opzioni (se esistono già le sovrascrivo)
     let opzioniForm = [];
     options.forEach(t => {
@@ -39,13 +36,9 @@ exports.generateForm = async (req,res) => {
 
 // Restituisce una form
 exports.getForm = async (req,res) => {
-  if(!mongoose.Types.ObjectId.isValid(req.params.id)){
-    return res.status(400).json({message: 'ID non valido'});
-  }
-
   // ottengo la form di uno specifico servizio
   try{
-    let form = await Servizio.findById(req.params.id).select('opzioniForm');
+    let form = await Servizio.findById(req.service_id).select('opzioniForm');
     if(!form){
       return res.status(404).json({message:'Form non trovata'});
     }
