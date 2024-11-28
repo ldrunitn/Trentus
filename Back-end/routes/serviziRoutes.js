@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
-// const serviziController = require(process.cwd()+'/controllers/servizi/serviziController');
-const Servizio = require('../../model/servizio.model');
-const { getServiceByGdSId } = require('../../controllers/servizioController');
-const {verifyTokenAndCheckId, checkRole, verifyTokenAndCheckServiceId} = require('../../middleware/authMiddleware');
-const segnalazioneController = require('../../controllers/segnalazioneController');
 
-//ritorna tutti i servizi
+// Model
+const Servizio = require('../models/servizio.model');
+
+// Controllers
+const segnalazioneController = require('../controllers/segnalazioneController');
+// const serviziController = require(process.cwd()+'/controllers/servizi/serviziController');
+
+// Middleware
+const { checkRole, verifyTokenAndCheckServiceId } = require('../middleware/authMiddleware');
+
+// Restituisce tutti i servizi
 router.get('/', async (req, res) => {
   try {
     // Ottengo tutti i record della collezione "service"
@@ -18,8 +23,10 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: 'Errore nel recupero dei dati', error: error.message });
   }
 })
+
+// Restituisce servizio in base al suo id
 router.get('/:id', async (req,res)=>{
-  if(!req.params.id){
+  if(!req.params.id) {
     return res.status(400).json({message: "ID mancante"});
   }
   let servizio = await Servizio.findById(req.params.id);
@@ -27,16 +34,17 @@ router.get('/:id', async (req,res)=>{
 
 });
 
-//riceve un array di stringhe e compone la form di segnalazione (id del servizio)
+// Riceve un array di stringhe e compone la form di segnalazione
 router.post('/:id/segnalazioni/form', verifyTokenAndCheckServiceId, checkRole(['gds']), async (req,res) => {
-  if(!req.params.id){
+  if(!req.params.id) {
     return res.status(400).json({ message: 'ID mancante' }); // Validazione di base
   }
   segnalazioneController.createForm(req, res);
 });
-//restituisce la form del servizio specificato
+
+// Restituisce la form del servizio specificato
 router.get('/:id/segnalazioni/form', async (req,res) => {
-  if(!req.params.id){
+  if(!req.params.id) {
     return res.status(400).json({ message: 'ID mancante' }); // Validazione di base
   }
   segnalazioneController.getForm(req, res);

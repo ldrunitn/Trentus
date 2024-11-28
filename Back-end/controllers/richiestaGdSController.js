@@ -1,7 +1,10 @@
-const GdSRequest = require('../model/richiestaGdS.model');
 const bcrypt = require('bcryptjs');
-const GdS = require('../model/gds.model');
 
+// Models
+const GdSRequest = require('../models/richiestaGdS.model');
+const GdS = require('../models/gds.model');
+
+// Crea una richiesta di accettazione della creazione del gds ed il suo servizio
 exports.createRequest = async (req,res) => {
   const { email, password, titolo, azienda, url, foto, descrizione } = req.body;
 
@@ -34,16 +37,20 @@ exports.createRequest = async (req,res) => {
     // Salva l'utente nel database
     await richiesta.save();
 
-    res.status(201).json({ message: 'Richiesta mandata con successo' });
+    res.status(201).json({ message: 'Richiesta inviata con successo' });
 
   } catch (err) {
     res.status(500).json({ message: 'Errore del server', error: err.message });
   }
 }
+
+// Questa dove viene usata?
 exports.confirmReq = async (request,session) => {
   request.confermata = true;
   await request.save({session});
 } 
+
+// Restituisce una richiesta specifica
 exports.getRequest = async (reqId,session) => {
   const request = await GdSRequest.findOne({_id:reqId, confermata:false}).session(session);
   return request;
