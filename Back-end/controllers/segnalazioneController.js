@@ -7,7 +7,7 @@ exports.compilaForm = async (req,res) => {
   //recupero l'array di opzioni (stringhe)
   const { options, checks, commento } = req.body;
   if(!options){
-    return res.status(400).json({message: "Opzioni non presenti; impossibile creare la form"});
+    return res.status(400).json({message: "La form non è stata compilata"});
   }
   try {
     const opzioniSegnalazione = options.map((t, index) => ({

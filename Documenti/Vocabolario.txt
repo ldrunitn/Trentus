@@ -1,18 +1,20 @@
 VOCABOLARIO DI PROGETTO
 
-Utente 				-> Colui che utilizza un servizio (sia registrato che non)
-Utente registrato 		-> Colui che utilizza un servizio e fa l'accesso
-GdS (Gestore del servizio)	-> Colui che fornisce un servizio (deve essere registrato)
-SuperAdmin			-> Dio
-Utilizzatore della WebApp	-> Colui che utilizza Trentus
-Servizio			-> Ciò che il GdS fornisce, sia questo un sito/app/ecc...
-Segnalazione			-> Metodo Utente per segnalare una problematica su un servizio
-Avviso				-> Messaggo che un GdS può lasciare riguardo il proprio servizio
-Notifica			-> Qualsiasi metodo per l'app di notificare all'utilizzatore
-Sondaggio			-> Form compilabile dall'utente per identificare un problema
-On				-> Quando un servizio è accessibile
-Stato				-> Comportamento di un servizio
-Off				-> Quando un servizio non è accessibile
-Malfunzionante			-> Quando un servizio non è accessibile involontariamente	
-Disabilitato			-> Quando un servizio non è accessibile volontariamente
-la nostra WebApp\Trentus	-> La nostra applicazione, il servizio che vogliamo creare
+Utente 					-> Colui che utilizza un servizio (sia registrato che non)
+Utente registrato			-> Colui che utilizza un servizio e fa l'accesso
+GdS (Gestore del servizio)		-> Colui che fornisce un servizio (deve essere registrato)
+SuperAdmin				-> Dio
+Utilizzatore della WebApp 		-> Colui che utilizza Trentus
+Servizio				-> Ciò che il GdS fornisce, sia questo un sito/app/ecc...
+Form					-> Questionario compilabile scritto dal gds per rilasciare una segnalazione
+Segnalazione				-> Form compilato dall'Utente per segnalare una problematica su un servizio
+Avviso					-> Messaggo che un GdS può lasciare riguardo il proprio servizio
+Notifica				-> Qualsiasi metodo per l'app di notificare l'utilizzatore
+Sondaggio				-> Questionario compilabile scritto dal GdS per rispondere a domande sul servizio
+Feedback				-> Sondaggio compilato dall'Utente
+On					-> Quando un servizio è accessibile
+Stato					-> Comportamento di un servizio
+Off					-> Quando un servizio non è accessibile
+Malfunzionante				-> Quando un servizio non è accessibile involontariamente	
+Disabilitato				-> Quando un servizio non è accessibile volontariamente
+la nostra WebApp\Trentus		-> La nostra applicazione, il servizio che vogliamo creare
