@@ -3,7 +3,7 @@ const schemaOpzione = require('./opzione.schema');
 
 const schemaSegnalazione = new mongoose.Schema({
   opzioni: {
-    type: [schemaOpzione],
+    type: [schemaOpzione.schemaOpzioneSingola],
     required: [true, "È necessario fornire un lista di opzioni"]
   },
   commento: {
