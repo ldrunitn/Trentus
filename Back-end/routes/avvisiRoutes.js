@@ -12,7 +12,7 @@ const { createAvviso } = require('../controllers/avvisoController');
 const { checkRole, usingToken, checkServiceId } = require('../middleware/authMiddleware');
 
 // Restituisce tutti gli avvisi
-router.get('/', async (req, res) => {
+router.get('/', checkServiceId, async (req, res) => {
   try {
     const avvisi = await Avviso.find({ servizio_id: new mongoose.Types.ObjectId(req.service_id) });
     res.status(200).json(avvisi);
@@ -27,7 +27,7 @@ router.post('/', usingToken, checkServiceId, checkRole(['gds']), async (req, res
 });
 
 // Restituisce l'avviso in base all'id
-router.get('/:avviso_id', async (req, res) => {
+router.get('/:avviso_id', checkServiceId, async (req, res) => {
   try {
     const avvisi = await Avviso.findById(req.params.avviso_id);
     return res.status(200).json(avvisi);

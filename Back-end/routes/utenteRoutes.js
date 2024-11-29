@@ -9,7 +9,7 @@ const { createUser, verifyCredentials, getFavorites, getUserById } = require('..
 const { usingToken, checkRole } = require('../middleware/authMiddleware');
 
 // Rotta protetta... wut?
-router.get('/', usingToken, checkRole(['user']), (req, res) => {
+router.get('/', usingToken, checkRole(['utente']), (req, res) => {
   getUserById(req,res);
 });
 
@@ -20,11 +20,11 @@ router.post('/login', async (req, res) => {
 
 // Registrazione utente
 router.post('/registrazione', async (req, res) => {
-  createUser(req,res,'user');
+  createUser(req,res,'utente');
 });
 
 // Restituisce i preferiti dell'utente con id specificato
-router.get('/preferiti', usingToken, checkRole(['user']), (req,res)=>{
+router.get('/preferiti', usingToken, checkRole(['utente']), (req,res)=>{
   getFavorites(req,res);
 });
 
