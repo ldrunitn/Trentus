@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const schemaOpzione = require('./opzione.schema');
 
-const schemaSondaggio = new mongoose.Schema({
+const schemaFeedback = new mongoose.Schema({
   titolo: {
     type: String,
     required: [true, "Il titolo è obbligatorio"],
