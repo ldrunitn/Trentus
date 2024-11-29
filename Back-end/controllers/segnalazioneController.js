@@ -3,35 +3,39 @@ const mongoose = require('mongoose');
 // Model
 const Segnalazione = require('../models/segnalazione.model');
 
-exports.generateForm = async (req,res) => {
+exports.compilaForm = async (req,res) => {
   //recupero l'array di opzioni (stringhe)
-  const { options, commento } = req.body;
-  id = req.servizio_id;
+  const { options, checks, commento } = req.body;
   if(!options){
     return res.status(400).json({message: "Opzioni non presenti; impossibile creare la form"});
   }
-  if(!mongoose.Types.ObjectId.isValid(req.params.id)){ //id del servizio?
-    return res.status(400).json({message: 'ID non valido'});
-  }
-
-  try{
-    let opzioniSegnalazione = [];
-    options.forEach(t => {
-      opzioniSegnalazione.push({
-        testo: t,
-        check: false,
-        tipo: 'check'
-      })
-    });
-    let segnalazione = new Segnalazione({
-      opzioniSegnalazione,
+  try {
+    const opzioniSegnalazione = options.map((t, index) => ({
+      testo: t,
+      check: checks?.[index],
+      tipo: 'check'
+    }));
+    console.log(opzioniSegnalazione);
+    const segnalazione = new Segnalazione({
+      opzioni: opzioniSegnalazione,
       commento,
-      undefined,
-      id
+      utente_id: req.user.id,
+      servizio_id: req.service_id
     });
     // infine lo salvo
-    await service.save();
-    return res.status(201).json({message: 'Form creata con successo'});
+    await segnalazione.save();
+    return res.status(201).json({message: 'Segnalazione creata con successo'});
+  }
+  catch(err){
+    console.log(err.message);
+    return res.status(500).json({message: 'Errore del server'});
+  }
+}
+
+exports.getCommenti = async (req,res) => {
+  try {
+    let commenti = await Segnalazione.find({ servizio_id: req.service_id }).select("commento");
+    return res.status(201).json(commenti);
   }
   catch(err){
     console.log(err.message);

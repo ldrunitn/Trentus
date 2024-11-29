@@ -30,25 +30,7 @@
         $ref: "#/components/schemas/Form"
     responses:
       '201':
-        description: Form creato con successo 
-  put:
-    summary: Aggiorna form
-    description: Aggiorna la form di segnalazione del servizio {service_id} per l'utente
-    security: 
-      - BearerAuth: [GdS]
-    parameters:
-      - name: servizio_id
-        in: path
-        description: id del servizio 
-        schema:
-          type: integer
-    requestBody:
-      required: true
-      content:
-        $ref: "#/components/schemas/Form"
-    responses:
-      '201':
-        description: Form modificato con successo 
+        description: Form creato con successo
 /servizi/{servizio_id}/segnalazioni/compila:
   post:
     summary: Compila segnalazione
