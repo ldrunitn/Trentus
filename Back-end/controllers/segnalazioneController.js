@@ -5,19 +5,16 @@ const Segnalazione = require('../models/segnalazione.model');
 
 exports.compilaForm = async (req,res) => {
   //recupero l'array di opzioni (stringhe)
-  const { options, checks, commento } = req.body;
-  if(!options){
+  const { risposte, commento } = req.body;
+  if(!risposte){
     return res.status(400).json({message: "La form non è stata compilata"});
   }
   try {
-    const opzioniSegnalazione = options.map((t, index) => ({
-      testo: t,
-      check: checks?.[index],
-      tipo: 'check'
+    const risposteOggetto = risposte.map(testo => ({
+      risposta: testo
     }));
-    console.log(opzioniSegnalazione);
     const segnalazione = new Segnalazione({
-      opzioni: opzioniSegnalazione,
+      risposte: risposteOggetto,
       commento,
       utente_id: req.user.id,
       servizio_id: req.service_id
