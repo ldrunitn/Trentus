@@ -17,6 +17,22 @@ exports.getSondaggi = async (req,res) => {
   }
 }
 
+exports.getSondaggioById = async (req,res) => {
+  try{
+    let sondaggio = await Sondaggio.findById(req.params.sondaggio_id);
+    if(!sondaggio){
+      return res.status(404).json({message:'Sondaggi non trovati'});
+    }
+    if(sondaggio.servizio_id != req.service_id){
+      return res.status(400).json({message:'Il sondaggio non è del servizio corretto'});
+    }
+    return res.status(200).json(sondaggio);
+  }
+  catch(err){
+    return res.status(500).json({message:'Errore del server'});
+  }
+}
+
 // Crea un sondaggio per uno specifico servizio
 exports.creaSondaggio = async (req,res) => {
   //recupero l'array di opzioni (stringhe)
