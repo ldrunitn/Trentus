@@ -11,7 +11,7 @@ const schemaFeedback = new mongoose.Schema({
     ref: 'Servizio',
     required: true
   },
-  segnalazione_id: {
+  sondaggio_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Servizio',
     required: true

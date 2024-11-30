@@ -14,7 +14,7 @@ const rpRaccoltaSchema = new mongoose.Schema({ //domanda con serie di potenziali
     maxlength: [255, "Il testo può avere massimo 255 caratteri"],
     required: [true, "Il testo è obbligatorio"]
   },
-  opzioni: [{
+  risposte: [{
     type: [rpSingolaSchema],
     required: true
   }],
@@ -43,6 +43,11 @@ const rpBaseSchema = new mongoose.Schema(
   },
   { discriminatorKey: 'type', _id: false }
 );
+
+// Collegare i discriminatori
+rpBaseSchema.discriminator('singola', rpSingolaSchema);
+rpBaseSchema.discriminator('raccolta', rpRaccoltaSchema);
+rpBaseSchema.discriminator('aperta', rpApertaSchema);
 
 module.exports = {
   rpSingolaSchema,

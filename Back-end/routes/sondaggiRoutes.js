@@ -6,12 +6,13 @@ const mongoose = require('mongoose');
 const Sondaggio = require('../models/sondaggio.model');
 
 // Controllers
-const { getSondaggi, creaSondaggio } = require('../controllers/sondaggioController');
+const { getSondaggi, creaSondaggio, getSondaggioById } = require('../controllers/sondaggioController');
+const { getFeedback, compilaSondaggio } = require('../controllers/feedbackController');
 
 // Middleware
 const { checkRole, usingToken, checkServiceId } = require('../middleware/authMiddleware');
 
-// Restitusce un sondaggio compilabile
+// Restitusce i sondaggi compilabili del servizio
 router.get('/', checkServiceId, usingToken, checkRole(['gds', 'utente']), async (req, res) => {
   getSondaggi(req, res);
 });
@@ -19,6 +20,21 @@ router.get('/', checkServiceId, usingToken, checkRole(['gds', 'utente']), async 
 // Crea un sondaggio
 router.post('/', checkServiceId, usingToken, checkRole(['gds']), async (req, res) => {
   creaSondaggio(req, res);
+});
+
+// Restituisce un sondaggio
+router.get('/:sondaggio_id', checkServiceId, usingToken, checkRole(['gds']), async (req, res) => {
+  getSondaggioById(req, res);
+});
+
+// Compila un sondaggio
+router.post('/:sondaggio_id', checkServiceId, usingToken, checkRole(['utente']), async (req, res) => {
+  compilaSondaggio(req, res);
+});
+
+// Risultati di un sondaggio
+router.get('/:sondaggio_id/risultati', checkServiceId, usingToken, checkRole(['gds']), async (req, res) => {
+  getFeedback(req, res);
 });
 
 module.exports = router;
