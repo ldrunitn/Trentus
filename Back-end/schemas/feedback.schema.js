@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
-const schemaOpzione = require('./opzione.schema');
+const { rpBaseSchema } = require('./documents/risposta.schema');
 
 const schemaFeedback = new mongoose.Schema({
-  titolo: {
-    type: String,
-    required: [true, "Il titolo è obbligatorio"],
-    maxlength: [64, "Il titolo può avere massimo 64 caratteri"]
+  risposte: { 
+    type: [rpBaseSchema],
+    required: true
   },
-  opzioni: { //potranno essere opzioni singole, oppure opzioni con "domanda" e risposte
-    items: [{
-      type: {
-        type: String,  // Differenziamo i due tipi
-        enum: [schemaOpzione.schemaOpzioneSingola, schemaOpzione.schemaRaccoltaOpzioni],
-        required: true
-      },
-    }]
+  utente_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Servizio',
+    required: true
+  },
+  segnalazione_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Servizio',
+    required: true
   },
   servizio_id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -25,4 +25,4 @@ const schemaFeedback = new mongoose.Schema({
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
 });
 
-module.exports = schemaSondaggio;
+module.exports = schemaFeedback;
