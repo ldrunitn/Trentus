@@ -18,17 +18,26 @@ exports.createService = async (request, session) => {
 }
 
 // Restituisce un servizio specifico
-exports.getService = async (req,res) => {
-  id = req.params.id;
-  if(!mongoose.Types.ObjectId.isValid(id)){
-    return res.status(400).json({message: 'ID non valido'});
-  }
+exports.getServizio = async (req,res) => {
   try{
-    let s = await Servizio.findById(id);
+    let s = await Servizio.findById(req.service_id);
     return res.status(200).json(s);
   } 
   catch(err){
     return res.status(500).json({message: "Errore del server"});
+  }
+}
+
+// Restituisce tutti i servizi
+exports.getServizi = async (req,res) => {
+  try {
+    // Ottengo tutti i record della collezione "service"
+    const services = await Servizio.find();
+
+    // Rispondo con i dati
+    res.status(200).json(services);
+  } catch (error) {
+    res.status(500).json({ message: 'Errore nel recupero dei dati', error: error.message });
   }
 }
 

@@ -6,19 +6,14 @@ const mongoose = require('mongoose');
 const Avviso = require('../models/avviso.model');
 
 // Controllers
-const { createAvviso } = require('../controllers/avvisoController');
+const { createAvviso, getAvvisi, getAvviso } = require('../controllers/avvisoController');
 
 // Middleware
 const { checkRole, usingToken, checkServiceId } = require('../middleware/authMiddleware');
 
 // Restituisce tutti gli avvisi
 router.get('/', checkServiceId, async (req, res) => {
-  try {
-    const avvisi = await Avviso.find({ servizio_id: new mongoose.Types.ObjectId(req.service_id) });
-    res.status(200).json(avvisi);
-  } catch (error) {
-    res.status(500).json({ message: 'Errore nel recupero dei dati', error: error.message });
-  }
+  getAvvisi(req, res)
 });
 
 // Crea un avviso
@@ -28,12 +23,7 @@ router.post('/', usingToken, checkServiceId, checkRole(['gds']), async (req, res
 
 // Restituisce l'avviso in base all'id
 router.get('/:avviso_id', checkServiceId, async (req, res) => {
-  try {
-    const avvisi = await Avviso.findById(req.params.avviso_id);
-    return res.status(200).json(avvisi);
-  } catch (error) {
-    return res.status(500).json({ message: 'Errore nel recupero dei dati', error });
-  }
+  getAvviso(req, res)
 });
 
 module.exports = router;
