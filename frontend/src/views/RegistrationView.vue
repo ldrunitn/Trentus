@@ -1,5 +1,6 @@
 <script setup>
 import RegistrationField from '@/components/login/RegistrationField.vue';
+import router from '@/router';
 </script>
 
 <template> 
@@ -20,7 +21,7 @@ import RegistrationField from '@/components/login/RegistrationField.vue';
     </div>
     <p class="place-self-center pt-4">Do you manage a service?</p>
     <p class="place-self-center"><a href="" class="underline text-gray-800" >Register your service to Trentus</a></p>
-    <p class="place-self-center pt-2">Already have an account? <a href="" class="underline text-gray-800">Login</a></p>
+    <p class="place-self-center pt-2">Already have an account? <router-link to="/login" class="underline text-gray-800">Login</router-link></p>
   </div>
     
 </template>
