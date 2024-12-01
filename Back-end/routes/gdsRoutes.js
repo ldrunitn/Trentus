@@ -22,8 +22,7 @@ router.post('/registrazione', async (req, res) => {
 
 // Conferma della richiesta di registrazione 
 router.get('/conferma/:gds_id', usingToken, checkRole(['superadmin']), async (req,res)=>{
-  const requestID = req.params.gds_id;
-  confirmRequest(requestID, res);
+  confirmRequest(req, res);
 });
 
 // Restituisce dati del servizio associato al GdS

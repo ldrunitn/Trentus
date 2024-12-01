@@ -23,7 +23,7 @@ router.post('/', checkServiceId, usingToken, checkRole(['gds']), async (req, res
 });
 
 // Restituisce un sondaggio
-router.get('/:sondaggio_id', checkServiceId, usingToken, checkRole(['gds']), async (req, res) => {
+router.get('/:sondaggio_id', checkServiceId, usingToken, checkRole(['gds', 'utente']), async (req, res) => {
   getSondaggioById(req, res);
 });
 
