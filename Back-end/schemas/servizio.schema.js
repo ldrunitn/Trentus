@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const schemaOpzione = require('./opzione.schema');
+const schemaOpzione = require('./documents/opzione.schema');
 
 const schemaServizio = new mongoose.Schema({
   titolo: {
@@ -27,7 +27,7 @@ const schemaServizio = new mongoose.Schema({
     maxlength: [255, "Il contenuto può avere massimo 255 caratteri"]
   },
   opzioniForm: {
-    type: [schemaOpzione.schemaOpzioneSingola],
+    type: [schemaOpzione.opSingolaSchema],
     required: false
   },
 }, {

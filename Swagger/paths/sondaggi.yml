@@ -6,7 +6,7 @@
     summary: Rilascia sondaggio
     description: Crea un nuovo sondaggio con la struttura passata
     security: 
-      - BearerAuth: [GdS]
+      - BearerAuth: [GdS, utente]
     parameters:
       - name: servizio_id
         in: path

@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const schemaOpzione = require('./opzione.schema');
+const schemaRisposta = require('./documents/risposta.schema');
 
 const schemaSegnalazione = new mongoose.Schema({
-  opzioni: {
-    type: [schemaOpzione.schemaOpzioneSingola],
+  risposte: {
+    type: [schemaRisposta.rpSingolaSchema],
     required: [true, "È necessario fornire un lista di opzioni"]
   },
   commento: {

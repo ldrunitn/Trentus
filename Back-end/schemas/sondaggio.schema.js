@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const schemaOpzione = require('./opzione.schema');
+const { opBaseSchema } = require('./documents/opzione.schema');
 
 const schemaSondaggio = new mongoose.Schema({
   titolo: {
@@ -7,14 +7,14 @@ const schemaSondaggio = new mongoose.Schema({
     required: [true, "Il titolo è obbligatorio"],
     maxlength: [64, "Il titolo può avere massimo 64 caratteri"]
   },
-  opzioni: { //potranno essere opzioni singole, oppure opzioni con "domanda" e risposte
-    items: [{
-      type: {
-        type: String,  // Differenziamo i due tipi
-        enum: [schemaOpzione.schemaOpzioneSingola, schemaOpzione.schemaRaccoltaOpzioni],
-        required: true
-      },
-    }]
+  corpo: { 
+    type: [opBaseSchema],
+    required: true
+  },
+  servizio_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Servizio',
+    required: true
   }
 }, {
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
