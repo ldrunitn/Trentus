@@ -6,7 +6,7 @@ const Servizio = require('../models/servizio.model');
 // Crea una form compilabile per rilasciare una segnalazione
 exports.generateForm = async (req,res) => {
   //recupero l'array di opzioni (stringhe)
-  const { options } = req.body;
+  const { opzioni } = req.body;
   if(!options){
     return res.status(400).json({message: "Opzioni non presenti; impossibile creare la form"});
   }
@@ -14,14 +14,9 @@ exports.generateForm = async (req,res) => {
   try{
     let service = await Servizio.findById(req.service_id);
     // creo le opzioni (se esistono già le sovrascrivo)
-    let opzioniForm = [];
-    options.forEach(t => {
-      opzioniForm.push({
-        testo: t,
-        check: false,
-        tipo: 'check'
-      })
-    });
+    const opzioniForm = opzioni.map(testo => ({
+      opzione: testo
+    }));
     // ora lo metto nel campo 'opzioniForm' del servizio
     service.opzioniForm = opzioniForm;
     // infine lo salvo
