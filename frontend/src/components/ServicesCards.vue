@@ -4,7 +4,9 @@
 
 <template>
 
-<div class="bg-white rounded-lg shadow-md p-16 max-w-100 mx-8 mt-4 w-full">
+
+<router-link to="/service">
+    <div class="bg-white rounded-lg shadow-md p-16 max-w-100 mx-8 mt-4 w-full">
     <div class="flex justify-between">
         <div class="basis-1/2">
             <h3 class="text-lg font-bold">Servizio 1</h3>
@@ -16,6 +18,8 @@
         </div>
     </div>  
 </div>
+</router-link>
+
 
 
 </template>
