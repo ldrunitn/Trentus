@@ -1,10 +1,10 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
-import Navbar from './components/Navbar.vue';
 import ServicesCards from './components/ServicesCards.vue';
 import SidebarLeft from './components/SidebarLeft.vue';
 import SidebarRight from './components/SidebarRight.vue';
+import AdminHomeView from './views/AdminHomeView.vue';
 
 const sidebarSections = [ //prova sidebar
   {
@@ -37,13 +37,8 @@ const sidebarSections = [ //prova sidebar
 </script>
 
 <template>
-  <Navbar />
-  <div class="flex flex-row h-screen" >
-    <div class="basis-1/4 h-full"><SidebarLeft :sections="sidebarSections"/></div>
-    <div class="basis-1/2"><ServicesCards/></div>
-    <div class="basis-1/4 flex justify-end h-full"><SidebarRight/></div>
-  </div>
   
+  <AdminHomeView></AdminHomeView>
   <RouterView />
   
 
