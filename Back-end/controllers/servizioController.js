@@ -20,7 +20,7 @@ exports.createService = async (request, session) => {
 // Restituisce un servizio specifico
 exports.getServizio = async (req,res) => {
   try{
-    let s = await Servizio.findById(req.service_id);
+    let s = await Servizio.findById(req.servizio_id);
     return res.status(200).json(s);
   } 
   catch(err){

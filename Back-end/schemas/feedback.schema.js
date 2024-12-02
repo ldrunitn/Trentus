@@ -8,12 +8,12 @@ const schemaFeedback = new mongoose.Schema({
   },
   utente_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Servizio',
+    ref: 'Utente',
     required: true
   },
   sondaggio_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Servizio',
+    ref: 'Sondaggio',
     required: true
   },
   servizio_id: {
