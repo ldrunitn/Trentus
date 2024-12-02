@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // Model
 const Feedback = require('../models/feedback.model');
 
-// Restituisce i sondaggi di uno specifico servizio
+// Restituisce i risultati di un sondaggio
 exports.getFeedback = async (req,res) => {
   try{
     let feedback = await Feedback.find({ sondaggio_id: req.params.sondaggio_id });
@@ -18,7 +18,7 @@ exports.getFeedback = async (req,res) => {
 }
 
 // Compila un sondaggio
-exports.compilaSondaggio = async (req,res) => {
+exports.creaFeedback = async (req,res) => {
   //recupero l'array di opzioni (stringhe)
   const { risposte } = req.body;
   if(!risposte){
@@ -45,7 +45,7 @@ exports.compilaSondaggio = async (req,res) => {
       risposte: risposteOggetto,
       utente_id: req.user.id,
       sondaggio_id: req.params.sondaggio_id,
-      servizio_id: req.service_id
+      servizio_id: req.servizio_id
     });
     // infine lo salvo
     const help = await feedback.save();

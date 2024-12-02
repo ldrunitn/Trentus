@@ -15,16 +15,11 @@ const schemaUtente = new mongoose.Schema({
   preferiti:{
     type: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'service'
+      ref: 'Servizio'
     }],
     required: false,
     default: [],
   },
-  role: {
-    type: String,
-    required: false,
-    default: "user"
-  }
 }, {
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
 });
