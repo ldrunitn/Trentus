@@ -10,7 +10,7 @@ const { getSondaggi, creaSondaggio, getSondaggioById } = require('../controllers
 const { getFeedback, creaFeedback } = require('../controllers/feedbackController');
 
 // Middleware
-const { checkRuolo, usaToken, checkServizioId } = require('../middleware/authMiddleware');
+const { checkRuolo, usaToken, checkServizioId, CheckDirittiServizio } = require('../middleware/authMiddleware');
 
 // Restitusce i sondaggi compilabili del servizio
 router.get('/', checkServizioId, usaToken, checkRuolo(['gds', 'utente']), async (req, res) => {
@@ -18,7 +18,7 @@ router.get('/', checkServizioId, usaToken, checkRuolo(['gds', 'utente']), async 
 });
 
 // Crea un sondaggio
-router.post('/', checkServizioId, usaToken, checkRuolo(['gds']), async (req, res) => {
+router.post('/', checkServizioId, usaToken, checkRuolo(['gds']), CheckDirittiServizio, async (req, res) => {
   creaSondaggio(req, res);
 });
 
@@ -33,7 +33,7 @@ router.post('/:sondaggio_id', checkServizioId, usaToken, checkRuolo(['utente']),
 });
 
 // Risultati di un sondaggio
-router.get('/:sondaggio_id/risultati', checkServizioId, usaToken, checkRuolo(['gds']), async (req, res) => {
+router.get('/:sondaggio_id/risultati', checkServizioId, usaToken, checkRuolo(['gds']), CheckDirittiServizio, async (req, res) => {
   getFeedback(req, res);
 });
 
