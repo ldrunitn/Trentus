@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-// Model
-const Servizio = require('../models/servizio.model');
-
 // Controllers
-const { getServizi, getServizio } = require('../controllers/servizioController')
+const { getServizi, getServizio } = require('../controllers/servizioController');
 // const serviziController = require(process.cwd()+'/controllers/servizi/serviziController');
+
+// Middleware
+const { checkServizioId, SIDSave } = require('../middleware/authMiddleware');
 
 // Restituisce tutti i servizi
 router.get('/', async (req, res) => {
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 })
 
 // Restituisce servizio in base al suo id
-router.get('/:id', async (req,res)=>{
+router.get('/:servizio_id', SIDSave, checkServizioId, async (req,res)=>{
   getServizio(req,res);
 });
 

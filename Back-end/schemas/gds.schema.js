@@ -14,7 +14,7 @@ const schemaGdS = new mongoose.Schema({
   },
   servizio:{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'service',
+    ref: 'Servizio',
     required: true
   }
 }, {

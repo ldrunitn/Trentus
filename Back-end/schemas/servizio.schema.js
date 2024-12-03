@@ -26,7 +26,7 @@ const schemaServizio = new mongoose.Schema({
     required: false,
     maxlength: [255, "Il contenuto può avere massimo 255 caratteri"]
   },
-  opzioniForm: {
+  form: {
     type: [schemaOpzione.opSingolaSchema],
     required: false
   },

@@ -1,11 +1,11 @@
 const bcrypt = require('bcryptjs');
 
 // Models
-const GdSRequest = require('../models/richiestaGdS.model');
+const richiestaGdS = require('../models/richiestaGdS.model');
 const GdS = require('../models/gds.model');
 
 // Crea una richiesta di accettazione della creazione del gds ed il suo servizio
-exports.createRequest = async (req,res) => {
+exports.creaRichiesta = async (req,res) => {
   const { email, password, titolo, azienda, url, foto, descrizione } = req.body;
 
   console.log(req.body);
@@ -13,9 +13,9 @@ exports.createRequest = async (req,res) => {
   try {
     // Verifica se il GdS esiste già, devo verificare sia se c'è già un utente registrato, sia se c'è una richiesta
     const existingGdS = await GdS.findOne({email});
-    const existingRequest = await GdSRequest.findOne({email});
+    const existingRequest = await richiestaGdS.findOne({email});
     if (existingGdS || existingRequest) {
-      return res.status(400).json({ message: 'Email già registrata o richiesta già spedita' });
+      return res.status(400).json({ message: 'Richiesta già spedita' });
     }
 
     // Hash della password con un "salt" di 10 round
@@ -23,7 +23,7 @@ exports.createRequest = async (req,res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Crea il nuovo utente con la password hashata
-    const richiesta = new GdSRequest({ 
+    const richiesta = new richiestaGdS({ 
       email, 
       passwordHash: hashedPassword, // Salva l'hash della password
       titolo,
@@ -45,13 +45,13 @@ exports.createRequest = async (req,res) => {
 }
 
 // Questa dove viene usata?
-exports.confirmReq = async (request,session) => {
+exports.confermaRichiesta = async (request,session) => {
   request.confermata = true;
   await request.save({session});
 } 
 
 // Restituisce una richiesta specifica
-exports.getRequest = async (reqId,session) => {
-  const request = await GdSRequest.findOne({_id:reqId, confermata:false}).session(session);
+exports.getRichiesta = async (reqId,session) => {
+  const request = await richiestaGdS.findOne({_id:reqId, confermata:false}).session(session);
   return request;
 }

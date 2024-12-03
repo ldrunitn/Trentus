@@ -4,14 +4,14 @@ const mongoose = require('mongoose');
 const GdS = require('../models/gds.model');
 
 // Controllers
-const { getRequest } = require('../controllers/richiestaGdSController');
-const { createService } = require('./servizioController');
+const { getRichiesta } = require('../controllers/richiestaGdSController');
+const { creaServizio } = require('./servizioController');
 
 // Middleware
-const { generateToken } = require('../middleware/authMiddleware');
+const { generaToken } = require('../middleware/authMiddleware');
  
 // Valida le credenziali del gds a login
-exports.validateCredentials = async (req,res) => {
+exports.validaCredenziali = async (req,res) => {
   const { email, password } = req.body;
   try {
     const gds = await GdS.findOne({ email });
@@ -23,7 +23,7 @@ exports.validateCredentials = async (req,res) => {
     if (!isMatch) {
       return res.status(400).json({ message: 'Password errata' });
     }
-    const token = generateToken(gds,'gds');
+    const token = generaToken(gds,'gds');
     res.json({ message: 'Login effettuato', token });
   } catch (err) {
     res.status(500).json({ message: 'Errore del server', error: err.message });
@@ -31,7 +31,7 @@ exports.validateCredentials = async (req,res) => {
 }
 
 // Conferma la creazione di un nuovo gds ed il suo servizio associato
-exports.confirmRequest = async (req, res) => { // Attenzione, solo il superdmin può invocarla
+exports.confermaRichiesta = async (req, res) => { // Attenzione, solo il superdmin può invocarla
   const requestID = req.params.gds_id;
   if (!mongoose.Types.ObjectId.isValid(requestID)) {
     return res.status(400).json({ message: 'ID non valido' });
@@ -40,12 +40,12 @@ exports.confirmRequest = async (req, res) => { // Attenzione, solo il superdmin 
   try {
     //trovo i dati della richiesta corrispondente
     session.startTransaction(); //faccio partire il transazione, visto che devo modificare due entità, in questo modo sono sicuro che entrambe o nessuna vengano modificate 
-    const request = await getRequest(requestID,session);
+    const request = await getRichiesta(requestID,session);
     if (!request) {
       session.abortTransaction();
       return res.status(404).json({ message: 'Richiesta non trovata' });
     }
-    const service_id = await createService(request,session);
+    const service_id = await creaServizio(request,session);
     //ora devo creare il gds con il servizio corrispondente
     const gds = new GdS({
       email: request['email'],
