@@ -35,7 +35,7 @@ export default{
 <template>
   <div class="flex flex-row text-gray-400">
     <ul class="">
-      <RequestItem v-for="service in services" :key="service._id" :title="service.titolo"></RequestItem>
+      <RequestItem v-for="service in services" :key="service._id" :id="service._id" :title="service.titolo"></RequestItem>
     </ul>
   </div>
 </template>
