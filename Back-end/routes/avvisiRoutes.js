@@ -9,7 +9,7 @@ const Avviso = require('../models/avviso.model');
 const { creaAvviso, getAvvisi, getAvvisoById } = require('../controllers/avvisoController');
 
 // Middleware
-const { checkRuolo, usaToken, checkServizioId } = require('../middleware/authMiddleware');
+const { checkRuolo, usaToken, checkServizioId, CheckDirittiServizio } = require('../middleware/authMiddleware');
 
 // Restituisce tutti gli avvisi
 router.get('/', checkServizioId, async (req, res) => {
@@ -17,7 +17,7 @@ router.get('/', checkServizioId, async (req, res) => {
 });
 
 // Crea un avviso
-router.post('/', usaToken, checkServizioId, checkRuolo(['gds']), async (req, res) => {
+router.post('/', usaToken, checkServizioId, checkRuolo(['gds']), CheckDirittiServizio, async (req, res) => {
   creaAvviso(req, res);
 });
 

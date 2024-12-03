@@ -32,7 +32,7 @@ exports.validaCredenziali = async (req,res) => {
 
 // Conferma la creazione di un nuovo gds ed il suo servizio associato
 exports.confermaRichiesta = async (req, res) => { // Attenzione, solo il superdmin può invocarla
-  const requestID = req.params.gds_id;
+  const requestID = req.params.richiesta_id;
   if (!mongoose.Types.ObjectId.isValid(requestID)) {
     return res.status(400).json({ message: 'ID non valido' });
   }
