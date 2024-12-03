@@ -5,6 +5,7 @@ import SidebarRight from '@/components/SidebarRight.vue'
 import { Bar, Doughnut } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PieController, ArcElement } from 'chart.js'
 import { data } from 'autoprefixer';
+import PopupReport from '@/components/PopupReport.vue';
 
 ChartJS.register(Title, ArcElement, Tooltip, /*Legend,*/ BarElement, CategoryScale, LinearScale)
 
@@ -97,7 +98,8 @@ const sidebarSections = [ //prova sidebar
             <div class="flex-shrink-0"><img src="@/assets/logo.svg" alt="Logo"></div>
             <div class="ml-4">
                 <h2 class="text-red-500 mr-4">Servizio Offline <i class="pi pi-circle-fill text-red-500 text-sm ml-1 align-middle"></i></h2>
-                <button class="bg-red-500 text-white rounded-lg border-slate-950 shadow mt-1 w-20 h-8 text-center">Segnala</button>
+                <!-- <button class="bg-red-500 text-white rounded-lg border-slate-950 shadow mt-1 w-20 h-8 text-center">Segnala</button> -->
+                <PopupReport/>
             </div>
         </div>
 
@@ -123,6 +125,8 @@ const sidebarSections = [ //prova sidebar
               </li>
             </ul>
           </div>
+
+        
 
           <!-- Grafico a ciambella -->
           <div class="bg-white p-4 rounded shadow col-span-2">

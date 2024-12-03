@@ -3,7 +3,7 @@ import TheWelcome from '../components/TheWelcome.vue'
 import Navbar from '../components/Navbar.vue';
 import SidebarLeft from '@/components/SidebarLeft.vue';
 import SidebarRight from '@/components/SidebarRight.vue';
-import ServicesCards from '@/components/ServicesCards.vue';
+import ServicesCard from '@/components/ServicesCard.vue';
 
 const sidebarSections = [ //prova sidebar
   {
@@ -44,7 +44,7 @@ const sidebarSections = [ //prova sidebar
   <Navbar />
   <div class="flex flex-row h-screen" >
     <div class="basis-1/4 h-full"><SidebarLeft :sections="sidebarSections"/></div>
-    <div class="flex-grow"><ServicesCards/> </div>
+    <div class="flex-grow"> <ServicesCard/> </div>
     <div class="basis-1/4 flex justify-end h-full"><SidebarRight/> </div>
   </div>
   <!-- like this -->
