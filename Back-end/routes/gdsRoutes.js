@@ -4,7 +4,6 @@ const router = express.Router();
 // Controllers
 const { validaCredenziali, confermaRichiesta } = require('../controllers/gdsController');
 const { creaRichiesta } = require('../controllers/richiestaGdSController');
-const { getServiceByGdSId } = require('../controllers/servizioController');
 // const gdsController = require(process.cwd()+'/controllers/gds/gdsController');
 
 // Middleware 
@@ -21,17 +20,13 @@ router.post('/registrazione', async (req, res) => {
 });
 
 // Conferma della richiesta di registrazione 
-router.get('/conferma/:gds_id', usaToken, checkRuolo(['superadmin']), async (req,res)=>{
+router.get('/conferma/:richiesta_id', usaToken, checkRuolo(['superadmin']), async (req,res)=>{
   confermaRichiesta(req, res);
 });
 
-// Restituisce dati del servizio associato al GdS
-// Non trovo il senso di questa api
-// Serve  per trovare il servizio del gds ma per farlo serve l'id del servizio?
-// Ma allora se abbiamo l'id del gds, che è già nel token, non possiamo controllare
-// Che un servizio sia suo prima di averlo??
-router.get(':servizio_id/servizio', usaToken, checkRuolo(['gds']), SIDSave, checkServizioId, CheckServiceGdSConnection, async (req,res)=>{
-  getServiceByGdSId(req,res);
+// Restituisce il servizio associato al GdS
+router.get('/servizio', usaToken, checkRuolo(['gds']), async (req,res)=>{
+  return req.user.servizio_id;
 });
 
 module.exports = router;
