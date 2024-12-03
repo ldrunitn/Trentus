@@ -1,12 +1,32 @@
 <script>
 export default{
   props:{
-    immagine:String,
-    title:String,
-    name:String,
-    link:String,
-    company: String,
-    description:String,
+    request_id:{
+      type: String,
+      required: true
+    }
+  },
+  data(){
+    return{
+      immagine: "",
+      title: "",
+      link: "",
+      company: "",
+      description: ""
+    }
+  },
+  async created(){
+    const request = await this.fetchRequest();
+    this.immagine = request.immagine;
+    this.title = request.title;
+    this.link = request.link;
+    this.company = request.company;
+    this.description = request.description;
+  },
+  methods:{
+    async fetchRequest(){
+      //metodo per recuperare la richiesta con l'id specificato dallo store vuex
+    }
   }
 }
 </script>
@@ -14,6 +34,7 @@ export default{
 <div class="bg-white rounded-lg shadow-md p-16 max-w-100 mx-8 mt-4 w-full">
   <h1 class="text-5xl text-gray-600 mb-10">Richiesta di aggiunta servizio</h1>
   <ul class="space-y-10 ml-5">
+    <li><span>Id: </span><span class="text-gray-600">{{ request_id }}</span></li>
     <li><span>Immagine: </span><span class="text-gray-600">{{ immagine }}</span></li>
     <li><span>Nome: </span><span class="text-gray-600">{{ title }}</span></li>
     <li><span>Link: </span><span class="text-gray-600">{{ link }}</span></li>

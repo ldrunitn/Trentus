@@ -75,18 +75,16 @@ export default{
 </script>
 <template>
   <Navbar></Navbar>
-  <div class="flex flex-row h-screen" >
+  <div class="flex flex-row h-screen" id="main">
     <div class="basis-1/4 h-full"><AdminSidebarLeft :sections="sidebarSections" /></div>
-    <!-- <div class="basis-1/2"><ServicesCards/></div> -->
-    <ModifyRequestView
-      :immagine="requests[0].immagine"
-      :title="requests[0].titolo"
-      :link="requests[0].link"
-      :company="requests[0].azienda"
-      :description="requests[0].descrizione"
-    ></ModifyRequestView>
+    <RouterView></RouterView>
     <div class="basis-1/4 flex justify-end h-full"><SidebarRight/></div>
   </div>
-  <RouterView />
 
 </template>
+<style scoped>
+#main{
+  background-color: #f3f4f6;
+  font-family: 'Product Sans', Arial, Helvetica, sans-serif;
+}
+</style>

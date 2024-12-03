@@ -8,6 +8,6 @@ export default{
 </script>
 <template>
   <li class="hover:text-gray-500">
-    <router-link>{{ title }}</router-link>  
+    <router-link :to="`/admin/${id}/approve`">{{ title }}</router-link>  
   </li>
 </template>

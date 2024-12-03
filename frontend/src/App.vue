@@ -38,8 +38,7 @@ const sidebarSections = [ //prova sidebar
 
 <template>
   
-  <AdminHomeView></AdminHomeView>
-  <RouterView />
+  <router-view></router-view>
   
 
 </template>
