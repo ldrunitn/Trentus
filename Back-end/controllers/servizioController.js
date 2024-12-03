@@ -5,7 +5,7 @@ const GdS = require('../models/gds.model');
 const Servizio = require('../models/servizio.model');
 
 // Crea un servizio
-exports.createService = async (req, res) => {
+exports.creaServizio = async (request, session) => {
   const servizio = new Servizio({
     titolo: request['titolo'],
     azienda: request['azienda'],
@@ -13,7 +13,7 @@ exports.createService = async (req, res) => {
     foto: request['foto'],
     descrizione: request['descrizione']
   });
-  const service_id = await servizio.save({res}); //salvo il servizio ottenendo l'id
+  const service_id = await servizio.save({session}); //salvo il servizio ottenendo l'id
   return service_id;
 }
 

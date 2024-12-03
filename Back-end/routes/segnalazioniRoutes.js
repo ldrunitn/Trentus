@@ -1,9 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-
-// Model
-const Segnalazione = require('../models/segnalazione.model');
 
 // Controllers
 const { getForm, generaForm } = require('../controllers/formController');

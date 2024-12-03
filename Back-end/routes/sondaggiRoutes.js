@@ -1,9 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-
-// Model
-const Sondaggio = require('../models/sondaggio.model');
 
 // Controllers
 const { getSondaggi, creaSondaggio, getSondaggioById } = require('../controllers/sondaggioController');
