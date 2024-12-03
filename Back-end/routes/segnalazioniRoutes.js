@@ -8,9 +8,10 @@ const Segnalazione = require('../models/segnalazione.model');
 // Controllers
 const { getForm, generaForm } = require('../controllers/formController');
 const { compilaForm, getCommenti } = require('../controllers/segnalazioneController');
+const { graficoTorta, graficoLinee } = require('../controllers/graphsController');
 
 // Middleware
-const { checkRuolo, usaToken, checkServizioId } = require('../middleware/authMiddleware');
+const { checkRuolo, usaToken, checkServizioId, CheckDirittiServizio } = require('../middleware/authMiddleware');
 
 // Restitusce un oggetto con la form di segnalazione compilabile per uno specifico servizio
 router.get('/form', checkServizioId, async (req, res) => {
@@ -18,7 +19,7 @@ router.get('/form', checkServizioId, async (req, res) => {
 });
 
 // Genera la form di segnalazione compilabile del servizio specificato
-router.post('/form', checkServizioId, usaToken, checkRuolo(['gds']), async (req, res) => {
+router.post('/form', checkServizioId, usaToken, checkRuolo(['gds']), CheckDirittiServizio, async (req, res) => {
   generaForm(req, res);
 });
 
@@ -32,12 +33,14 @@ router.get('/commenti', checkServizioId, async (req, res) => {
   getCommenti(req, res);
 });
 
-router.get('/servizi/{servizio_id}/segnalazioni/graficolinee', async (req, res) => {
-  
+// Restituisce dati per la creazione del grafico di frequenza segnalazioni
+router.get('/graficolinee', checkServizioId, async (req, res) => {
+  graficoLinee(req, res)
 });
 
-router.get('/servizi/{servizio_id}/segnalazioni/graficotorta', async (req, res) => {
-  
+// Restituisce dati per la creazione del grafico di frequenza problemi riscontrati
+router.get('/graficotorta', checkServizioId, async (req, res) => {
+  graficoTorta(req, res)
 });
 
 
