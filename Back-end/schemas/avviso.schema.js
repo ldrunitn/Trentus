@@ -7,7 +7,7 @@ const schemaAvviso = new mongoose.Schema({
     minlength: [5, "Il titolo deve avere mino 5 caratteri"],
     maxlength: [64, "Il titolo può avere massimo 64 caratteri"]
   },
-  contenuto: {
+  corpo: {
     type: String,
     required: [true, "Il contenuto è obbligatorio"],
     minlength: [5, "Il contenuto deve avere minimo 5 caratteri"],

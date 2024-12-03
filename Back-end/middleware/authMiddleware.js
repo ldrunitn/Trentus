@@ -9,12 +9,12 @@ const SECRET_KEY = process.env.JWT_SECRET
 const Servizio = require('../models/servizio.model');
 
 // Genera un token JWT dalla durata di 3h
-exports.generateToken = (user, ruolo) => {
+exports.generaToken = (user, ruolo) => {
   return jwt.sign({ id: user._id, username: user.username, role: ruolo }, SECRET_KEY, { expiresIn: '3h' });
 };
 
 // Verifico la correttezza di un token JWT e ne salvo i dati
-exports.usingToken = (req, res, next) => {
+exports.usaToken = (req, res, next) => {
   const token = req.headers['authorization'];
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
@@ -26,16 +26,22 @@ exports.usingToken = (req, res, next) => {
   }
 };
 
+// Funzione per mantenere il :service_id tra le routes
+exports.SIDSave = (req, res, next) => {
+  req.servizio_id = req.params.servizio_id;
+  next();
+};
+
 // Verifico l'esistenza del servizio
-exports.checkServiceId = (req, res, next) => {
-  if(!mongoose.Types.ObjectId.isValid(req.service_id)){
+exports.checkServizioId = (req, res, next) => {
+  if(!mongoose.Types.ObjectId.isValid(req.servizio_id)){
     return res.status(400).json({ message: 'Servizio inesistente' });
   }
   next();
 }
 
 // Controlla che il ruolo dell'utente che cerca di accedere sia quello specificato
-exports.checkRole = (roles) => { 
+exports.checkRuolo = (roles) => { 
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({ message: 'Accesso negato. Non hai i permessi per questa azione.' });
@@ -46,7 +52,7 @@ exports.checkRole = (roles) => {
 
 // Verifico che l'user sia il possessore del servizio utilizzato
 exports.CheckServiceGdSConnection = async (req, res, next) => {
-  const id = req.params.service_id;
+  const id = req.servizio_id;
   if(!id){
     console.log(req.originalUrl);
     return res.status(401).json({ message: 'ID mancante' }); //quale iddddddd

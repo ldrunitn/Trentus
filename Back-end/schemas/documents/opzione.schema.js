@@ -33,15 +33,13 @@ const opApertaSchema = new mongoose.Schema({
   },
 }, { _id: false });
 
-const opBaseSchema = new mongoose.Schema(
-  {
-    type: {
-      type: String,
-      required: true,
-      enum: ['singola', 'raccolta', 'aperta'], 
-    },
+const opBaseSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    required: true,
+    enum: ['singola', 'raccolta', 'aperta'], 
   },
-  { discriminatorKey: 'type', _id: false }
+}, { discriminatorKey: 'type', _id: false }
 );
 
 // Collegare i discriminatori
