@@ -33,7 +33,7 @@ exports.generaForm = async (req,res) => {
 exports.getForm = async (req,res) => {
   // ottengo la form di uno specifico servizio
   try{
-    let form = await Servizio.findById(req.servizio_id).select('opzioniForm');
+    let form = await Servizio.findById(req.servizio_id).select("form");
     if(!form){
       return res.status(404).json({message:'Form non trovata'});
     }

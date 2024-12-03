@@ -1,9 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-
-// Model
-const Avviso = require('../models/avviso.model');
 
 // Controllers
 const { creaAvviso, getAvvisi, getAvvisoById } = require('../controllers/avvisoController');

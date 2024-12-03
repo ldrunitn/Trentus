@@ -1,8 +1,10 @@
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 
 // Models
 const richiestaGdS = require('../models/richiestaGdS.model');
 const GdS = require('../models/gds.model');
+const { creaServizio } = require('./servizioController');
 
 // Crea una richiesta di accettazione della creazione del gds ed il suo servizio
 exports.creaRichiesta = async (req,res) => {
@@ -44,14 +46,42 @@ exports.creaRichiesta = async (req,res) => {
   }
 }
 
-// Questa dove viene usata?
-exports.confermaRichiesta = async (request,session) => {
-  request.confermata = true;
-  await request.save({session});
-} 
+// Conferma la creazione di un nuovo gds ed il suo servizio associato
+exports.confermaRichiesta = async (req, res) => { // Attenzione, solo il superdmin può invocarla
+  const requestID = req.params.richiesta_id;
+  if (!mongoose.Types.ObjectId.isValid(requestID)) {
+    return res.status(400).json({ message: 'ID non valido' });
+  }
+  const session = await mongoose.startSession(); // faccio partire una sessione per usare le transazioni
+  try {
+    //trovo i dati della richiesta corrispondente
+    session.startTransaction(); //faccio partire il transazione, visto che devo modificare due entità, in questo modo sono sicuro che entrambe o nessuna vengano modificate 
+    const request = await richiestaGdS.findOne({ _id: requestID, confermata: false});
+    if (!request) {
+      session.abortTransaction();
+      return res.status(404).json({ message: 'Richiesta non trovata' });
+    }
+    const service_id = await creaServizio(request,session);
+    //ora devo creare il gds con il servizio corrispondente
+    console.log(request);
+    const gds = new GdS({
+      email: request['email'],
+      passwordHash: request['passwordHash'],
+      servizio: service_id
+    });
+    await gds.save({session}); // salvo il gds
+    request.confermata = true; //confermo la richiesta
+    await request.save({session});
 
-// Restituisce una richiesta specifica
-exports.getRichiesta = async (reqId,session) => {
-  const request = await richiestaGdS.findOne({_id:reqId, confermata:false}).session(session);
-  return request;
+    //confermo la transazione
+    await session.commitTransaction();
+
+    res.status(201).json({ message: 'GdS creato con successo'});
+  } catch (err) {
+    await session.abortTransaction();
+    res.status(500).json({ message: 'Errore del server', error: err.message });
+  } 
+  finally{
+    session.endSession();
+  }
 }
