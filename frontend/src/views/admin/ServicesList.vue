@@ -1,8 +1,8 @@
 <script>
-import ServicesCards from '@/components/ServicesCards.vue';
+import ServicesCard from '@/components/ServicesCard.vue';
 export default{
   components: {
-    ServicesCards
+    ServicesCard
   }
 }
 

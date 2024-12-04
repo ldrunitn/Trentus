@@ -1,7 +1,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import SidebarRight from '@/components/SidebarRight.vue';
-import ServicesCards from '@/components/ServicesCards.vue';
+import ServicesCard from '@/components/ServicesCard.vue';
 import AdminSidebarLeft from '@/components/admin/sidebarLeft/AdminSidebarLeft.vue';
 import RequestView from './admin/RequestView.vue';
 import ModifyRequestView from './admin/ModifyRequestView.vue';
@@ -10,7 +10,7 @@ export default{
     Navbar,
     AdminSidebarLeft,
     SidebarRight,
-    ServicesCards,
+    ServicesCard,
     RequestView,
     ModifyRequestView
   },
