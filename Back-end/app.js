@@ -5,8 +5,11 @@ const app = express();
 // Impostazione Database
 const db = require('./models/db');
 
-// Cookie Parser (automatico)
-const cookieParser = require('cookie-parser');
+// Documentation viewer
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+app.use('/api-docs', swaggerUi.serve);
+app.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
 const createError = require('http-errors');
 const path = require('path');
@@ -29,7 +32,6 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 
