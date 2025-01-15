@@ -7,18 +7,52 @@ const { creaAvviso, getAvvisi, getAvvisoById } = require('../controllers/avvisoC
 // Middleware
 const { checkRuolo, usaToken, checkServizioId, CheckDirittiServizio } = require('../middleware/authMiddleware');
 
-// Restituisce tutti gli avvisi
 router.get('/', checkServizioId, async (req, res) => {
+  // #swagger.description = 'Restituisce tutti gli avvisi'
+  /* #swagger.responses[200] = {
+      content: {
+        "application/json": {
+          schema: {
+            type: "array",
+            items: {
+              $ref: "#/components/schemas/Avviso"
+            }
+          }
+        }           
+      }
+    }   
+  */
   getAvvisi(req, res)
 });
 
-// Crea un avviso
 router.post('/', usaToken, checkServizioId, checkRuolo(['gds']), CheckDirittiServizio, async (req, res) => {
+  // #swagger.description = 'Crea un avviso'
+  // #swagger.security = [{ "BearerAuth": ['gds'] }]
+  /* #swagger.requestBody = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/Avviso"
+          }
+        }           
+      }
+    }   
+  */
   creaAvviso(req, res);
 });
 
-// Restituisce l'avviso in base all'id
 router.get('/:avviso_id', checkServizioId, async (req, res) => {
+  // #swagger.description = 'Restituisce un avviso in base all'id'
+  /* #swagger.responses[200] = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/Avviso"
+          }
+        }           
+      }
+    }   
+  */
   getAvvisoById(req, res)
 });
 

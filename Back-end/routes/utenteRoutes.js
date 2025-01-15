@@ -8,23 +8,65 @@ const { creaUtente, verificaCredenziali, getPreferiti, getUtente } = require('..
 // Middleware 
 const { usaToken, checkRuolo } = require('../middleware/authMiddleware');
 
-// Rotta protetta... wut?
-router.get('/', usaToken, checkRuolo(['utente']), (req, res) => {
-  getUtente(req,res);
-});
-
-// Login utente
 router.post('/login', async (req, res) => {
+  // #swagger.description = 'Login Utente'
+  /* #swagger.requestBody = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/Login"
+          }
+        }           
+      }
+    }   
+  */
   verificaCredenziali(req,res);
 });
 
-// Registrazione utente
+router.get('/', usaToken, checkRuolo(['utente']), (req, res) => {
+  // #swagger.description = 'Restituisce i dati di un utente'
+  // #swagger.security = [{ "BearerAuth": ['utente'] }]
+  /* #swagger.responses[200] = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/Utente"
+          }
+        }           
+      }
+    }   
+  */
+  getUtente(req,res);
+});
+
 router.post('/registrazione', async (req, res) => {
+  // #swagger.description = 'Registra un nuovo utente'
+  /* #swagger.requestBody = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/Utente"
+          }
+        }           
+      }
+    }   
+  */
   creaUtente(req,res);
 });
 
-// Restituisce i preferiti dell'utente con id specificato
 router.get('/preferiti', usaToken, checkRuolo(['utente']), (req,res)=>{
+  // #swagger.description = 'Restituisce i preferiti di un utente'
+  // #swagger.security = [{ "BearerAuth": ['utente'] }]
+  /* #swagger.responses[200] = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/Utente/Preferiti"
+          }
+        }           
+      }
+    }   
+  */
   getPreferiti(req,res);
 });
 

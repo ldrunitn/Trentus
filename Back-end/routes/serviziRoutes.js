@@ -8,13 +8,36 @@ const { getServizi, getServizio } = require('../controllers/servizioController')
 // Middleware
 const { checkServizioId, SIDSave } = require('../middleware/authMiddleware');
 
-// Restituisce tutti i servizi
 router.get('/', async (req, res) => {
+  // #swagger.description = 'Restituisce tutti i servizi'
+  /* #swagger.responses[200] = {
+      content: {
+        "application/json": {
+          schema: {
+            type: "array",
+            items: {
+              $ref: "#/components/schemas/Servizio"
+            }
+          }
+        }           
+      }
+    }   
+  */
   getServizi(req,res);
 })
 
-// Restituisce servizio in base al suo id
 router.get('/:servizio_id', SIDSave, checkServizioId, async (req,res)=>{
+  // #swagger.description = 'Restituisce servizio in base al suo id'
+  /* #swagger.responses[200] = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/Servizio"
+          }
+        }           
+      }
+    }   
+  */
   getServizio(req,res);
 });
 
