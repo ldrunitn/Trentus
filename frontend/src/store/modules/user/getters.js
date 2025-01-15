@@ -8,9 +8,10 @@ export default {
     getAlerts(state) {
         return state.alerts;
     },
-    getFavourites(state) {
+    getFavouritesServices(state) {//array con servizi preferiti
         return state.services.filter(service => state.favourites.includes(service._id));
     },
+    getFavourites: (state) => state.favourites, 
     getToken(state) {
         return state.token;
     },

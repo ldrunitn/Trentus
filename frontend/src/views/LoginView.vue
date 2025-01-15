@@ -1,6 +1,39 @@
-<script setup>
+<script>
 import LoginWGoogle from "@/components/login/LoginWGoogle.vue";
-import LoginField from "@/components/login/LoginField.vue";
+import ErrorMessage from "@/components/ErrorMessage.vue";
+export default{
+  components: {
+    ErrorMessage
+  },
+  data(){
+    return{
+      email: "",
+      password: "",
+      errore: ""
+    }
+  },
+  methods:{
+    async login(){
+      //dispatch dell'action
+      try {
+        if(this.password.trim() === "" || this.email.trim() === ""){
+          throw new Error("Invalid credentials");
+        }
+        await this.$store.dispatch('user/login', {
+          email: this.email.trim(),
+          password: this.password.trim(),
+        });
+        if(this.$store.getters["user/getIsAuthenticated"]){
+          console.log("Entrato");
+          this.$router.push("/");
+        }
+      } catch (error) {
+        this.errore = error;
+      }
+    }
+  }
+}
+
 </script>
 
 <template>
@@ -18,8 +51,13 @@ import LoginField from "@/components/login/LoginField.vue";
     <div
       class="inline-flex flex-col items-center justify-center w-[400px] max-w-md p-4 bg-white rounded-lg shadow-md"
     >
-      <LoginField />
-      <div class="relative flex items-center w-full my-6">
+    <div class="flex flex-col grid-flow-col grid-cols-1 gap-2 mt-8">
+        <input v-model="email" type="email" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Insert your Email">
+        <input v-model="password" type="password" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Insert your Password">
+        <button @click="login" class="w-52 h-8 bg-gray-300 text-black border border-gray-400 shadow-md rounded-lg mt-8">Log in</button>
+        <ErrorMessage :message="errore" class="rounded-lg" v-if="errore"></ErrorMessage>
+    </div>
+    <div class="relative flex items-center w-full my-6">
         <hr class="w-full h-px bg-gray-300 border-0 dark:bg-gray-700" />
         <span
           class="absolute px-2 font-medium text-gray-900 text-sm bg-white left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4"
