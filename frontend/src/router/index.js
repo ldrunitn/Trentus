@@ -7,6 +7,7 @@ import AdminHomeView from '@/views/AdminHomeView.vue'
 import RequestView from '@/views/admin/RequestView.vue'
 import ServicesList from '@/views/admin/ServicesList.vue'
 import ModifyRequestView from '@/views/admin/ModifyRequestView.vue'
+import store from '@/store';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +16,14 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      beforeEnter: (to, from, next) => {
+        console.log(store.getters['user/getIsAuthenticated'])
+        if (store.getters['user/getIsAuthenticated']) {
+          next();
+        } else {
+          next('/login');
+        }
+      },
     },
     {
       path: '/about',

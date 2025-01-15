@@ -7,7 +7,7 @@ export default {
     state: () => ({
         services: [],
         favourites: [],
-        alerts: [],
+        alerts: {},
         token: localStorage.getItem('token') || '',
         isAuthenticated: !!localStorage.getItem('token'),
         

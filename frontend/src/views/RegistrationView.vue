@@ -1,6 +1,35 @@
-<script setup>
-import RegistrationField from '@/components/login/RegistrationField.vue';
-import router from '@/router';
+<script>
+import ErrorMessage from '@/components/ErrorMessage.vue';
+export default{
+  components:{
+    ErrorMessage
+  },
+  data(){
+    return{
+      email: "",
+      password: "",
+      passwordRepeat: "",
+      errore: ""
+    }
+  },
+  methods:{
+    async register(){
+      
+      //dispatch dell'action
+      try {
+        if(this.password.trim() === "" || this.passwordRepeat.trim() === "" || this.email.trim() === "" || this.password.trim() != this.passwordRepeat.trim()){
+          throw new Error("Invalid credentials");
+        }
+        await this.$store.dispatch('user/register', {
+          email: this.email.trim(),
+          password: this.password.trim(),
+        });
+      } catch (error) {
+        this.errore = error;
+      }
+    }
+  }
+}
 </script>
 
 <template> 
@@ -17,7 +46,13 @@ import router from '@/router';
     <div
       class="inline-flex flex-col items-center justify-center w-[400px] max-w-md p-4 bg-white rounded-lg shadow-md"
     >
-    <RegistrationField/>
+    <div class="flex flex-col grid-flow-col grid-cols-1 gap-2 mt-8">
+        <input v-model="email" type="email" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Insert your Email">
+        <input v-model="password" type="password" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Insert your Password">
+        <input v-model="passwordRepeat" type="password" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Repeat your Password">
+        <ErrorMessage :message="errore" class="rounded-lg" v-if="errore"></ErrorMessage>
+        <button @click="register" class="w-52 h-8 bg-gray-300 text-black border border-gray-400 shadow-md rounded-lg mt-8">Register</button>
+      </div>
     </div>
     <p class="place-self-center pt-4">Do you manage a service?</p>
     <p class="place-self-center"><a href="" class="underline text-gray-800" >Register your service to Trentus</a></p>

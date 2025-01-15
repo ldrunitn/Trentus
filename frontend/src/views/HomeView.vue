@@ -46,10 +46,14 @@ onMounted( async () => {
   console.log("Creata");
   try {
     await store.dispatch('user/fetchServices')
+    
     loading.value = false;
-    console.log("loading finito");
     const servizi = store.getters['user/getServices'];
-    console.log(servizi[0].titolo);
+
+    await store.dispatch('user/fetchAlerts');
+    const alerts = store.getters['user/getAlerts'];
+
+    console.log(alerts);
   } catch (error) {
     console.error(error)
   }

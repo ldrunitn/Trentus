@@ -4,19 +4,19 @@ export default {
         state.token = token;
         state.isAuthenticated = true;
     },
-    setAlerts(state,alerts) {
-        state.alerts = alerts;
-    },
     setFavourites(state,favourites) {
         state.favourites = favourites;
     },
     setServices(state,services) {
         state.services = services;
     },
+    addAlerts(state, payload){
+        state.alerts[payload["service_id"]] = payload["alerts"];
+    },
     logout(state) {
         state.token = "";
         state.isAuthenticated = false;
         state.favourites = [];
-        state.alerts = [];
+        state.alerts = {};
     }
 }
