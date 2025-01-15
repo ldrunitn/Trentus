@@ -1,50 +1,43 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
+    "version": "2.0.0",
     "title": "Trentus API",
-    "description": "Documentazione delle API di Trentus",
-    "version": "1.0.0"
+    "description": "Documentazione delle API di Trentus"
   },
-  "host": "localhost:8080",
-  "basePath": "/",
-  "schemes": [
-    "http"
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Server Locale"
+    }
   ],
   "paths": {
-    "/api-docs": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/servizi/{servizio_id}/avvisi/": {
       "get": {
-        "description": "",
+        "description": "Restituisce tutti gli avvisi",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Avviso"
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -55,41 +48,21 @@
         }
       },
       "post": {
-        "description": "",
+        "description": "Crea un avviso",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "titolo": {
-                  "example": "any"
-                },
-                "corpo": {
-                  "example": "any"
-                },
-                "tipo": {
-                  "example": "any"
-                },
-                "inizio": {
-                  "example": "any"
-                },
-                "fine": {
-                  "example": "any"
-                }
-              }
+              "type": "string"
             }
           }
         ],
@@ -106,29 +79,56 @@
           "403": {
             "description": "Forbidden"
           }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "gds"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Avviso"
+              }
+            }
+          }
         }
       }
     },
     "/servizi/{servizio_id}/avvisi/{avviso_id}": {
       "get": {
-        "description": "",
+        "description": "Restituisce un avviso in base all",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "avviso_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Avviso"
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -141,23 +141,37 @@
     },
     "/servizi/{servizio_id}/sondaggi/": {
       "get": {
-        "description": "",
+        "description": "Restituisce i sondaggi compilabili del servizio",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Sondaggio"
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -174,35 +188,32 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "gds",
+              "utente"
+            ]
+          }
+        ]
       },
       "post": {
-        "description": "",
+        "description": "Crea un sondaggio",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "titolo": {
-                  "example": "any"
-                },
-                "opzioni": {
-                  "example": "any"
-                }
-              }
+              "type": "string"
             }
           }
         ],
@@ -221,35 +232,64 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "gds"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Sondaggio"
+              }
+            }
           }
         }
       }
     },
     "/servizi/{servizio_id}/sondaggi/{sondaggio_id}": {
       "get": {
-        "description": "",
+        "description": "Restituisce un sondaggio",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "sondaggio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sondaggio"
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -266,38 +306,40 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "gds",
+              "utente"
+            ]
+          }
+        ]
       },
       "post": {
-        "description": "",
+        "description": "Rilascia un feedback",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "sondaggio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "risposte": {
-                  "example": "any"
-                }
-              }
+              "type": "string"
             }
           }
         ],
@@ -316,35 +358,67 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "utente"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Feedback"
+              }
+            }
           }
         }
       }
     },
     "/servizi/{servizio_id}/sondaggi/{sondaggio_id}/risultati": {
       "get": {
-        "description": "",
+        "description": "Restituisce i risultati di un sondaggio",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "sondaggio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Feedback"
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -361,23 +435,39 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "gds"
+            ]
+          }
+        ]
       }
     },
     "/servizi/{servizio_id}/segnalazioni/form": {
       "get": {
-        "description": "",
+        "description": "Restituisce la form di segnalazione compilabile per un servizio",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Servizio/Form"
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -391,29 +481,21 @@
         }
       },
       "post": {
-        "description": "",
+        "description": "Genera la form di segnalazione compilabile per un servizio",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "opzioni": {
-                  "example": "any"
-                }
-              }
+              "type": "string"
             }
           }
         ],
@@ -432,38 +514,43 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "gds"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Servizio/Form"
+              }
+            }
           }
         }
       }
     },
     "/servizi/{servizio_id}/segnalazioni/compila": {
       "post": {
-        "description": "",
+        "description": "Salva i dati del form di segnalazione del servizio compilato dall",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "risposte": {
-                  "example": "any"
-                },
-                "commento": {
-                  "example": "any"
-                }
-              }
+              "type": "string"
             }
           }
         ],
@@ -483,21 +570,52 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "utente"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Segnalazione"
+              }
+            }
+          }
         }
       }
     },
     "/servizi/{servizio_id}/segnalazioni/commenti": {
       "get": {
-        "description": "",
+        "description": "Restituisce i commenti delle segnalazioni di un servizio",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Segnalazione/Commento"
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          },
           "201": {
             "description": "Created"
           },
@@ -512,16 +630,28 @@
     },
     "/servizi/{servizio_id}/segnalazioni/graficolinee": {
       "get": {
-        "description": "",
+        "description": "Restituisce dati per la creazione del grafico di frequenza segnalazioni",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Segnalazione/Grafico"
+                }
+              }
+            },
+            "description": "OK"
+          },
           "400": {
             "description": "Bad Request"
           }
@@ -530,16 +660,28 @@
     },
     "/servizi/{servizio_id}/segnalazioni/graficotorta": {
       "get": {
-        "description": "",
+        "description": "Restituisce dati per la creazione del grafico di problemi riscontrati",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Segnalazione/Grafico"
+                }
+              }
+            },
+            "description": "OK"
+          },
           "400": {
             "description": "Bad Request"
           }
@@ -548,24 +690,7 @@
     },
     "/gds/login": {
       "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
+        "description": "Login GdS",
         "responses": {
           "200": {
             "description": "OK"
@@ -576,44 +701,21 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
         }
       }
     },
     "/gds/registrazione": {
       "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                },
-                "titolo": {
-                  "example": "any"
-                },
-                "azienda": {
-                  "example": "any"
-                },
-                "url": {
-                  "example": "any"
-                },
-                "foto": {
-                  "example": "any"
-                },
-                "descrizione": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
+        "description": "Invia una richiesta di registrazione per un GdS",
         "responses": {
           "201": {
             "description": "Created"
@@ -624,23 +726,36 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RichiestaGdS"
+              }
+            }
+          }
         }
       }
     },
     "/gds/conferma/{richiesta_id}": {
       "get": {
-        "description": "",
+        "description": "Conferma la richiesta di registrazione per un GdS",
         "parameters": [
           {
             "name": "richiesta_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -661,17 +776,26 @@
     },
     "/gds/servizio": {
       "get": {
-        "description": "",
+        "description": "Restituisce il servizio associato al GdS",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Servizio"
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized"
@@ -679,52 +803,19 @@
           "403": {
             "description": "Forbidden"
           }
-        }
-      }
-    },
-    "/utente/": {
-      "get": {
-        "description": "",
-        "parameters": [
+        },
+        "security": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "BearerAuth": [
+              "gds"
+            ]
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          }
-        }
+        ]
       }
     },
     "/utente/login": {
       "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
+        "description": "Login Utente",
         "responses": {
           "200": {
             "description": "OK"
@@ -735,29 +826,60 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
         }
+      }
+    },
+    "/utente/": {
+      "get": {
+        "description": "Restituisce i dati di un utente",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Utente"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "utente"
+            ]
+          }
+        ]
       }
     },
     "/utente/registrazione": {
       "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
+        "description": "Registra un nuovo utente",
         "responses": {
           "201": {
             "description": "Created"
@@ -768,22 +890,40 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Utente"
+              }
+            }
+          }
         }
       }
     },
     "/utente/preferiti": {
       "get": {
-        "description": "",
+        "description": "Restituisce i preferiti di un utente",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Utente/Preferiti"
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized"
@@ -794,15 +934,32 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "utente"
+            ]
+          }
+        ]
       }
     },
     "/servizi/": {
       "get": {
-        "description": "",
+        "description": "Restituisce tutti i servizi",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Servizio"
+                  }
+                }
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"
@@ -812,18 +969,27 @@
     },
     "/servizi/{servizio_id}": {
       "get": {
-        "description": "",
+        "description": "Restituisce servizio in base al suo id",
         "parameters": [
           {
             "name": "servizio_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Servizio"
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -834,5 +1000,30 @@
         }
       }
     }
-  }
+  },
+  "components": {
+    "schemas":{
+      "Avviso": {},
+      "Feedback": {},
+      "Login": {},
+      "RichiestaGdS": {},
+      "Segnalazione": {},
+      "Servizio": {},
+      "Sondaggio": {},
+      "Utente": {}
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "Bearer token per accedere alle API"
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ]
 }

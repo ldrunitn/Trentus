@@ -9,23 +9,55 @@ const { creaRichiesta, confermaRichiesta } = require('../controllers/richiestaGd
 // Middleware 
 const { usaToken, checkRuolo } = require('../middleware/authMiddleware');
 
-// Login GdS
 router.post('/login', async (req, res) => {
+  // #swagger.description = 'Login GdS'
+  /* #swagger.requestBody = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/Login"
+          }
+        }           
+      }
+    }   
+  */
   validaCredenziali(req,res);
 });
 
-// Invia richiesta di registrazione
 router.post('/registrazione', async (req, res) => {
+  // #swagger.description = 'Invia una richiesta di registrazione per un GdS'
+  /* #swagger.requestBody = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/RichiestaGdS"
+          }
+        }           
+      }
+    }   
+  */
   creaRichiesta(req,res);
 });
-
-// Conferma della richiesta di registrazione 
+ 
 router.get('/conferma/:richiesta_id', /*usaToken, checkRuolo(['superadmin']),*/ async (req,res)=>{
+  // #swagger.description = 'Conferma la richiesta di registrazione per un GdS'
   if(req.headers['authorization'] == "Luca") confermaRichiesta(req, res);
 });
 
 // Restituisce il servizio associato al GdS
 router.get('/servizio', usaToken, checkRuolo(['gds']), async (req,res)=>{
+  // #swagger.description = 'Restituisce il servizio associato al GdS'
+  // #swagger.security = [{ "BearerAuth": ['gds'] }]
+  /* #swagger.responses[200] = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/Servizio"
+          }
+        }           
+      }
+    }   
+  */
   return res.status(200).json({ servizio_id: req.user.servizio_id });
 });
 

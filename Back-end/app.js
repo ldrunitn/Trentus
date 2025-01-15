@@ -9,7 +9,7 @@ const db = require('./models/db');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 app.use('/api-docs', swaggerUi.serve);
-app.get('/api-docs', swaggerUi.setup(swaggerDocument));
+app.get('/api-docs', /*#swagger.ignore = true*/ swaggerUi.setup(swaggerDocument)); 
 
 const createError = require('http-errors');
 const path = require('path');

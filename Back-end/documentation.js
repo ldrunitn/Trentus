@@ -1,16 +1,30 @@
 const express = require('express');
 const app = express();
-const swaggerAutogen = require('swagger-autogen');
+const swaggerAutogen = require('swagger-autogen')({openapi: '3.0.0'});
 const outputFile = './swagger.json';
 const endpointsFiles = ['./app.js'];
-const documentation = {
+const doc = {
   info: {
-    title: 'Trentus API', // API title
-    description: 'Documentazione delle API di Trentus', // API description
+    version: '2.0.0',            
+    title: 'Trentus API',             
+    description: 'Documentazione delle API di Trentus'        
   },
-  host: 'localhost:8080', // Base URL (update for production)
-  schemes: ['http'], // or ['https'] for HTTPS APIs
+  servers: [
+    {
+      url: 'http://localhost:8080',             
+      description: 'Server Locale'      
+    },
+  ],
+  securityDefinitions: {
+    BearerAuth: {
+      type: 'apiKey',
+      name: 'Authorization',
+      in: 'header',
+      description: 'Bearer token per accedere alle API',
+    },
+  },
+  security: [{ BearerAuth: [] }],
 };
-swaggerAutogen(outputFile, endpointsFiles, documentation).then(() => {
+swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
   console.log('Swagger documentation generated!');
 });
