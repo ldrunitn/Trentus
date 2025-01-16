@@ -49,21 +49,29 @@ export default {
     },
     async fetchAlerts({commit,getters}){
         try {
-            const fav = getters.getFavourites;
-            console.log(fav);
-            fav.forEach(async id => {
-                await axios.get(BACKEND_URL + `/servizi/${id}/avvisi`)
-                .then(response => {
-                    console.log(response.data);
-                    // Non mette correttamente dentro alerts
-                    commit('addAlerts', {
-                        service_id: id,
-                        alerts: response.data,
-                    });
-                })
+            let alerts = {};
+
+            let fav = getters.getFavourites;
+            // Raccolgo tutte le richieste in un array
+            const promises = fav.map(async id => {
+                const response_service = await axios.get(BACKEND_URL + `/servizi/${id}`);
+
+                console.log(response_service.data);
+
+                const response = await axios.get(BACKEND_URL + `/servizi/${id}/avvisi`);
+                console.log(`Avvisi per il servizio ${id}:`, response.data);
+                alerts[response_service.data.titolo] = response.data;
             });
-            console.log("ALERTS-----------");
-            console.log(getters.getAlerts);
+
+            // Aspetta che tutte le promesse siano risolte
+            await Promise.all(promises);
+            commit('setAlerts', alerts);
+            
+            // console.log("---------ALERTS NELL'ACTION-----------");
+            // console.log(JSON.stringify(getters.getAlerts));
+            // console.log("STAMPA ALERT SINGOLO");
+            // console.log(getters.getAlerts["674ef57eebb1aca78e9fb775"][0]["titolo"]);
+
         } catch (error) {
             console.error(error);
             throw new Error("Impossibile trovare i servizi");

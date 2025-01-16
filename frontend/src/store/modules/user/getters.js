@@ -20,5 +20,8 @@ export default {
     },
     getService(state,id) {
         return state.services.find(service => service._id === id); 
+    },
+    getCurrentAlert(state,id) {
+        return state.currentAlert;
     }
 }

@@ -16,25 +16,30 @@
 <template>
   <div class="w-64 flex-col bg-gray-100 p-4 shadow-md mr-4 max-w-prose h-full">
     <!-- Ciclo sulle sezioni -->
-    <div v-for="(section, index) in sections" :key="index" class="mb-6">
+    <div v-for="(section, sectionIndex) in sections" :key="sectionIndex" class="mb-6">
       <!-- Titolo sezione -->
-      <h2 class="text-lg font-semibold mb-2">{{ section.title }}</h2>
+      <button class="text-lg font-semibold mb-2" @click="toggleSection(sectionIndex)">{{ section.title }}</button>
       <!-- Ciclo sui contenuti della sezione -->
-      <div v-for="(item, subIndex) in section.items" :key="subIndex" class="mb-4">
+      <div v-for="(item, itemIndex) of section.items" :key="itemIndex" class="mb-4" v-if="section.showItems">
         <button
-          @click="toggleSection(index, subIndex)"
+          @click="toggleDetails(sectionIndex, itemIndex)"
           class="w-full text-left font-medium text-gray-700"
         >
           {{ item.label }}
         </button>
         <!-- Mostra i dettagli se la sezione è aperta -->
         <div
-          v-if="isSectionOpen(index, subIndex)"
           class="ml-4 mt-2 text-sm text-gray-600 space-y-1"
+          v-if="item.showDetails"
         >
-          <p v-for="(detail, detailIndex) in item.details" :key="detailIndex">
+          <router-link 
+            to="/alert"
+            v-for="(detail, detailIndex) in item.details" 
+            :key="detailIndex"
+            @click.native = "getAlert(sectionIndex, itemIndex, detailIndex)"
+          >
             {{ detail }}
-          </p>
+          </router-link>
         </div>
       </div>
     </div>
@@ -42,6 +47,8 @@
 </template>
 
 <script>
+import store from '@/store';
+
 export default {
   props: {
     sections: {
@@ -50,19 +57,37 @@ export default {
       default: () => [],
     },
   },
+  created(){
+    // faccio vedere gli elementi della prima sezione
+    this.sections[0].showItems = true; 
+    this.sections[0].items[0].showDetails = true;
+  },
   data() {
     return {
-      openSections: {}, // Tiene traccia delle sezioni aperte
+      openSections: [], // Tiene traccia delle sezioni aperte
+      openedItems: []
     };
   },
   methods: {
-    toggleSection(sectionIndex, itemIndex) {
-      const key = `${sectionIndex}-${itemIndex}`;
-      this.$set(this.openSections, key, !this.openSections[key]);
+    toggleSection(sectionIndex) {
+      this.sections[sectionIndex].showItems = !this.sections[sectionIndex].showItems;
     },
-    isSectionOpen(sectionIndex, itemIndex) {
-      return this.openSections[`${sectionIndex}-${itemIndex}`] || false;
+    toggleDetails(sectionIndex, itemIndex){
+      let item = this.sections[sectionIndex].items[itemIndex];
+      item.showDetails = !item.showDetails;
     },
+    //imposta il current aler per farlo leggere alla view
+    getAlert(sectionIndex, itemIndex, detailIndex){
+      const service_id = this.sections[sectionIndex].items[itemIndex].label;
+      console.log("Service_id: " + service_id);
+
+      let alert = store.getters['user/getAlerts'][service_id][detailIndex];
+      console.log("Alert trovato: ")
+      console.log(alert);
+      
+      store.commit('user/setCurrentAlert',alert);
+
+    }
   },
 };
 </script>
