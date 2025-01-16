@@ -8,10 +8,9 @@ export default {
         services: [],
         favourites: [],
         alerts: {},
+        currentAlert: {},
         token: localStorage.getItem('token') || '',
         isAuthenticated: !!localStorage.getItem('token'),
-        
-        
     }),
     namespaced: true,
     mutations,

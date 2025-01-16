@@ -7,8 +7,9 @@ import AdminHomeView from '@/views/AdminHomeView.vue'
 import RequestView from '@/views/admin/RequestView.vue'
 import ServicesList from '@/views/admin/ServicesList.vue'
 import ModifyRequestView from '@/views/admin/ModifyRequestView.vue'
+import AlertView from '@/views/user/AlertView.vue'
 import store from '@/store';
-
+import ServicesView from '@/views/user/ServicesView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -24,6 +25,17 @@ const router = createRouter({
           next('/login');
         }
       },
+      children: [
+        {
+          path: '',
+          component: ServicesView
+        },
+        {
+          path:'alert',
+          component: AlertView,
+          props: true,
+        },
+      ]
     },
     {
       path: '/about',

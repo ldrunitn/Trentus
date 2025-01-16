@@ -13,6 +13,12 @@ export default {
     addAlerts(state, payload){
         state.alerts[payload["service_id"]] = payload["alerts"];
     },
+    setAlerts(state, payload){
+        state.alerts = payload;
+    },
+    setCurrentAlert(state, payload){
+        state.currentAlert = payload;
+    },
     logout(state) {
         state.token = "";
         state.isAuthenticated = false;

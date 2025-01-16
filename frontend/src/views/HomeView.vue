@@ -3,8 +3,7 @@ import TheWelcome from '../components/TheWelcome.vue'
 import Navbar from '../components/Navbar.vue';
 import SidebarLeft from '@/components/SidebarLeft.vue';
 import SidebarRight from '@/components/SidebarRight.vue';
-import ServicesCard from '@/components/ServicesCard.vue';
-import { ref, onMounted, onBeforeMount, computed} from 'vue';
+import { ref, onMounted, onBeforeMount, computed, reactive} from 'vue';
 import { useStore } from 'vuex';
 // const sidebarSections = [ //prova sidebar
 //   {
@@ -35,6 +34,8 @@ import { useStore } from 'vuex';
 //   },
 // ]
 
+const sidebarSections = reactive([
+]); //per le sezioni della sidebar sinistra
 
 const loading = ref(true);
 const store = useStore();
@@ -42,18 +43,49 @@ const services = computed(() => {
   console.log("computed services");
   return store.getters['user/getServices'];
 });
+const alerts = computed(() => {
+  console.log("computed alerts");
+  return store.getters['user/getAlerts'];
+});
+const SidebarSections = computed(()=>{
+  return sidebarSections;
+});
 onMounted( async () => {
   console.log("Creata");
   try {
-    await store.dispatch('user/fetchServices')
+    //fetch dei servizi
+    await store.dispatch('user/fetchServices')    
     
     loading.value = false;
     const servizi = store.getters['user/getServices'];
 
+    //fetch alerts dei preferiti
     await store.dispatch('user/fetchAlerts');
     const alerts = store.getters['user/getAlerts'];
 
-    console.log(alerts);
+    //formatto gli alerts per la sidebar
+    let alertSection = {
+      title: "Notifiche",
+    };
+    //guardo tutti i servizi che hanno mandato notifiche
+    let itemsArray = [];
+    for(const id in alerts){
+      let item = {};
+      item["label"] = id;
+      //scorro gli alerts
+      let details = [];
+      for(const al of alerts[id]){
+        details.push(al.titolo);
+      }
+      item["details"] = details;
+      itemsArray.push(item);
+    }
+    alertSection["items"] = itemsArray;
+
+    sidebarSections.push(alertSection);
+
+    console.log(sidebarSections);
+    
   } catch (error) {
     console.error(error)
   }
@@ -72,8 +104,8 @@ onMounted( async () => {
    <!-- vabbé in teoria è fatta basta copiaincollare il template di App.vue -->
   <Navbar />
   <div class="flex flex-row h-screen" >
-    <div class="basis-1/4 h-full"><SidebarLeft :sections="sidebarSections"/></div>
-    <div class="flex-grow" v-if="!loading"> <ServicesCard v-for="service in services" :service="service"/> </div>
+    <div class="basis-1/4 h-full"><SidebarLeft :sections="SidebarSections" v-if="sidebarSections.length >= 1"/></div>
+      <router-view class="flex-grow"></router-view>
     <div class="basis-1/4 flex justify-end h-full"><SidebarRight/> </div>
   </div>
   <!-- like this -->
