@@ -5,6 +5,7 @@ import actions from "./actions";
 import App from "@/App.vue";
 import userModule from "./modules/user/userModule";
 import gdsModule from "./modules/gds/gdsModule";
+import adminModule from "./modules/admin/adminModule";
 
 
 export default createStore ({
@@ -18,6 +19,7 @@ export default createStore ({
     modules: {
         user: userModule,
         gds: gdsModule,
+        admin: adminModule
     },
     mutations,
     getters,

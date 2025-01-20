@@ -4,7 +4,6 @@ import SidebarRight from '@/components/SidebarRight.vue';
 import ServicesCard from '@/components/ServicesCard.vue';
 import AdminSidebarLeft from '@/components/admin/sidebarLeft/AdminSidebarLeft.vue';
 import RequestView from './admin/RequestView.vue';
-import ModifyRequestView from './admin/ModifyRequestView.vue';
 export default{
   components: {
     Navbar,
@@ -12,7 +11,6 @@ export default{
     SidebarRight,
     ServicesCard,
     RequestView,
-    ModifyRequestView
   },
   data(){
     return{
@@ -77,7 +75,7 @@ export default{
   <Navbar></Navbar>
   <div class="flex flex-row h-screen" id="main">
     <div class="basis-1/4 h-full"><AdminSidebarLeft :sections="sidebarSections" /></div>
-    <RouterView></RouterView>
+    <RouterView class="flex-grow"></RouterView>
     <div class="basis-1/4 flex justify-end h-full"><SidebarRight/></div>
   </div>
 
