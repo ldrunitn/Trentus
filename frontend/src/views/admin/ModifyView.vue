@@ -1,0 +1,49 @@
+<script>
+export default{
+  props:{
+    service_id:{
+      type: String,
+      required: true
+    }
+  },
+  data(){
+    return{
+      service: {},
+    }
+  },
+  methods:{
+    findService(){
+      //metodo per recuperare la richiesta con l'id specificato dallo store vuex
+      const services = this.$store.getters["user/getServices"];
+      console.log("SERVIZIIIIIIIIIIIII");
+      console.log(services);
+      const service =  services.find(service => service._id == this.service_id);
+      console.log(service);
+      return service;
+    }
+  },
+  created(){
+    this.service = this.findService();
+  }
+}
+</script>
+<template>
+<div class="bg-white rounded-lg shadow-md p-16 max-w-100 mx-8 mt-4 w-full">
+  <h1 class="text-5xl text-gray-600 mb-10">Modifica servizio</h1>
+  <ul class="space-y-10 ml-5">
+    <li><span>Immagine: </span><input class="text-gray-600 bg-white border rounded p-1" :value="service.immagine"></li>
+    <li><span>Nome: </span><input class="text-gray-600 bg-white border rounded p-1" :value="service.titolo"></input></li>
+    <li><span>Link: </span><span class="text-gray-600"><input class="text-gray-600 bg-white border rounded p-1" :value="service.url" ></input></span></li>
+    <li><span>Azienda: </span><span class="text-gray-600"><input class="text-gray-600 bg-white border rounded p-1" :value="service.azienda" ></input></span></li>
+    <li>
+      <p>Descrizione: </p>
+      <p class="text-gray-600 mx-4 mt-5"><textarea class="text-gray-600 bg-white border rounded p-1 w-full" :value="service.descrizione"></textarea></p>
+    </li>
+  </ul>
+  <!-- pulsanti di conferma o annulla -->
+  <div class="flex flex-row flex-nowrap w-full justify-end space-x-4 mt-10">
+    <button class="hover:text-gray-600">Annulla</button>
+    <button class="bg-blue-400 text-white py-2 px-4 rounded hover:bg-blue-700">Conferma</button>
+  </div>
+</div>
+</template>
