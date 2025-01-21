@@ -21,6 +21,7 @@ export default {
             .then(response => {
                 console.log(response.data);
                 commit('setToken', response.data.token)
+                commit('setRole', "user", { root: true }); //imposto il ruolo globale
                 console.log(getters.getIsAuthenticated);
             })
             await axios.get(BACKEND_URL + '/utente/preferiti',{

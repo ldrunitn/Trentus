@@ -19,13 +19,13 @@ export default{
         if(this.password.trim() === "" || this.email.trim() === ""){
           throw new Error("Invalid credentials");
         }
-        await this.$store.dispatch('user/login', {
+        await this.$store.dispatch('gds/login', {
           email: this.email.trim(),
           password: this.password.trim(),
         });
-        if(this.$store.getters["user/getIsAuthenticated"]){
+        if(this.$store.getters["gds/getIsAuthenticated"]){
           console.log("Entrato");
-          this.$router.push("/");
+          this.$router.push("/gds/"+this.$store.getters["gds/getServiceId"]);
         }
       } catch (error) {
         this.errore = error;
@@ -45,6 +45,7 @@ export default{
             alt="logo_trentus"
             class=""
         />
+        <h1>as a service</h1>
     </div>
   
   <div class="mt-12 place-self-center items-center justify-center min-h-screen bg-gray-100 ">
@@ -68,8 +69,6 @@ export default{
     </div>
     <p class="place-self-center pt-4"><a href="" class="underline text-gray-800" >Forgot your Password?</a></p>
     <p class="place-self-center pt-2">Don't have an account? <router-link to="/register" class="underline text-gray-800">Register</router-link></p>
-    <p class="place-self-center pt-2">Gestisci un servizio? <router-link to="/gds/login" class="underline text-gray-800">clicca qui per fare il login</router-link></p>
-
   </div>
 </template>
 

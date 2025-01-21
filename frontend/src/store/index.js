@@ -11,9 +11,7 @@ import adminModule from "./modules/admin/adminModule";
 export default createStore ({
     state() {
         return {
-            token: "",
-            email: "",
-            
+            role: ""
         }
     },
     modules: {
