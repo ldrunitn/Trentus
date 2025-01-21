@@ -6,13 +6,8 @@ import mutations from "./mutations";
 
 export default {
     state: () => ({
-        titolo: "",
-        azienda: "",
-        url: "",
-        picture: File,
-        descrizione: "",
-        opzioniForm: [], //capiamo!
-        status: "",
+        service: {},
+        service_id: "",
         token: localStorage.getItem('token') || '',
         isAuthenticated: !!localStorage.getItem('token'),
     }),

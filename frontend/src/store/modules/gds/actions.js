@@ -9,29 +9,26 @@ export default {
             
         }
     },
-
-    login({commit,getters}, credentials) {
+    async login({commit,getters},credentials) {
         try{
-            let serviceId;
-            axios.post(BACKEND_URL + '/gds/login', credentials)
+            await axios.post(BACKEND_URL + '/gds/login', credentials)
             .then(response => {
+                console.log(response.data);
                 commit('setToken', response.data.token)
+                commit('setRole', "gds", { root: true }); //imposto il ruolo globale
+                console.log(getters.getIsAuthenticated);
             })
-            axios.get(BACKEND_URL + '/gds/servizio', {
-                    headers: {
-                        authorization: getters.getToken()
-                    }
+            await axios.get(BACKEND_URL + '/gds/servizio/',{
+                headers: {
+                    authorization: getters.getToken,
                 }
-            ).then(response => {
-                serviceId = response.data.id
-            })
-            axios.get(BACKEND_URL + '/gds/servizio/' + serviceId)
-            .then(response => {
-                commit('setService', response.data)
+            }).then(response => {
+                commit('setServiceId', response.data["servizio_id"]);
+                console.log(response.data["servizio_id"]);
             })
         }
         catch (error) {
-            console.log(error)
+            throw new Error("Login non riuscito");
         }
     },
 

@@ -1,14 +1,56 @@
 <script setup>
-import Navbar from '@/components/Navbar.vue'
-import SidebarLeft from '@/components/SidebarLeft.vue'
-import SidebarRight from '@/components/SidebarRight.vue'
 import { Bar, Doughnut } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PieController, ArcElement } from 'chart.js'
 import { data } from 'autoprefixer';
 import PopupReport from '@/components/PopupReport.vue';
+import axios from 'axios';
+import { onMounted, ref, useSSRContext } from 'vue';
+import { useRoute } from 'vue-router';
+import Comment from '@/components/services/Comment.vue';
+import { comment } from 'postcss';
+import { useStore } from 'vuex';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-ChartJS.register(Title, ArcElement, Tooltip, /*Legend,*/ BarElement, CategoryScale, LinearScale)
+const route = useRoute();
+const store = useStore();
 
+const role = store.getters['getRole'];
+const service_id = route.params.service_id;
+
+ChartJS.register(Title, ArcElement, Tooltip, /*Legend,*/ BarElement, CategoryScale, LinearScale);
+
+const service = ref({});
+const comments = ref({});
+//fetcha il servizio con id == service_id (prop)
+async function fetchService(){
+    try{
+        await axios.get(BACKEND_URL + `/servizi/${service_id}`,)
+        .then(response => {
+            service.value = response.data;
+        })  
+    }
+    catch(e){
+        console.error(e);
+    }
+    console.log(service.value);
+}
+//stessa cosa per i commenti
+async function fetchComments(){
+  try{
+    await axios.get(BACKEND_URL + `/servizi/${service_id}/segnalazioni/commenti`,)
+    .then(response => {
+        comments.value = response.data;
+    })  
+  }
+  catch(e){
+      console.error(e);
+  }
+  console.log("Commenti fetchati");
+  console.log(comments);
+}
+//le chiamo subito
+fetchService();
+fetchComments();
 
 const chartData = {
     labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
@@ -54,52 +96,32 @@ const chartOptionsDoughnut = {
     //     }
     // }
 }
-const sidebarSections = [ //prova sidebar
-    {
-        title: 'Sezione 1',
-        items: [
-            {
-                label: 'Item 1',
-                details: ['Dettaglio 1', 'Dettaglio 2'],
-            },
-            {
-                label: 'Item 2',
-                details: ['Dettaglio 1', 'Dettaglio 2'],
-            },
-        ],
-    },
-    {
-        title: 'Sezione 2',
-        items: [
-            {
-                label: 'Item 1',
-                details: ['Dettaglio 1', 'Dettaglio 2'],
-            },
-            {
-                label: 'Item 2',
-                details: ['Dettaglio 1', 'Dettaglio 2'],
-            },
-        ],
-    },
-]
-
 </script>
 
 <template>
-    <Navbar/>
     <div class="flex h-screen bg-gray-100">
-    
-      <SidebarLeft :sections="sidebarSections"/>
-  
+     
       <!-- Area principale -->
       <main class="flex-1 p-6">
         <!-- Informazioni Servizio -->
         <div class="bg-white p-4 rounded shadow flex items-center justify-between">
-            <div class="flex-shrink-0"><img src="@/assets/logo.svg" alt="Logo"></div>
-            <div class="ml-4">
-                <h2 class="text-red-500 mr-4">Servizio Offline <i class="pi pi-circle-fill text-red-500 text-sm ml-1 align-middle"></i></h2>
-                <!-- <button class="bg-red-500 text-white rounded-lg border-slate-950 shadow mt-1 w-20 h-8 text-center">Segnala</button> -->
-                <PopupReport/>
+            <div class="flex-shrink-0 flex flex-col space-y-5">
+                <p>{{ service["foto"] }}</p>
+                <p class="text-3xl">
+                  <span>{{ service["titolo"] }}</span><br>
+                  <span class="text-lg text-gray-400">Azienda: {{ service["azienda"] }}</span>
+                </p>
+                <p class="text-xs text-gray-700">Descrizione: {{ service["descrizione"] }}</p>
+            
+              </div>
+
+            <div class="ml-4 flex-row space-x-4">
+                <h2 class="text-red-500 mr-4" v-if="service['stato'] == 'off'">Servizio Offline <i class="pi pi-circle-fill text-red-500 text-sm ml-1 align-middle"></i></h2>
+                <h2 class="text-green-500 mr-4" v-else >Servizio Online <i class="pi pi-circle-fill text-green-500 text-sm ml-1 align-middle"></i></h2>
+
+                <button class="bg-red-500 text-white rounded-lg border-slate-950 shadow mt-1 w-20 h-8 text-center">Segnala</button>
+                <button class="bg-blue-500 text-white rounded-lg border-slate-950 shadow mt-1 w-20 h-8 text-center" v-if="role === 'admin' || role === 'gds'">Modifica</button> <!-- viene mostrato solamente se il ruolo è admin o gds -->
+                <!-- <PopupReport/> -->
             </div>
         </div>
 
@@ -114,15 +136,11 @@ const sidebarSections = [ //prova sidebar
           <!-- Commenti -->
           <div class="bg-white p-4 rounded shadow">
             <h3 class="font-semibold mb-4">Commenti</h3>
-            <ul>
-              <li class="mb-4">
-                <strong>@MarcoUser01</strong>
-                <p>Ottimo servizio!</p>
-              </li>
-              <li>
-                <strong>@LuigiUser02</strong>
-                <p>Alcuni aspetti migliorabili.</p>
-              </li>
+            <ul class="space-y-3">
+              <comment
+                v-for="c in comments"
+                :text="c['commento']"
+              ></comment>
             </ul>
           </div>
 
@@ -135,7 +153,6 @@ const sidebarSections = [ //prova sidebar
           </div>
         </div>
       </main>  
-      <SidebarRight/> 
     </div>
   </template>
   

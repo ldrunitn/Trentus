@@ -1,37 +1,16 @@
 export default {
-    setTitle(state,newTitle) {
-        state.titolo = newTitle;
-    },
-    setCompany(state,newCompany) {
-        state.azienda = newCompany;
-    },
-    setUrl(state,newUrl) {
-        state.url = newUrl;
-    },
-    setPicture(state,newPicture) {
-        state.picture = newPicture;
-    },
-    setDescription(state,newDescription) {
-        state.descrizione = newDescription;
-    },
-    setOptionsForm(state,newOptionsForm) {
-        state.opzioniForm = newOptionsForm;
-    },
-    setStatus(state,newStatus) {
-        state.status = newStatus;
-    },
+    // setOptionsForm(state,newOptionsForm) {
+    //     state.opzioniForm = newOptionsForm;
+    // },
     setToken(state,newToken) {
         state.token = newToken;
         state.isAuthenticated = true;
     },
     setService(state,service) {
-        state.titolo = service.titolo;
-        state.azienda = service.azienda;
-        state.url = service.url;
-        state.picture = service.picture;
-        state.descrizione = service.descrizione;
-        state.opzioniForm = service.opzioniForm;
-        state.status = service.status;
+        state.service = service;
+    },
+    setServiceId(state, id){
+        state.service_id = id;
     },
     logout(state) {
         state.token = '';

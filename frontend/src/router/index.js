@@ -10,6 +10,7 @@ import AlertView from '@/views/user/AlertView.vue'
 import store from '@/store';
 import ServicesView from '@/views/user/ServicesView.vue'
 import ServicesViewAdmin from '@/views/admin/ServicesViewAdmin.vue'
+import LoginViewGdS from '@/views/gds/LoginViewGdS.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -51,6 +52,11 @@ const router = createRouter({
       component: LoginView,
     },
     {
+      path: '/gds/login',
+      name: 'login gds',
+      component: LoginViewGdS
+    },
+    {
       path: '/register',
       name: 'registration',
       component: RegistrationView,
@@ -79,6 +85,18 @@ const router = createRouter({
           path:':service_id/modify',
           component: ModifyView,
           props: true
+        }
+      ]
+    },
+    {
+      path: '/gds',
+      name: 'GdS Homepage',
+      component: HomeView,
+      children: [
+        {
+          path: ':service_id',
+          component: ServiceView,
+          props: true,
         }
       ]
     }
