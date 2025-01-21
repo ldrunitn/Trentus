@@ -26,10 +26,15 @@ const schemaServizio = new mongoose.Schema({
     required: false,
     maxlength: [255, "Il contenuto può avere massimo 255 caratteri"]
   },
+  stato: {
+    type: String,
+    enum:['on','off'],
+    required: true
+  },
   form: {
     type: [schemaOpzione.opSingolaSchema],
     required: false
-  },
+  }
 }, {
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
 });
