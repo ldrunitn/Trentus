@@ -9,33 +9,99 @@ const { graficoTorta, graficoLinee } = require('../controllers/graphsController'
 // Middleware
 const { checkRuolo, usaToken, checkServizioId, CheckDirittiServizio } = require('../middleware/authMiddleware');
 
-// Restitusce un oggetto con la form di segnalazione compilabile per uno specifico servizio
 router.get('/form', checkServizioId, async (req, res) => {
+  // #swagger.description = 'Restituisce la form di segnalazione compilabile per un servizio'
+  /* #swagger.responses[200] = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/Servizio/properties/Form"
+          }
+        }           
+      }
+    }   
+  */
   getForm(req, res);
 });
 
-// Genera la form di segnalazione compilabile del servizio specificato
 router.post('/form', checkServizioId, usaToken, checkRuolo(['gds']), CheckDirittiServizio, async (req, res) => {
+  // #swagger.description = 'Genera la form di segnalazione compilabile per un servizio'
+  // #swagger.security = [{ "BearerAuth": ['gds'] }]
+  /* #swagger.requestBody = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/Servizio/properties/Form"
+          }
+        }           
+      }
+    }   
+  */
   generaForm(req, res);
 });
 
-// Salva i dati del form di segnalazione del servizio compilata dall'utente
 router.post('/compila', checkServizioId, usaToken, checkRuolo(['utente']), async (req, res) => {
+  // #swagger.description = 'Salva i dati del form di segnalazione del servizio compilato dall'utente'
+  // #swagger.security = [{ "BearerAuth": ['utente'] }]
+  /* #swagger.requestBody = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/Segnalazione"
+          }
+        }           
+      }
+    }   
+  */
   compilaForm(req, res);
 });
 
-// Restituisce i commenti delle segnalazioni di un servizio
 router.get('/commenti', checkServizioId, async (req, res) => {
+  // #swagger.description = 'Restituisce i commenti delle segnalazioni di un servizio'
+  /* #swagger.responses[200] = {
+      content: {
+        "application/json": {
+          schema: {
+            type: "array",
+            items: {
+              $ref: "#/components/schemas/Segnalazione/properties/Commento"
+            }
+          }
+        }           
+      }
+    }   
+  */
   getCommenti(req, res);
 });
 
 // Restituisce dati per la creazione del grafico di frequenza segnalazioni
 router.get('/graficolinee', checkServizioId, async (req, res) => {
+  // #swagger.description = 'Restituisce dati per la creazione del grafico di frequenza segnalazioni'
+  /* #swagger.responses[200] = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/Segnalazione/properties/Grafico"
+          }
+        }           
+      } 
+    }   
+  */
   graficoLinee(req, res)
 });
 
-// Restituisce dati per la creazione del grafico di frequenza problemi riscontrati
 router.get('/graficotorta', checkServizioId, async (req, res) => {
+  // #swagger.description = 'Restituisce dati per la creazione del grafico di problemi riscontrati'
+  /* #swagger.responses[200] = {
+      content: {
+        "application/json": {
+          schema:{
+            $ref: "#/components/schemas/Segnalazione/properties/Grafico"
+          }
+        }           
+      }
+    }   
+  */
   graficoTorta(req, res)
 });
 
