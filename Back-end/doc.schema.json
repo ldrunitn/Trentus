@@ -221,6 +221,11 @@
                 "maxLength": 255,
                 "description": "Descrizione del servizio (opzionale), massimo 255 caratteri"
             },
+            "Stato": {
+                "type": "string",
+                "maxLength": 3,
+                "description": "Stato del servizio (on/off)"
+            },
             "Form": {
                 "type": "array",
                 "items": {

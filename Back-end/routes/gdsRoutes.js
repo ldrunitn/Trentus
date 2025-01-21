@@ -44,7 +44,6 @@ router.get('/conferma/:richiesta_id', /*usaToken, checkRuolo(['superadmin']),*/ 
   if(req.headers['authorization'] == "Luca") confermaRichiesta(req, res);
 });
 
-// Restituisce il servizio associato al GdS
 router.get('/servizio', usaToken, checkRuolo(['gds']), async (req,res)=>{
   // #swagger.description = 'Restituisce il servizio associato al GdS'
   // #swagger.security = [{ "BearerAuth": ['gds'] }]
