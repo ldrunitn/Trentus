@@ -15,7 +15,7 @@ router.get('/form', checkServizioId, async (req, res) => {
       content: {
         "application/json": {
           schema:{
-            $ref: "#/components/schemas/Servizio/Form"
+            $ref: "#/components/schemas/Servizio/properties/Form"
           }
         }           
       }
@@ -31,7 +31,7 @@ router.post('/form', checkServizioId, usaToken, checkRuolo(['gds']), CheckDiritt
       content: {
         "application/json": {
           schema:{
-            $ref: "#/components/schemas/Servizio/Form"
+            $ref: "#/components/schemas/Servizio/properties/Form"
           }
         }           
       }
@@ -64,7 +64,7 @@ router.get('/commenti', checkServizioId, async (req, res) => {
           schema: {
             type: "array",
             items: {
-              $ref: "#/components/schemas/Segnalazione/Commento"
+              $ref: "#/components/schemas/Segnalazione/properties/Commento"
             }
           }
         }           
@@ -81,7 +81,7 @@ router.get('/graficolinee', checkServizioId, async (req, res) => {
       content: {
         "application/json": {
           schema:{
-            $ref: "#/components/schemas/Grafico"
+            $ref: "#/components/schemas/Segnalazione/properties/Grafico"
           }
         }           
       } 
@@ -96,7 +96,7 @@ router.get('/graficotorta', checkServizioId, async (req, res) => {
       content: {
         "application/json": {
           schema:{
-            $ref: "#/components/schemas/Grafico"
+            $ref: "#/components/schemas/Segnalazione/properties/Grafico"
           }
         }           
       }

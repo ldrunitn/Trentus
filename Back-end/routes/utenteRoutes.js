@@ -61,7 +61,7 @@ router.get('/preferiti', usaToken, checkRuolo(['utente']), (req,res)=>{
       content: {
         "application/json": {
           schema:{
-            $ref: "#/components/schemas/Utente/Preferiti"
+            $ref: "#/components/schemas/Utente/properties/Preferiti"
           }
         }           
       }
