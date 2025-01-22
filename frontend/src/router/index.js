@@ -11,6 +11,7 @@ import store from '@/store';
 import ServicesView from '@/views/user/ServicesView.vue'
 import ServicesViewAdmin from '@/views/admin/ServicesViewAdmin.vue'
 import LoginViewGdS from '@/views/gds/LoginViewGdS.vue'
+import EditForm from '@/views/gds/EditForm.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
