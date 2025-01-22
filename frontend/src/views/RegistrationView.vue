@@ -51,7 +51,7 @@ export default{
         <input v-model="password" type="password" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Insert your Password">
         <input v-model="passwordRepeat" type="password" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Repeat your Password">
         <ErrorMessage :message="errore" class="rounded-lg" v-if="errore"></ErrorMessage>
-        <button @click="register" class="w-52 h-8 bg-gray-300 text-black border border-gray-400 shadow-md rounded-lg mt-8">Register</button>
+        <button @click="register" class="w-52 h-8 bg-purple-600 text-white rounded-lg hover:bg-purple-700 mt-8">Register</button>
       </div>
     </div>
     <p class="place-self-center pt-4">Do you manage a service?</p>
