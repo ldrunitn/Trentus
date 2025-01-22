@@ -9,6 +9,7 @@ import { useRoute } from 'vue-router';
 import Comment from '@/components/services/Comment.vue';
 import { comment } from 'postcss';
 import { useStore } from 'vuex';
+import EditForm from './gds/EditForm.vue';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const route = useRoute();
@@ -23,10 +24,12 @@ const service = ref({});
 const comments = ref({});
 //fetcha il servizio con id == service_id (prop)
 async function fetchService(){
+  console.log("fetch del servizio");
     try{
         await axios.get(BACKEND_URL + `/servizi/${service_id}`,)
         .then(response => {
             service.value = response.data;
+            store.commit("gds/setService",response.data);
         })  
     }
     catch(e){
@@ -151,7 +154,11 @@ const chartOptionsDoughnut = {
             <h3 class="font-semibold mb-2">Motivo delle segnalazioni</h3>
             <div class="h-40 bg-white rounded"><Doughnut id="my-chart-id" :options="chartOptionsDoughnut" :data="chartData"/></div>
           </div>
+          <!-- Form di segnalazione -->
+          <edit-form :service="service" @update-form="fetchService"></edit-form>
         </div>
+
+        
       </main>  
     </div>
   </template>
