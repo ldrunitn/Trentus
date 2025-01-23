@@ -6,6 +6,7 @@ import SidebarRight from '@/components/SidebarRight.vue';
 
 
 <template>
+  <Navbar/>
   <div class="flex h-full bg-gray-100">
     <!-- Contenuto principale -->
     <main class="flex-1 flex items-center justify-center">
@@ -34,11 +35,11 @@ import SidebarRight from '@/components/SidebarRight.vue';
           placeholder="Descrivi qui il tuo problema (opzionale)"
         ></textarea> <!-- Commento -->
         <div class="flex justify-end space-x-4">
-          <button class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Annulla</button>
-          <button class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">Conferma</button>
+          <router-link to="/" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Annulla</router-link>
+          <router-link to="/" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">Conferma</router-link> <!-- Pop-up di riuscita segnalazione o pagina? -->
         </div>
       </section>
-    </main>
+    </main>>
   </div>
 </template>
 
