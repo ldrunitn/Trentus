@@ -122,8 +122,8 @@ const chartOptionsDoughnut = {
                 <h2 class="text-red-500 mr-4" v-if="service['stato'] == 'off'">Servizio Offline <i class="pi pi-circle-fill text-red-500 text-sm ml-1 align-middle"></i></h2>
                 <h2 class="text-green-500 mr-4" v-else >Servizio Online <i class="pi pi-circle-fill text-green-500 text-sm ml-1 align-middle"></i></h2>
 
-                <button class="bg-red-500 text-white rounded-lg border-slate-950 shadow mt-1 w-20 h-8 text-center">Segnala</button>
-                <button class="bg-blue-500 text-white rounded-lg border-slate-950 shadow mt-1 w-20 h-8 text-center" v-if="role === 'admin' || role === 'gds'">Modifica</button> <!-- viene mostrato solamente se il ruolo è admin o gds -->
+                <button class="bg-red-500 text-white rounded-lg border-slate-950 shadow mt-1 w-20 h-8 text-center" v-if="role==='user'">Segnala</button>
+                <router-link class="btn bg-blue-500 text-white rounded-lg text-center" v-if="role === 'admin' || role === 'gds'" :to="`/gds/${service_id}/modify`">Modifica</router-link> <!-- viene mostrato solamente se il ruolo è admin o gds -->
                 <!-- <PopupReport/> -->
             </div>
         </div>

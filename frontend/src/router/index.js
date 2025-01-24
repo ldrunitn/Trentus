@@ -98,6 +98,11 @@ const router = createRouter({
           path: ':service_id',
           component: ServiceView,
           props: true,
+        },
+        {
+          path:':service_id/modify',
+          component: ModifyView,
+          props: true
         }
       ]
     }

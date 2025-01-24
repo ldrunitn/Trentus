@@ -12,8 +12,9 @@ export default{
     }
   },
   methods:{
-    findService(){
+    async findService(){
       //metodo per recuperare la richiesta con l'id specificato dallo store vuex
+      await this.$store.dispatch('user/fetchServices');
       const services = this.$store.getters["user/getServices"];
       console.log("SERVIZIIIIIIIIIIIII");
       console.log(services);
@@ -22,8 +23,8 @@ export default{
       return service;
     }
   },
-  created(){
-    this.service = this.findService();
+  async created(){
+    this.service = await this.findService();
   }
 }
 </script>
@@ -31,7 +32,7 @@ export default{
 <div class="bg-white rounded-lg shadow-md p-16 max-w-100 mx-8 mt-4 w-full">
   <h1 class="text-5xl text-gray-600 mb-10">Modifica servizio</h1>
   <ul class="space-y-10 ml-5">
-    <li><span>Immagine: </span><input class="text-gray-600 bg-white border rounded p-1" :value="service.immagine"></li>
+    <li><span>Immagine: </span><input class="text-gray-600 bg-white border rounded p-1" :value="service.foto"></li>
     <li><span>Nome: </span><input class="text-gray-600 bg-white border rounded p-1" :value="service.titolo"></input></li>
     <li><span>Link: </span><span class="text-gray-600"><input class="text-gray-600 bg-white border rounded p-1" :value="service.url" ></input></span></li>
     <li><span>Azienda: </span><span class="text-gray-600"><input class="text-gray-600 bg-white border rounded p-1" :value="service.azienda" ></input></span></li>
