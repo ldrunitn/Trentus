@@ -1,6 +1,10 @@
 // Imposatzione Express 
 const express = require('express');
 const app = express();
+const cors = require('cors');
+
+//cors
+app.use(cors());
 
 // Impostazione Database
 const db = require('./models/db');
