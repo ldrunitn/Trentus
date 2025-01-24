@@ -12,6 +12,7 @@ import ServicesView from '@/views/user/ServicesView.vue'
 import ServicesViewAdmin from '@/views/admin/ServicesViewAdmin.vue'
 import LoginViewGdS from '@/views/gds/LoginViewGdS.vue'
 import EditForm from '@/views/gds/EditForm.vue'
+import ReportView from '@/views/ReportView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -66,6 +67,11 @@ const router = createRouter({
       path: '/service',
       name: 'service',
       component: ServiceView,
+    },
+    {
+      path: '/report',
+      name: 'report',
+      component: ReportView,
     },
     {
       path: '/admin',
