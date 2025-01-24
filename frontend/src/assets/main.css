@@ -4,6 +4,15 @@
 @import "tailwindcss/utilities";
 
 
+body {
+  background-color: #f3f4f6;
+}
+
+body {
+  font-family: 'Product Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+
 
 /* #app {
   max-width: 1280px;
