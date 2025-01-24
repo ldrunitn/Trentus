@@ -21,7 +21,7 @@ const store = useStore();
 //chiama l'api per creare la form
 function submitForm(){
   if(option.value.trim() === ""){
-    errore.value == "Opzione non presente"
+    errore.value = "Opzione non presente"
     return;
   }
   try {
@@ -48,10 +48,41 @@ function submitForm(){
       })
 
   } catch (error) {
-    console.error(error);
+    errore.value = "Errore nell'aggiunta di un opzione";
   }
+}
+//per rimuovere un opzione
+function removeOption(op){
+  let form = props.service['form'];
+  form = form.filter(item => item['opzione'] !== op);
+  console.log("Nuova form");
+  console.log(form);
 
+  try {
+    let options = [];
+    for(let item of form){
+      options.push(item['opzione']);
+    }
+    const data = {
+      opzioni: options,
+    }
+    console.log(data);
+    const config = {
+      headers: {
+        'Content-Type' : 'application/json',
+        'authorization': store.getters['gds/getToken']
+      }
+    }
+    axios.post(BACKEND_URL + `/servizi/${props.service['_id']}/segnalazioni/form`,data,config)
+      .then(response => {
+        console.log(response.data);
+        emit('updateForm'); //aggiorna la UI della  form
+        console.log("Evento emesso");
+      })
 
+  } catch (error) {
+    errore.value = "Errore nell'eliminazione dell'opzione"
+  }
 }
 </script>
 <template>
@@ -59,14 +90,14 @@ function submitForm(){
   <!-- Lista di possibili opzioni -->
   <h1 class="text-2xl">Form di segnalazione</h1>
   lista di possibili opzioni: 
-  <ul>
-    <li v-for="item in service['form']">- {{ item['opzione'] }}</li>
+  <ul class="space-y-4">
+    <li v-for="item in service['form']" key="item">- {{ item['opzione'] }} <button class="btn-elimina rounded-lg" @click="removeOption(item['opzione'])">Elimina</button></li>
   </ul>
 
   <!-- Possbilità di aggiungere un'opzione -->
-  <input class="input-custom" v-model="option" type="text" placeholder="Scrivi qui l'opzione da aggiungere">
-  <button class="btn m-4 bg-blue-500 text-white" @click="submitForm">Aggiungi</button>
+  <input class="input-custom m-4" v-model="option" type="text" placeholder="Scrivi qui l'opzione da aggiungere">
   <error-message v-if="errore" :message="errore"></error-message>
+  <button class="btn m-4 bg-blue-500 text-white" @click="submitForm">Aggiungi</button>
 </div>
 </template>
 <style scoped>
@@ -74,5 +105,10 @@ function submitForm(){
   border: 1px solid black;
   padding: 4px;
   width: 100%;
+}
+.btn-elimina{
+  background-color: rgb(255, 130, 130);
+  color: white;
+  padding: 3px;
 }
 </style>
