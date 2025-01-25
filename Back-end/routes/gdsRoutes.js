@@ -3,11 +3,11 @@ const router = express.Router();
 
 // Controllers
 const { validaCredenziali } = require('../controllers/gdsController');
-const { creaRichiesta, confermaRichiesta } = require('../controllers/richiestaGdSController');
+const { creaRichiesta } = require('../controllers/richiestaGdSController');
 // const gdsController = require(process.cwd()+'/controllers/gds/gdsController');
 
 // Middleware 
-const { usaToken, checkRuolo } = require('../middleware/authMiddleware');
+const { usaToken, checkRuolo, CheckDirittiServizio } = require('../middleware/authMiddleware');
 
 router.post('/login', async (req, res) => {
   // #swagger.description = 'Login GdS'
@@ -38,14 +38,9 @@ router.post('/registrazione', async (req, res) => {
   */
   creaRichiesta(req,res);
 });
- 
-router.get('/conferma/:richiesta_id', /*usaToken, checkRuolo(['superadmin']),*/ async (req,res)=>{
-  // #swagger.description = 'Conferma la richiesta di registrazione per un GdS'
-  if(req.headers['authorization'] == "Luca") confermaRichiesta(req, res);
-});
 
 // Restituisce il servizio associato al GdS
-router.get('/servizio', usaToken, checkRuolo(['gds']), async (req,res)=>{
+router.get('/servizio', usaToken, checkRuolo(['gds']), CheckDirittiServizio, async (req,res)=>{
   // #swagger.description = 'Restituisce il servizio associato al GdS'
   // #swagger.security = [{ "BearerAuth": ['gds'] }]
   /* #swagger.responses[200] = {
