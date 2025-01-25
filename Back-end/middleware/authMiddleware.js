@@ -63,6 +63,8 @@ exports.checkRuolo = (roles) => {
 
 // Verifico che il GdS sia il possessore del servizio utilizzato
 exports.CheckDirittiServizio = async (req, res, next) => {
+  console.log(req.user.servizio_id)
+  console.log(req.servizio_id)
   if (req.user.servizio_id != req.servizio_id) {
     return res.status(403).json({ message: 'Accesso negato. Non gestisci questo servizio.' });
   }

@@ -1,5 +1,3 @@
-const mongoose = require('mongoose');
-
 // Models
 const GdS = require('../models/gds.model');
 const Servizio = require('../models/servizio.model');
@@ -11,7 +9,8 @@ exports.creaServizio = async (request, session) => {
     azienda: request['azienda'],
     url: request['url'],
     foto: request['foto'],
-    descrizione: request['descrizione']
+    descrizione: request['descrizione'],
+    stato: "on"
   });
   const service_id = await servizio.save({session}); //salvo il servizio ottenendo l'id
   return service_id;
@@ -40,3 +39,48 @@ exports.getServizi = async (req,res) => {
     res.status(500).json({ message: 'Errore nel recupero dei dati', error: error.message });
   }
 }
+
+// Modifica stato servizio
+exports.servizioFunzionante = async (req, res) => {
+  try {
+    let servizio = await Servizio.findById(req.servizio_id);
+    
+    servizio.stato = servizio.stato === "on" ? "off" : "on";
+
+    await servizio.save();
+
+    return res.status(201).json({message: 'servizio ora ' + servizio.stato});
+  } catch (error) {
+    return res.status(500).json({ message: "Errore nel modificare lo stato", error: error.message });
+  }
+};
+
+exports.servizioOn = async (req, res) => {
+  try {
+    let servizio = await Servizio.findById(req.servizio_id);
+    
+    servizio.stato = "on";
+    servizio.motivo = " ";
+
+    await servizio.save();
+
+    return res.status(201).json({message: 'servizio ora ' + servizio.stato});
+  } catch (error) {
+    return res.status(500).json({ message: "Errore nel modificare lo stato", error: error.message });
+  }
+};
+
+exports.servizioOff = async (req, res) => {
+  try {
+    let servizio = await Servizio.findById(req.servizio_id);
+    
+    servizio.stato = "off";
+    servizio.motivo = req.body.tipo;
+
+    await servizio.save();
+
+    return res.status(201).json({message: 'servizio ora ' + servizio.stato + ", motivo " +  servizio.motivo, avviso_id: req.avviso_id});
+  } catch (error) {
+    return res.status(500).json({ message: "Errore nel modificare lo stato", error: error.message });
+  }
+};
