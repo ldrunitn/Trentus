@@ -53,7 +53,8 @@ exports.checkServizioId = (req, res, next) => {
 // Controlla che il ruolo dell'utente che cerca di accedere sia quello specificato
 exports.checkRuolo = (roles) => { 
   return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
+    if (req.user.role == "SuperAdmin") {}
+    else if (!roles.includes(req.user.role)) {
       return res.status(403).json({ message: 'Accesso negato. Non hai i permessi per questa azione.' });
     }
     next(); // Passa al prossimo middleware o al controller della rotta

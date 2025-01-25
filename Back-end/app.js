@@ -1,6 +1,10 @@
 // Imposatzione Express 
 const express = require('express');
 const app = express();
+const cors = require('cors');
+
+//cors
+app.use(cors());
 
 // Impostazione Database
 const db = require('./models/db');
@@ -16,6 +20,7 @@ const path = require('path');
 const logger = require('morgan');
 
 // Prelevo le routes
+const adminRoutes = require('./routes/adminRoutes');
 const avvisiRoutes = require('./routes/avvisiRoutes');
 const gdsRoutes = require('./routes/gdsRoutes');
 const segnalazioniRoutes = require('./routes/segnalazioniRoutes');
@@ -43,6 +48,7 @@ app.use('/servizi/:servizio_id/segnalazioni', SIDSave, segnalazioniRoutes);
 app.use('/gds', gdsRoutes);
 app.use('/utente', utenteRoutes);
 app.use('/servizi', serviziRoutes);
+app.use('/controlpanel', adminRoutes);
 
 // Gestore errore 404
 app.use(function (req, res, next) {
