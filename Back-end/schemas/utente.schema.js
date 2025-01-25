@@ -20,6 +20,10 @@ const schemaUtente = new mongoose.Schema({
     required: false,
     default: [],
   },
+  checkSuperAdmin:{
+    type: Boolean,
+    required: false
+  }
 }, {
   timestamps: true // Per aggiungere automaticamente campi createdAt e updatedAt
 });
