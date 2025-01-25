@@ -47,7 +47,7 @@ exports.creaRichiesta = async (req,res) => {
 }
 
 // Conferma la creazione di un nuovo gds ed il suo servizio associato
-exports.confermaRichiesta = async (req, res) => { // Attenzione, solo il superdmin può invocarla
+exports.confermaRichiesta = async (req, res) => { 
   const requestID = req.params.richiesta_id;
   if (!mongoose.Types.ObjectId.isValid(requestID)) {
     return res.status(400).json({ message: 'ID non valido' });
@@ -84,4 +84,16 @@ exports.confermaRichiesta = async (req, res) => { // Attenzione, solo il superdm
   finally{
     session.endSession();
   }
+}
+
+// Ottieni le richeste fatte al gds
+exports.getRichieste = async (req, res) => { 
+  try {
+      let richieste = await richiestaGdS.find({ confermata: false });
+      return res.status(201).json(richieste);
+    }
+    catch(err){
+      console.log(err.message);
+      return res.status(500).json({message: 'Errore del server'});
+    }
 }
