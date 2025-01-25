@@ -41,7 +41,7 @@ exports.getServizi = async (req,res) => {
 }
 
 // Modifica stato servizio
-exports.modificaStato = async (req, res) => {
+exports.servizioFunzionante = async (req, res) => {
   try {
     let servizio = await Servizio.findById(req.servizio_id);
     
@@ -50,6 +50,36 @@ exports.modificaStato = async (req, res) => {
     await servizio.save();
 
     return res.status(201).json({message: 'servizio ora ' + servizio.stato});
+  } catch (error) {
+    return res.status(500).json({ message: "Errore nel modificare lo stato", error: error.message });
+  }
+};
+
+exports.servizioOn = async (req, res) => {
+  try {
+    let servizio = await Servizio.findById(req.servizio_id);
+    
+    servizio.stato = "on";
+    servizio.motivo = " ";
+
+    await servizio.save();
+
+    return res.status(201).json({message: 'servizio ora ' + servizio.stato});
+  } catch (error) {
+    return res.status(500).json({ message: "Errore nel modificare lo stato", error: error.message });
+  }
+};
+
+exports.servizioOff = async (req, res) => {
+  try {
+    let servizio = await Servizio.findById(req.servizio_id);
+    
+    servizio.stato = "off";
+    servizio.motivo = req.body.tipo;
+
+    await servizio.save();
+
+    return res.status(201).json({message: 'servizio ora ' + servizio.stato + ", motivo " +  servizio.motivo, avviso_id: req.avviso_id});
   } catch (error) {
     return res.status(500).json({ message: "Errore nel modificare lo stato", error: error.message });
   }

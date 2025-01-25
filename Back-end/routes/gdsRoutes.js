@@ -40,7 +40,7 @@ router.post('/registrazione', async (req, res) => {
 });
 
 // Restituisce il servizio associato al GdS
-router.get('/servizio', usaToken, checkRuolo(['gds']), CheckDirittiServizio, async (req,res)=>{
+router.get('/servizio', usaToken, checkRuolo(['gds']), async (req,res)=>{
   // #swagger.description = 'Restituisce il servizio associato al GdS'
   // #swagger.security = [{ "BearerAuth": ['gds'] }]
   /* #swagger.responses[200] = {
