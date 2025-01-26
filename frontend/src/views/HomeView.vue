@@ -108,8 +108,12 @@ onMounted( async () => {
   <Navbar />
   <div class="flex flex-row h-screen" >
     <div class="basis-1/4 h-full"><SidebarLeft :sections="SidebarSections" v-if="sidebarSections.length >= 1"/></div>
-      <router-view class="flex-grow" :key="route.fullPath"></router-view>
+      <router-view class="flex-grow view" :key="route.fullPath"></router-view>
     <div class="basis-1/4 flex justify-end h-full"><SidebarRight/> </div>
   </div>
   <!-- like this -->
 </template>
+
+<style>
+
+</style>

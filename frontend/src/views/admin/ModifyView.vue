@@ -44,7 +44,19 @@ export default{
   <!-- pulsanti di conferma o annulla -->
   <div class="flex flex-row flex-nowrap w-full justify-end space-x-4 mt-10">
     <button class="hover:text-gray-600">Annulla</button>
-    <button class="bg-blue-400 text-white py-2 px-4 rounded hover:bg-blue-700">Conferma</button>
+    <button class="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700">Conferma</button>
   </div>
 </div>
 </template>
+
+<style scoped>
+main::-webkit-scrollbar{
+    display: none;
+  }
+  main{
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    margin-bottom: 50px;
+  }
+</style>
