@@ -2,12 +2,18 @@
 import Navbar from '@/components/Navbar.vue';
 import SidebarLeft from '@/components/SidebarLeft.vue';
 import SidebarRight from '@/components/SidebarRight.vue';
+import ErrorMessage from '@/components/ErrorMessage.vue';
+import SuccessMessage from '@/components/SuccessMessage.vue';
 import { onMounted, ref } from 'vue';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 import axios from 'axios';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const store = useStore();
+const errore = ref("");
+const successo = ref("");
 const service = ref({});
 const commento = ref("");
 const selectedOptions = ref([]);
@@ -31,8 +37,42 @@ async function fetchService(){
     }
     console.log(service.value);
 }
-function submitForm(){
-  console.log(selectedOptions.value);
+async function submitForm(){
+  console.log("Submit")
+  if(selectedOptions.value.length == 0){
+    errore.value = "Nessuna opzione selezionata";
+    successo.value = "";
+    return;
+  }
+  try{
+    const data = {
+      "risposte" : selectedOptions.value,
+      "commento" : commento.value
+    }
+    console.log("dati segnalazione");
+    console.log(data);
+    const config = {
+      headers: {
+        'Content-Type' : 'application/json',
+        'authorization' : store.getters['user/getToken'],
+      }
+    }
+    axios.post(BACKEND_URL + `/servizi/${props.service_id}/segnalazioni/compila`,data,config)
+      .then(response => {
+        console.log(response.data);
+        console.log("Segnalazione mandata")
+        successo.value = "Segnalazione mandata con successo";
+        errore.value = "";
+      })
+  }
+  catch(error){
+    console.error(error);
+    errore.value = "Errore nella creazione della segnalazione"
+    successo.value = "";
+  }
+}
+function goBack(){
+  router.go(-1);
 }
 onMounted(async()=>{
   await fetchService();
@@ -64,8 +104,10 @@ onMounted(async()=>{
           class="w-full p-3 border rounded-lg focus:ring focus:ring-purple-300"
           placeholder="Descrivi qui il tuo problema (opzionale)"
         ></textarea> <!-- Commento -->
+        <success-message :message="successo" v-if="successo"></success-message>
+        <error-message :message="errore" v-if="errore"></error-message>
         <div class="flex justify-end space-x-4">
-          <router-link to="/" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Annulla</router-link>
+          <button class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400" @click="goBack()">Annulla</button>
           <button class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700" @click="submitForm">Conferma</button> <!-- Pop-up di riuscita segnalazione o pagina? -->
         </div>
       </section>
