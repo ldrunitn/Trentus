@@ -105,76 +105,82 @@ const chartOptionsDoughnut = {
 </script>
 
 <template>
-    <div class="flex h-screen bg-gray-100 service">
-     
-      <!-- Area principale -->
-      <main class="flex-1 p-6">
-        <!-- Informazioni Servizio -->
-        <div class="bg-white p-4 rounded shadow flex items-center justify-between">
-            <div class="flex-shrink-0 flex flex-col space-y-5">
-                <p>{{ service["foto"] }}</p>
-                <p class="text-3xl">
-                  <span>{{ service["titolo"] }}</span><br>
-                  <span class="text-lg text-gray-400">Azienda: {{ service["azienda"] }}</span>
-                </p>
-                <p class="text-xs text-gray-700">Descrizione: {{ service["descrizione"] }}</p>
-            
-              </div>
+  <div class="flex h-screen bg-gray-100 service overflow-hidden">
+    <!-- Area principale -->
+    <main class="flex-1 p-6 overflow-y-auto">
+      <!-- Informazioni Servizio -->
+      <div class="bg-white p-4 rounded shadow flex items-center justify-between">
+        <div class="flex-shrink-0 flex flex-col space-y-5">
+          <p>{{ service["foto"] }}</p>
+          <p class="text-3xl">
+            <span>{{ service["titolo"] }}</span><br>
+            <span class="text-lg text-gray-400">Azienda: {{ service["azienda"] }}</span>
+          </p>
+          <p class="text-xs text-gray-700">Descrizione: {{ service["descrizione"] }}</p>
+        </div>
+        <div class="ml-4 flex-row space-x-4">
+          <h2 class="text-red-500 mr-4" v-if="service['stato'] == 'off'">Servizio Offline</h2>
+          <h2 class="text-green-500 mr-4" v-else>Servizio Online</h2>
+          <router-link
+            class="btn bg-red-500 text-white rounded-lg text-center mt-2"
+            v-if="role === 'user'"
+            :to="`/service/${service_id}/report`"
+          >Segnala</router-link>
+          <router-link
+            class="btn bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-center"
+            v-if="role === 'admin' || role === 'gds'"
+            :to="`/gds/${service_id}/modify`"
+          >Modifica</router-link>
+        </div>
+      </div>
 
-            <div class="ml-4 flex-row space-x-4">
-                <h2 class="text-red-500 mr-4" v-if="service['stato'] == 'off'">Servizio Offline <i class="pi pi-circle-fill text-red-500 text-sm ml-1 align-middle"></i></h2>
-                <h2 class="text-green-500 mr-4" v-else >Servizio Online <i class="pi pi-circle-fill text-green-500 text-sm ml-1 align-middle"></i></h2>
-
-                <router-link class="btn bg-red-500 text-white rounded-lg text-center" v-if="role==='user'" :to="`/service/${service_id}/report`">Segnala</router-link>
-                <router-link class="btn bg-blue-500 text-white rounded-lg text-center" v-if="role === 'admin' || role === 'gds'" :to="`/gds/${service_id}/modify`">Modifica</router-link> <!-- viene mostrato solamente se il ruolo è admin o gds -->
-                <!-- <PopupReport/> -->
-            </div>
+      <!-- Grafico e commenti -->
+      <div class="grid grid-cols-3 gap-4 pt-4">
+        <!-- Grafico a barre -->
+        <div class="col-span-3 bg-white p-4 rounded shadow">
+          <h3 class="font-semibold mb-4">Segnalazioni negli ultimi 10 giorni</h3>
+          <div class="h-40"><Bar :options="chartOptionsBar" :data="chartData" /></div>
         </div>
 
-        <!-- Grafico e commenti -->
-        <div class="grid grid-cols-3 gap-4 pt-4">
-          <!-- Grafico a barre -->
-          <div class="col-span-3 bg-white p-4 rounded shadow">
-            <h3 class="font-semibold mb-4">Segnalazioni negli ultimi 10 giorni</h3>
-            <div class="h-40 bg-white rounded"><Bar id="my-chart-id" :options="chartOptionsBar" :data="chartData"/></div>
-          </div>
-  
-          <!-- Commenti -->
-          <div class="bg-white p-4 rounded shadow">
-            <h3 class="font-semibold mb-4">Commenti</h3>
-            <ul class="space-y-3">
-              <comment
-                v-for="c in comments"
-                :text="c['commento']"
-                :email = "c['utente_id']['email']"
-              ></comment>
-            </ul>
-          </div>
-
-        
-
-          <!-- Grafico a ciambella -->
-          <div class="bg-white p-4 rounded shadow col-span-2">
-            <h3 class="font-semibold mb-2">Motivo delle segnalazioni</h3>
-            <div class="h-40 bg-white rounded"><Doughnut id="my-chart-id" :options="chartOptionsDoughnut" :data="chartData"/></div>
-          </div>
-          <!-- Form di segnalazione -->
-          <edit-form v-if="role === 'admin' || role === 'gds'" :service="service" @update-form="fetchService"></edit-form>
+        <!-- Commenti -->
+        <div class="bg-white p-4 rounded shadow col-span-1">
+          <h3 class="font-semibold mb-4">Commenti</h3>
+          <ul class="space-y-3">
+            <comment
+              v-for="c in comments"
+              :key="c.id"
+              :text="c.commento"
+              :email="c.utente_id.email"
+            />
+          </ul>
         </div>
 
-        
-      </main>  
-    </div>
-  </template>
+        <!-- Grafico a ciambella -->
+        <div class="bg-white p-4 rounded shadow col-span-2">
+          <h3 class="font-semibold mb-2">Motivo delle segnalazioni</h3>
+          <div class="h-40"><Doughnut :options="chartOptionsDoughnut" :data="chartData" /></div>
+        </div>
+
+        <!-- Form di segnalazione -->
+        <edit-form
+          v-if="role === 'admin' || role === 'gds'"
+          :service="service"
+          @update-form="fetchService"
+        ></edit-form>
+      </div>
+    </main>
+  </div>
+</template>
+
   
   <style scoped>
-  .service::-webkit-scrollbar{
+  main::-webkit-scrollbar{
     display: none;
   }
-  .service{
+  main{
     overflow: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    padding-bottom: 30px;
+    margin-bottom: 50px;
   }
   </style>
