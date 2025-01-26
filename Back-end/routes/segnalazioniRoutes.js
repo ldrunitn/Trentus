@@ -64,6 +64,7 @@ router.get('/commenti', checkServizioId, async (req, res) => {
           schema: {
             type: "array",
             items: {
+              $ref: "#/components/schemas/Segnalazione/properties/utente_id",
               $ref: "#/components/schemas/Segnalazione/properties/Commento"
             }
           }

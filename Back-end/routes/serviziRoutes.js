@@ -6,7 +6,7 @@ const { getServizi, getServizio, servizioOn } = require('../controllers/servizio
 // const serviziController = require(process.cwd()+'/controllers/servizi/serviziController');
 
 // Middleware
-const { checkServizioId, SIDSave, usaToken, checkRuolo,CheckDirittiServizio } = require('../middleware/authMiddleware');
+const { checkServizioId, SIDSave, usaToken, checkRuolo, CheckDirittiServizio } = require('../middleware/authMiddleware');
 
 router.get('/', async (req, res) => {
   // #swagger.description = 'Restituisce tutti i servizi'

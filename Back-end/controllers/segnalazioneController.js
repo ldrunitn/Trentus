@@ -31,7 +31,7 @@ exports.compilaForm = async (req,res) => {
 
 exports.getCommenti = async (req,res) => {
   try {
-    let commenti = await Segnalazione.find({ servizio_id: req.servizio_id }).select("commento");
+    let commenti = await Segnalazione.find({ servizio_id: req.servizio_id }).select("commento utente_id");
     return res.status(201).json(commenti);
   }
   catch(err){
