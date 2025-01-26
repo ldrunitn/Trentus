@@ -14,30 +14,43 @@ import LoginViewGdS from '@/views/gds/LoginViewGdS.vue'
 import EditForm from '@/views/gds/EditForm.vue'
 import ReportView from '@/views/ReportView.vue'
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  //import.meta.env.BASE_URL
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
       name: 'home',
       component: HomeView,
-      beforeEnter: (to, from, next) => {
-        console.log(store.getters['user/getIsAuthenticated'])
-        if (store.getters['user/getIsAuthenticated']) {
-          next();
-        } else {
-          next('/login');
-        }
-      },
+      // beforeEnter: (to, from, next) => {
+      //   console.log(store.getters['user/getIsAuthenticated'])
+      //   if (store.getters['user/getIsAuthenticated']) {
+      //     next();
+      //   } else {
+      //     next('/login');
+      //   }
+      // },
       children: [
         {
           path: '',
-          component: ServicesView
+          component: ServicesView,
         },
         {
           path:'alert',
           component: AlertView,
           props: true,
         },
+        {
+          path: 'service/:service_id',
+          name: "service-details",
+          component: ServiceView,
+          props: true
+        },
+        {
+          path: 'service/:service_id/report',
+          name: "service-report",
+          component: ReportView,
+          props: true
+        }
       ]
     },
     {
@@ -62,11 +75,6 @@ const router = createRouter({
       path: '/register',
       name: 'registration',
       component: RegistrationView,
-    },
-    {
-      path: '/service',
-      name: 'service',
-      component: ServiceView,
     },
     {
       path: '/report',
@@ -115,5 +123,11 @@ const router = createRouter({
     
   ],
 })
+router.afterEach((to, from) => {
+  console.log('Navigazione completata:', to.path);
+  if(to.path !== from.path){
+    // window.location.reload();
+  }
+});
 
 export default router

@@ -6,8 +6,11 @@
 
 body {
   background-color: #f3f4f6;
+  overflow: hidden;
 }
-
+body::-webkit-scrollbar{
+  display: none;
+}
 body {
   font-family: 'Product Sans', 'Helvetica Neue', Arial, sans-serif;
 }
