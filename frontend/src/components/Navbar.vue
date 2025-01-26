@@ -12,6 +12,7 @@ export default{
         favUrl: "/src/assets/favorite.svg",
         darkTheme: false,
         favorites: [1,3],
+        dropdown: false,
         services: [
                 {
                 _id: 1,
@@ -44,6 +45,13 @@ export default{
             this.services.forEach((service) => {
                 service.show = this.favorites.include(service.id);
             });
+        },
+        toggleDropdown() {
+            this.dropdown = !this.dropdown;
+        },
+        logout() {
+            this.$store.commit('user/logout');
+            this.$router.push('/login');
         }
     }   
 }
@@ -57,8 +65,9 @@ export default{
         <div class="flex flex-nowrap ml-auto place-content-evenly" id="buttons">
             <ul class="flex space-x-4 flex-nowrap items-center mr-4">
                 <li><nav-button to="favorites" @click="toggleFavorites"><img class="size-9" src="/src/assets/favorite.svg" alt="Preferiti"></nav-button></li>
-                <li><nav-button to="/darkTheme"><img class="size-9" src="/src/assets/settings.svg" alt=""></nav-button></li>
-                <li><nav-button to="/settings" @click="toggleDarkTheme"><img class="size-9" src="/src/assets/theme.svg" alt=""></nav-button></li>
+                <li><nav-button to="/settings" @click.prevent="toggleDropdown"><img class="size-9 hover:bg-purple-400 hover:rounded-full" src="/src/assets/settings.svg" alt=""></nav-button></li>
+                <button v-if="dropdown" @click="logout" class="bg-gray-100 absolute mt-15 w-20 ml-9 border border-black font-normal text-black text-center">logout</button>
+                <li><nav-button to="/darkTheme" @click="toggleDarkTheme"><img class="size-9" src="/src/assets/theme.svg" alt=""></nav-button></li>
             </ul>
         </div>
     </nav>
