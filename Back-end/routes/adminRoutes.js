@@ -9,6 +9,7 @@ const { usaToken, checkRuolo } = require('../middleware/authMiddleware');
 
 router.post('/login', async (req, res) => {
   // #swagger.description = 'Login Superadmin'
+  // #swagger.security = [{ "BearerAuth": ['SuperAdmin'] }]
   /* #swagger.requestBody = {
       content: {
         "application/json": {
@@ -24,6 +25,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/confermagds/lista', usaToken, checkRuolo(['SuperAdmin']), async (req,res)=>{
   // #swagger.description = 'Ottieni richieste di registrazione per un GdS'
+  // #swagger.security = [{ "BearerAuth": ['SuperAdmin'] }]
   /* #swagger.response[200] = {
       content: {
         "application/json": {
@@ -42,6 +44,7 @@ router.get('/confermagds/lista', usaToken, checkRuolo(['SuperAdmin']), async (re
 
 router.get('/confermagds/:richiesta_id', usaToken, checkRuolo(['SuperAdmin']), async (req,res)=>{
   // #swagger.description = 'Conferma la richiesta di registrazione per un GdS'
+  // #swagger.security = [{ "BearerAuth": ['SuperAdmin'] }]
   /* #swagger.response[200] = {
       content: {
         "application/json": {
