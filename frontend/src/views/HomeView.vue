@@ -5,6 +5,7 @@ import SidebarLeft from '@/components/SidebarLeft.vue';
 import SidebarRight from '@/components/SidebarRight.vue';
 import { ref, onMounted, onBeforeMount, computed, reactive} from 'vue';
 import { useStore } from 'vuex';
+import { useRoute, useRouter } from 'vue-router';
 // const sidebarSections = [ //prova sidebar
 //   {
 //     title: 'Sezione 1',
@@ -39,6 +40,8 @@ const sidebarSections = reactive([
 
 const loading = ref(true);
 const store = useStore();
+const route = useRoute();
+const router = useRouter();
 const services = computed(() => {
   console.log("computed services");
   return store.getters['user/getServices'];
@@ -105,7 +108,7 @@ onMounted( async () => {
   <Navbar />
   <div class="flex flex-row h-screen" >
     <div class="basis-1/4 h-full"><SidebarLeft :sections="SidebarSections" v-if="sidebarSections.length >= 1"/></div>
-      <router-view class="flex-grow"></router-view>
+      <router-view class="flex-grow" :key="route.fullPath"></router-view>
     <div class="basis-1/4 flex justify-end h-full"><SidebarRight/> </div>
   </div>
   <!-- like this -->

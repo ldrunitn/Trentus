@@ -1,4 +1,4 @@
-<script setup>
+1<script setup>
 import { ref, onMounted, computed} from 'vue';
 import { useStore } from 'vuex';
 import ServicesCard from '@/components/ServicesCard.vue';
@@ -22,5 +22,16 @@ onMounted( async () => {
 })
 </script>
 <template>
-    <div v-if="!loading"> <ServicesCard v-for="service in services" :service="service"/> </div>
+    <div class="services" v-if="!loading"> <ServicesCard v-for="service in services" :service="service"/> </div>
 </template>
+
+<style scoped>
+.services::-webkit-scrollbar{
+  display: none;
+}
+.services{
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+</style>

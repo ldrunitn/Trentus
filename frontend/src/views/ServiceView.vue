@@ -43,18 +43,21 @@ async function fetchComments(){
     await axios.get(BACKEND_URL + `/servizi/${service_id}/segnalazioni/commenti`,)
     .then(response => {
         comments.value = response.data;
+        console.log("Commenti fetchati");
+        console.log(comments.value);
     })  
   }
   catch(e){
       console.error(e);
   }
-  console.log("Commenti fetchati");
-  console.log(comments);
+
 }
 //le chiamo subito
-fetchService();
-fetchComments();
+onMounted(async()=> {
+  await fetchService();
+  await fetchComments();
 
+});
 const chartData = {
     labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
     datasets: [
@@ -102,7 +105,7 @@ const chartOptionsDoughnut = {
 </script>
 
 <template>
-    <div class="flex h-screen bg-gray-100">
+    <div class="flex h-screen bg-gray-100 service">
      
       <!-- Area principale -->
       <main class="flex-1 p-6">
@@ -122,7 +125,7 @@ const chartOptionsDoughnut = {
                 <h2 class="text-red-500 mr-4" v-if="service['stato'] == 'off'">Servizio Offline <i class="pi pi-circle-fill text-red-500 text-sm ml-1 align-middle"></i></h2>
                 <h2 class="text-green-500 mr-4" v-else >Servizio Online <i class="pi pi-circle-fill text-green-500 text-sm ml-1 align-middle"></i></h2>
 
-                <button class="bg-red-500 text-white rounded-lg border-slate-950 shadow mt-1 w-20 h-8 text-center" v-if="role==='user'">Segnala</button>
+                <router-link class="btn bg-red-500 text-white rounded-lg text-center" v-if="role==='user'" :to="`/service/${service_id}/report`">Segnala</router-link>
                 <router-link class="btn bg-blue-500 text-white rounded-lg text-center" v-if="role === 'admin' || role === 'gds'" :to="`/gds/${service_id}/modify`">Modifica</router-link> <!-- viene mostrato solamente se il ruolo è admin o gds -->
                 <!-- <PopupReport/> -->
             </div>
@@ -143,6 +146,7 @@ const chartOptionsDoughnut = {
               <comment
                 v-for="c in comments"
                 :text="c['commento']"
+                :email = "c['utente_id']['email']"
               ></comment>
             </ul>
           </div>
@@ -155,7 +159,7 @@ const chartOptionsDoughnut = {
             <div class="h-40 bg-white rounded"><Doughnut id="my-chart-id" :options="chartOptionsDoughnut" :data="chartData"/></div>
           </div>
           <!-- Form di segnalazione -->
-          <edit-form :service="service" @update-form="fetchService"></edit-form>
+          <edit-form v-if="role === 'admin' || role === 'gds'" :service="service" @update-form="fetchService"></edit-form>
         </div>
 
         
@@ -163,3 +167,14 @@ const chartOptionsDoughnut = {
     </div>
   </template>
   
+  <style scoped>
+  .service::-webkit-scrollbar{
+    display: none;
+  }
+  .service{
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding-bottom: 30px;
+  }
+  </style>
