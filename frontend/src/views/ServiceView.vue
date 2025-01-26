@@ -140,7 +140,7 @@ const chartOptionsDoughnut = {
           </div>
   
           <!-- Commenti -->
-          <div class="bg-white p-4 rounded shadow">
+          <div class="bg-white p-4 rounded shadow comments-container max-h-72 overflow-y-scroll">
             <h3 class="font-semibold mb-4">Commenti</h3>
             <ul class="space-y-3">
               <comment
