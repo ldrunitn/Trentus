@@ -48,7 +48,7 @@
         }
       },
       "post": {
-        "description": "Crea un avviso",
+        "description": "Crea un avviso e modifica lo stato del servizio!!!!!",
         "parameters": [
           {
             "name": "servizio_id",
@@ -67,9 +67,6 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
           "400": {
             "description": "Bad Request"
           },
@@ -964,6 +961,52 @@
         }
       }
     },
+    "/servizi/{servizio_id}/riabilita": {
+      "post": {
+        "description": "Servizio ON",
+        "parameters": [
+          {
+            "name": "servizio_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "gds"
+            ]
+          }
+        ]
+      }
+    },
     "/controlpanel/login": {
       "post": {
         "description": "Login Superadmin",
@@ -978,6 +1021,13 @@
             "description": "Internal Server Error"
           }
         },
+        "security": [
+          {
+            "BearerAuth": [
+              "SuperAdmin"
+            ]
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1014,7 +1064,14 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "SuperAdmin"
+            ]
+          }
+        ]
       }
     },
     "/controlpanel/confermagds/{richiesta_id}": {
@@ -1056,7 +1113,14 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "SuperAdmin"
+            ]
+          }
+        ]
       }
     }
   },
@@ -1283,6 +1347,11 @@
             "type": "string",
             "maxLength": 255,
             "description": "Descrizione del servizio (opzionale), massimo 255 caratteri"
+          },
+          "Stato": {
+            "type": "string",
+            "maxLength": 3,
+            "description": "Stato del servizio (on/off)"
           },
           "Form": {
             "type": "array",
