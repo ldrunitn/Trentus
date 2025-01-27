@@ -63,7 +63,7 @@ const chartData = {
     datasets: [
         {
             label: 'Data One',
-            backgroundColor: [ '#7f79f8' ],
+            backgroundColor: [ '#7e22ce' ],
             data: [40, 20, 30, 50, 60, 70, 80, 90, 100, 110]
         }
     ]
