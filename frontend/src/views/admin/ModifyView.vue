@@ -23,7 +23,7 @@ export default{
       return service;
     },
     goBack(){
-      this.$router.push(-1);
+      this.$router.go(-1);
     }
   },
   async created(){

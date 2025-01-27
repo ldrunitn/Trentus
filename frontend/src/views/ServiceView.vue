@@ -5,7 +5,7 @@ import { data } from 'autoprefixer';
 import PopupReport from '@/components/PopupReport.vue';
 import axios from 'axios';
 import { onMounted, ref, useSSRContext } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import Comment from '@/components/services/Comment.vue';
 import { comment } from 'postcss';
 import { useStore } from 'vuex';
@@ -13,6 +13,7 @@ import EditForm from './gds/EditForm.vue';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const route = useRoute();
+const router = useRouter();
 const store = useStore();
 
 const role = store.getters['getRole'];
@@ -50,7 +51,9 @@ async function fetchComments(){
   catch(e){
       console.error(e);
   }
-
+}
+function goBack(){
+  router.go(-1);
 }
 //le chiamo subito
 onMounted(async()=> {
@@ -144,7 +147,7 @@ const chartOptionsDoughnut = {
         </div>
 
         <!-- Commenti -->
-        <div class="bg-white p-4 rounded shadow comments-container max-h-72 overflow-y-scroll col-span-1">
+        <div class="bg-white p-4 rounded shadow comments-container max-h-72 overflow-y-scroll col-span-2">
           <h3 class="font-semibold mb-4">Commenti</h3>
           <ul class="space-y-3">
             <comment
@@ -157,7 +160,7 @@ const chartOptionsDoughnut = {
         </div>
 
         <!-- Grafico a ciambella -->
-        <div class="bg-white p-4 rounded shadow col-span-2">
+        <div class="bg-white p-4 rounded shadow col-span-1">
           <h3 class="font-semibold mb-2">Motivo delle segnalazioni</h3>
           <div class="h-40"><Doughnut :options="chartOptionsDoughnut" :data="chartData" /></div>
         </div>
@@ -168,6 +171,7 @@ const chartOptionsDoughnut = {
           :service="service"
           @update-form="fetchService"
         ></edit-form>
+        <button class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 col-end-4" @click="goBack()">Indietro</button>
       </div>
     </main>
   </div>
