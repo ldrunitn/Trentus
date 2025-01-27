@@ -167,11 +167,12 @@ const chartOptionsDoughnut = {
 
         <!-- Form di segnalazione -->
         <edit-form
+          class="col-start-1 col-span-3"
           v-if="role === 'admin' || role === 'gds'"
           :service="service"
           @update-form="fetchService"
         ></edit-form>
-        <button class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 col-end-4" @click="goBack()">Indietro</button>
+        <button class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 col-end-4" @click="goBack()" v-if="role === 'user' || role === 'admin'">Indietro</button>
       </div>
     </main>
   </div>
