@@ -13,6 +13,7 @@ export default{
         darkTheme: false,
         favorites: [1,3],
         dropdown: false,
+        // role: this.$store.getters['getRole'],
         services: [
                 {
                 _id: 1,
@@ -50,8 +51,15 @@ export default{
             this.dropdown = !this.dropdown;
         },
         logout() {
-            this.$store.commit('user/logout');
-            this.$router.push('/login');
+            console.log('autismo')
+           if(this.$store.getters['getRole'] === 'user') {
+                this.$store.commit('user/logout');
+                this.$router.push('/login');
+           } else if(this.$store.getters['getRole'] === 'gds') {
+                this.$store.commit('gds/logout');
+                this.$router.push('/gds/login');
+
+           }
         }
     },   
     computed: {

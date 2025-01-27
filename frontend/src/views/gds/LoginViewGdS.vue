@@ -45,7 +45,7 @@ export default{
             alt="logo_trentus"
             class=""
         />
-        <h1>as a service</h1>
+        <h1 class="text-black">as a service</h1>
     </div>
   
   <div class="mt-12 place-self-center items-center justify-center min-h-screen bg-gray-100 ">
