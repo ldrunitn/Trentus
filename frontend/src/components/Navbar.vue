@@ -52,14 +52,15 @@ export default{
         },
         logout() {
             console.log('autismo')
+            console.log(this.$store.getters['getRole']);
            if(this.$store.getters['getRole'] === 'user') {
                 this.$store.commit('user/logout');
                 this.$router.push('/login');
            } else if(this.$store.getters['getRole'] === 'gds') {
                 this.$store.commit('gds/logout');
                 this.$router.push('/gds/login');
-
            }
+           this.$store.commit('setRole',""); // resetto anche il ruolo
         }
     },   
     computed: {

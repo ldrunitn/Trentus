@@ -106,12 +106,11 @@ onMounted( async () => {
   <!-- sidebars (a destra bisogna fare un v-for con dellle mini schede api, a sinistra dei paragrafi che si possano collassare )  -->
    <!-- vabbé in teoria è fatta basta copiaincollare il template di App.vue -->
   <Navbar />
-  <div class="flex flex-row h-screen" >
-    <div class="basis-1/4 h-full"><SidebarLeft :sections="SidebarSections" v-if="sidebarSections.length >= 1"/></div>
-      <router-view class="flex-grow view" :key="route.fullPath"></router-view>
-    <div class="basis-1/4 flex justify-end h-full"><SidebarRight/> </div>
+   <div class="grid grid-cols-7 h-screen" >
+    <div class=" col-start-1 col-span-1 h-full"><SidebarLeft :sections="SidebarSections" v-if="sidebarSections.length >= 1"/></div>
+      <router-view class="col-start-3 col-span-3" :key="route.fullPath"></router-view>
+    <div class="flex h-full col-start-7 col-span-1"><SidebarRight/> </div>
   </div>
-  <!-- like this -->
 </template>
 
 <style>
