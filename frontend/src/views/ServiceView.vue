@@ -56,6 +56,7 @@ async function fetchComments(){
 onMounted(async()=> {
   await fetchService();
   await fetchComments();
+  comments.value.reverse();
 
 });
 const chartData = {
