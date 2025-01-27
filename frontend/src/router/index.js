@@ -21,14 +21,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-      // beforeEnter: (to, from, next) => {
-      //   console.log(store.getters['user/getIsAuthenticated'])
-      //   if (store.getters['user/getIsAuthenticated']) {
-      //     next();
-      //   } else {
-      //     next('/login');
-      //   }
-      // },
+      meta: { roles: ['user']},
       children: [
         {
           path: '',
@@ -53,14 +46,14 @@ const router = createRouter({
         }
       ]
     },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
-    },
+    // {
+    //   path: '/about',
+    //   name: 'about',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (About.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import('../views/AboutView.vue'),
+    // },
     {
       path: '/login',
       name: 'login',
@@ -84,6 +77,7 @@ const router = createRouter({
     {
       path: '/admin',
       name: 'Admin Homepage',
+      meta: { roles: ['admin'] },
       component: AdminHomeView,
       children: [
         {
@@ -106,6 +100,7 @@ const router = createRouter({
     {
       path: '/gds',
       name: 'GdS Homepage',
+      meta: { roles: ['gds']},
       component: HomeView,
       children: [
         {
@@ -123,10 +118,14 @@ const router = createRouter({
     
   ],
 })
-router.afterEach((to, from) => {
-  console.log('Navigazione completata:', to.path);
-  if(to.path !== from.path){
-    // window.location.reload();
+router.afterEach((to, from, next) => {
+  const userRole = store.state.getters['getRole'];
+  const requiredRoles = to.meta.roles;
+
+  if (requiredRoles && !requiredRoles.includes(userRole)) {
+    next('/login'); //non permesso
+  } else {
+    next(); //permesso
   }
 });
 
