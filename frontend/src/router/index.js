@@ -13,6 +13,7 @@ import LoginViewGdS from '@/views/gds/LoginViewGdS.vue'
 import ReportView from '@/views/ReportView.vue'
 import SendAlert from '@/views/gds/SendAlert.vue'
 import store from '@/store'
+import E404View from '@/views/E404View.vue'
 const router = createRouter({
   //import.meta.env.BASE_URL
   history: createWebHistory(),
@@ -116,10 +117,9 @@ const router = createRouter({
       ]
     },
     {
-      path: '/alert',
-      component: AlertView,
-      props:true,
-      meta: { roles: ['user','gds']}
+      path: '/:catchAll(.*)',
+      name: '404',
+      component: E404View,
     },
     
   ],
