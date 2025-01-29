@@ -42,7 +42,7 @@ router.get('/confermagds/lista', usaToken, checkRuolo(['SuperAdmin']), async (re
   getRichieste(req, res);
 });
 
-router.get('/confermagds/:richiesta_id', usaToken, checkRuolo(['SuperAdmin']), async (req,res)=>{
+router.post('/confermagds/:richiesta_id', usaToken, checkRuolo(['SuperAdmin']), async (req,res)=>{
   // #swagger.description = 'Conferma la richiesta di registrazione per un GdS'
   // #swagger.security = [{ "BearerAuth": ['SuperAdmin'] }]
   /* #swagger.response[200] = {
