@@ -10,9 +10,8 @@ import AlertView from '@/views/user/AlertView.vue'
 import ServicesView from '@/views/user/ServicesView.vue'
 import ServicesViewAdmin from '@/views/admin/ServicesViewAdmin.vue'
 import LoginViewGdS from '@/views/gds/LoginViewGdS.vue'
-import EditForm from '@/views/gds/EditForm.vue'
 import ReportView from '@/views/ReportView.vue'
-
+import SendAlert from '@/views/gds/SendAlert.vue'
 import store from '@/store'
 const router = createRouter({
   //import.meta.env.BASE_URL
@@ -78,7 +77,6 @@ const router = createRouter({
     {
       path: '/admin',
       name: 'Admin Homepage',
-      meta: { roles: ['admin'] },
       component: AdminHomeView,
       children: [
         {
@@ -113,6 +111,10 @@ const router = createRouter({
           path:':service_id/modify',
           component: ModifyView,
           props: true
+        },{
+          path: ':service_id/sendalert',
+          component: SendAlert,
+          props: true
         }
       ]
     }
@@ -123,10 +125,6 @@ router.beforeEach((to, from, next) => {
   // const userRole = store.getters['getRole'];
   const userRole = store.state.role;
   const requiredRoles = to.meta.roles;
-
-  if(!requiredRoles){ //nel caso in cui non siano impostati i ruoli
-    next(); 
-  }
 
   if (requiredRoles && !requiredRoles.includes(userRole)) {
     next('/login'); //non permesso
