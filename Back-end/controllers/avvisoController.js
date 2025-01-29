@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-var postmark = require("postmark");
-var client = new postmark.Client("b790e07c-63b5-4cb3-aeec-cd621242f6d5");
+const nodemailer = require('nodemailer');
 
 // Model
 const Avviso = require('../models/avviso.model');
@@ -26,6 +25,9 @@ exports.creaAvviso = async (req,  res) => {
       await inviaEmailInteressati(req, res);
       res.status(200).send('Avviso creato e email inviata!');
     } catch (err) {
+      if (err.name === "ValidationError") {
+        return res.status(400).json({ error: err.message });
+      }
       res.status(500).send('Errore nella creazione dell\'avviso');
     }
 }
@@ -63,38 +65,29 @@ const inviaEmailInteressati = async (req, res) => {
       return;
     }
 
-    // Creiamo l'array degli indirizzi email degli utenti
-    const destinatari = utenti.map(user => user.email);
+    const transporter = nodemailer.createTransport({ sendmail: true });
 
-    utenti.forEach(async (user) => {
-      client.sendEmail({
-        from: 'no-reply@trentus.it',
+    const emailPromises = utenti.map(user => {
+      const mailOptions = {
+        from: "no-reply@trentus.it",
         to: user.email,
-        subject: 'Nuovo Avviso - Servizio Preferito',
-        html: `<p>Ciao Luca,</p>
+        subject: 'Avviso servizio: '+ req.servizio_id,
+        html: `<p>Ciao ${user.nome},</p>
                <p>È stato creato un nuovo avviso per il tuo servizio preferito. Ecco i dettagli:</p>
                <p><strong>Titolo:</strong> ${req.body.titolo}</p>
                <p><strong>Descrizione:</strong> ${req.body.corpo}</p>
                <p><strong>Periodo:</strong> ${new Date(req.body.inizio).toLocaleDateString()} - ${new Date(req.body.fine).toLocaleDateString()}</p>`
-      })
+      };
+      
+      return transporter.sendMail(mailOptions);
     });
 
-    client.sendEmail({
-      from: 'no-reply@trentus.it',
-      to: 'luca.dariz-1@studenti.unitn.it',
-      subject: 'Nuovo Avviso - Servizio Preferito',
-      html: `<p>Ciao ${user.nome},</p>
-             <p>È stato creato un nuovo avviso per il tuo servizio preferito. Ecco i dettagli:</p>
-             <p><strong>Titolo:</strong> ${req.body.titolo}</p>
-             <p><strong>Descrizione:</strong> ${req.body.corpo}</p>
-             <p><strong>Periodo:</strong> ${new Date(req.body.inizio).toLocaleDateString()} - ${new Date(req.body.fine).toLocaleDateString()}</p>`
-    })
+    await Promise.all(emailPromises); // Attende tutte le email
 
-    // Invio dell'email
-    inviaEmail(emailOptions);
-    console.log('Email inviata con successo a tutti gli utenti');
+    console.log("Email inviate con successo a tutti gli utenti");
+    res.status(200).send("Email inviate con successo");
   } catch (err) {
-    console.error('Errore durante l\'invio delle email:', err);
-    res.status(500).send('Errore nell\'invio delle email');
+    console.error("Errore durante l'invio delle email:", err);
+    res.status(500).send("Errore nell'invio delle email");
   }
 };

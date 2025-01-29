@@ -26,7 +26,7 @@ router.get('/', checkServizioId, async (req, res) => {
 });
 
 router.post('/', usaToken, checkServizioId, checkRuolo(['gds']), CheckDirittiServizio, async (req, res) => {
-  // #swagger.description = 'Crea un avviso e modifica lo stato del servizio!!!!!'
+  // #swagger.description = 'Crea un avviso e invia una mail a tutti gli utenti interessati'
   // #swagger.security = [{ "BearerAuth": ['gds'] }]
   /* #swagger.requestBody = {
       content: {
