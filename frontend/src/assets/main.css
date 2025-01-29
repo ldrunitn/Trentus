@@ -6,8 +6,12 @@
 
 body {
   background-color: #f3f4f6;
+  overflow: hidden;
+  /* padding-bottom: 30px; */
 }
-
+body::-webkit-scrollbar{
+  display: none;
+}
 body {
   font-family: 'Product Sans', 'Helvetica Neue', Arial, sans-serif;
 }

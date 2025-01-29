@@ -2,13 +2,6 @@ import axios from "axios";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default {
-    async fetchService() {
-        try  {
-            axios.get(BACKEND_URL)
-        } catch (error) {
-            
-        }
-    },
     async login({commit,getters},credentials) {
         try{
             await axios.post(BACKEND_URL + '/gds/login', credentials)

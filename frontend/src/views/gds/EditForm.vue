@@ -95,9 +95,9 @@ function removeOption(op){
   </ul>
 
   <!-- Possbilità di aggiungere un'opzione -->
-  <input class="input-custom m-4" v-model="option" type="text" placeholder="Scrivi qui l'opzione da aggiungere">
+  <input class="input-custom mb-4 mt-2 rounded-lg" v-model="option" type="text" placeholder="Scrivi qui l'opzione da aggiungere">
   <error-message v-if="errore" :message="errore"></error-message>
-  <button class="btn m-4 bg-blue-500 text-white" @click="submitForm">Aggiungi</button>
+  <button class="btn m-4 bg-blue-500 text-white mb-16" @click="submitForm">Aggiungi</button>
 </div>
 </template>
 <style scoped>
