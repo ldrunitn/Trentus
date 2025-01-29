@@ -1,6 +1,5 @@
 // Imposatzione Express 
 const express = require('express');
-const nodemailer = require('nodemailer');
 const app = express();
 const cors = require('cors');
 
@@ -9,15 +8,6 @@ app.use(cors());
 
 // Impostazione Database
 const db = require('./models/db');
-
-// Impostazione Mailer
-const transporter = nodemailer.createTransport({
-  service: 'gmail', // Puoi usare anche altri provider come 'smtp.mailtrap.io', 'yahoo', etc.
-  auth: {
-    user: 'tuaemail@gmail.com', // Inserisci la tua email
-    pass: 'tuapassword'          // Inserisci la tua password o la password app se usi Gmail
-  }
-});
 
 // Documentation viewer
 const swaggerUi = require('swagger-ui-express');
