@@ -19,7 +19,7 @@ const store = useStore();
 const role = store.getters['getRole'];
 const service_id = route.params.service_id;
 
-ChartJS.register(Title, ArcElement, Tooltip, /*Legend,*/ BarElement, CategoryScale, LinearScale);
+ChartJS.register(Title, ArcElement, Tooltip, /*Legend,*/ BarElement, CategoryScale, LinearScale, PieController);
 
 const service = ref({});
 const comments = ref({});
@@ -40,6 +40,7 @@ async function fetchService(){
 }
 //stessa cosa per i commenti
 async function fetchComments(){
+  console.log('protazzo')
   try{
     await axios.get(BACKEND_URL + `/servizi/${service_id}/segnalazioni/commenti`,)
     .then(response => {
@@ -52,6 +53,121 @@ async function fetchComments(){
       console.error(e);
   }
 }
+
+const chartDataIstogramma = ref({
+    labels: [],
+    datasets: [
+        {
+            label: '',
+            backgroundColor: [ '#7e22ce' ],
+            data: []
+        }
+    ]
+})
+const chartDataAerogramma = ref({
+    labels: [],
+    datasets: [
+        {
+            label: '',
+            backgroundColor: [ '#7e22ce' ],
+            data: []
+        }
+    ]
+})
+
+const chartOptionsBar = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+        y: {
+            beginAtZero: true,  // Aggiungi questa riga
+            min: 0,             // Aggiungi questa riga
+            grid: {
+                display: true
+            },
+            ticks: {
+                precision: 0,    // Aggiungi questa riga per mostrare solo numeri interi
+                stepSize: 1      // Aggiungi questa riga per avere step di 1
+            }
+        },
+        x: {
+            grid: {
+                display: false
+            }
+        }
+    }
+}
+
+const chartOptionsDoughnut = {
+    responsive: true,
+    maintainAspectRatio: false,
+}
+
+const istogrammaData = ref([]);
+const aerogrammaData = ref([]);
+
+async function fetchGraphs() {
+  try {
+    // Fetch istogramma
+    const istogrammaResponse = await axios.get(BACKEND_URL + `/servizi/${service_id}/segnalazioni/istogramma`);
+    istogrammaData.value = istogrammaResponse.data;
+    console.log('Istogramma fetchato:', istogrammaData.value);
+
+    // Fetch aerogramma
+    const aerogrammaResponse = await axios.get(BACKEND_URL + `/servizi/${service_id}/segnalazioni/aerogramma`);
+    aerogrammaData.value = aerogrammaResponse.data;
+    console.log('Aerogramma fetchato:', aerogrammaData.value);
+
+    // Aggiorna dati per il grafico a barre (istogramma)
+    if (typeof istogrammaData.value === "object" && !Array.isArray(istogrammaData.value)) {
+      chartDataIstogramma.value.labels = Object.keys(istogrammaData.value);
+      chartDataIstogramma.value.datasets[0].data = Object.values(istogrammaData.value);
+    } else if (Array.isArray(istogrammaData.value)) {
+      chartDataIstogramma.value.labels = istogrammaData.value.map((_, i) => `Giorno ${i + 1}`);
+      chartDataIstogramma.value.datasets[0].data = istogrammaData.value;
+    } else {
+      console.error("Formato dati istogramma non valido:", istogrammaData.value);
+    }
+
+    // Aggiorna dati per il grafico a ciambella (aerogramma)
+    // Aggiorna dati per il grafico a ciambella (aerogramma)
+
+  // chartDataAerogramma.value.labels = aerogrammaData.value.map(item => item.risposta.risposta);
+  // chartDataAerogramma.value.datasets[0].data = aerogrammaData.value.map(item => item.count);
+  // console.log("Dati per il grafico a ciambella:", chartDataAerogramma.value);
+  // chartDataAerogramma.value = { ...chartDataAerogramma.value };
+  chartDataAerogramma.value = {
+    labels: aerogrammaData.value.map(item => item.risposta.risposta),
+    datasets: [{
+      label: '',
+      backgroundColor: ['#7e22ce'],
+      data: aerogrammaData.value.map(item => item.count)
+    }]
+  };
+
+  // Aggiorna dati per il grafico a barre (istogramma)
+// Aggiorna dati per il grafico a barre (istogramma)
+if (istogrammaData.value) {
+  chartDataIstogramma.value = {
+    labels: istogrammaData.value.map(item => item.date),  // Usa le date come labels
+    datasets: [{
+      label: 'Segnalazioni',
+      backgroundColor: '#7e22ce',
+      data: istogrammaData.value.map(item => item.count)  // Usa i count come valori
+    }]
+  };
+}
+
+
+
+
+
+  } catch (error) {
+    console.error("Errore nel fetch dei grafici:", error);
+  }
+}
+
+
 function goBack(){
   router.go(-1);
 }
@@ -60,52 +176,10 @@ onMounted(async()=> {
   await fetchService();
   await fetchComments();
   comments.value.reverse();
+  await fetchGraphs();
 
 });
-const chartData = {
-    labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    datasets: [
-        {
-            label: 'Data One',
-            backgroundColor: [ '#7e22ce' ],
-            data: [40, 20, 30, 50, 60, 70, 80, 90, 100, 110]
-        }
-    ]
-}
 
-const chartOptionsBar = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-        y: {
-            grid: {
-                display: true
-            },
-        },
-        x: {
-            grid: {
-                display: false
-            },
-        }
-    }
-}
-
-const chartOptionsDoughnut = {
-    responsive: true,
-    maintainAspectRatio: false,
-    // scales: {
-    //     y: {
-    //         grid: {
-    //             display: false
-    //         },
-    //     },
-    //     x: {
-    //         grid: {
-    //             display: false
-    //         },
-    //     }
-    // }
-}
 </script>
 
 <template>
@@ -123,8 +197,8 @@ const chartOptionsDoughnut = {
           <p class="text-xs text-gray-700">Descrizione: {{ service["descrizione"] }}</p>
         </div>
         <div class="ml-4 flex-row space-x-4">
-          <h2 class="text-red-500 mr-4" v-if="service['stato'] == 'off'">Servizio Offline</h2>
-          <h2 class="text-green-500 mr-4" v-else>Servizio Online</h2>
+          <h2 class="text-red-500 mr-4" v-if="service['stato'] == 'off'">Servizio Offline <i class="pi pi-circle-fill text-sm/8"></i></h2>
+          <h2 class="text-green-500 mr-4" v-else>Servizio Online <i class="pi pi-circle-fill text-sm/8"></i></h2>
           <router-link
             class="btn bg-red-500 text-white rounded-lg text-center mt-2"
             v-if="role === 'user'"
@@ -148,7 +222,7 @@ const chartOptionsDoughnut = {
         <!-- Grafico a barre -->
         <div class="col-span-3 bg-white p-4 rounded shadow">
           <h3 class="font-semibold mb-4">Segnalazioni negli ultimi 10 giorni</h3>
-          <div class="h-40"><Bar :options="chartOptionsBar" :data="chartData" /></div>
+          <div class="h-40"><Bar :options="chartOptionsBar" :data="chartDataIstogramma" /></div>
         </div>
 
         <!-- Commenti -->
@@ -167,7 +241,7 @@ const chartOptionsDoughnut = {
         <!-- Grafico a ciambella -->
         <div class="bg-white p-4 rounded shadow col-span-1">
           <h3 class="font-semibold mb-2">Motivo delle segnalazioni</h3>
-          <div class="h-40"><Doughnut :options="chartOptionsDoughnut" :data="chartData" /></div>
+          <div class="h-40"><Doughnut :options="chartOptionsDoughnut" :data="chartDataAerogramma" /></div>
         </div>
 
         <!-- Form di segnalazione -->
