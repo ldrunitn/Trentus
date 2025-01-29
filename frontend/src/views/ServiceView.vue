@@ -64,7 +64,7 @@ const chartDataIstogramma = ref({
         }
     ]
 })
-const chartDataAerogramma = ref({
+const chartDataAreogramma = ref({
     labels: [],
     datasets: [
         {
@@ -104,7 +104,7 @@ const chartOptionsDoughnut = {
 }
 
 const istogrammaData = ref([]);
-const aerogrammaData = ref([]);
+const areogrammaData = ref([]);
 
 async function fetchGraphs() {
   try {
@@ -113,10 +113,10 @@ async function fetchGraphs() {
     istogrammaData.value = istogrammaResponse.data;
     console.log('Istogramma fetchato:', istogrammaData.value);
 
-    // Fetch aerogramma
-    const aerogrammaResponse = await axios.get(BACKEND_URL + `/servizi/${service_id}/segnalazioni/aerogramma`);
-    aerogrammaData.value = aerogrammaResponse.data;
-    console.log('Aerogramma fetchato:', aerogrammaData.value);
+    // Fetch areogramma
+    const areogrammaResponse = await axios.get(BACKEND_URL + `/servizi/${service_id}/segnalazioni/areogramma`);
+    areogrammaData.value = areogrammaResponse.data;
+    console.log('Areogramma fetchato:', areogrammaData.value);
 
     // Aggiorna dati per il grafico a barre (istogramma)
     if (typeof istogrammaData.value === "object" && !Array.isArray(istogrammaData.value)) {
@@ -129,19 +129,19 @@ async function fetchGraphs() {
       console.error("Formato dati istogramma non valido:", istogrammaData.value);
     }
 
-    // Aggiorna dati per il grafico a ciambella (aerogramma)
-    // Aggiorna dati per il grafico a ciambella (aerogramma)
+    // Aggiorna dati per il grafico a ciambella (areogramma)
+    // Aggiorna dati per il grafico a ciambella (areogramma)
 
-  // chartDataAerogramma.value.labels = aerogrammaData.value.map(item => item.risposta.risposta);
-  // chartDataAerogramma.value.datasets[0].data = aerogrammaData.value.map(item => item.count);
-  // console.log("Dati per il grafico a ciambella:", chartDataAerogramma.value);
-  // chartDataAerogramma.value = { ...chartDataAerogramma.value };
-  chartDataAerogramma.value = {
-    labels: aerogrammaData.value.map(item => item.risposta.risposta),
+  // chartDataAreogramma.value.labels = areogrammaData.value.map(item => item.risposta.risposta);
+  // chartDataAreogramma.value.datasets[0].data = areogrammaData.value.map(item => item.count);
+  // console.log("Dati per il grafico a ciambella:", chartDataAreogramma.value);
+  // chartDataAreogramma.value = { ...chartDataAreogramma.value };
+  chartDataAreogramma.value = {
+    labels: areogrammaData.value.map(item => item.risposta.risposta),
     datasets: [{
       label: '',
       backgroundColor: ['#7e22ce'],
-      data: aerogrammaData.value.map(item => item.count)
+      data: areogrammaData.value.map(item => item.count)
     }]
   };
 
@@ -241,7 +241,7 @@ onMounted(async()=> {
         <!-- Grafico a ciambella -->
         <div class="bg-white p-4 rounded shadow col-span-1">
           <h3 class="font-semibold mb-2">Motivo delle segnalazioni</h3>
-          <div class="h-40"><Doughnut :options="chartOptionsDoughnut" :data="chartDataAerogramma" /></div>
+          <div class="h-40"><Doughnut :options="chartOptionsDoughnut" :data="chartDataAreogramma" /></div>
         </div>
 
         <!-- Form di segnalazione -->
