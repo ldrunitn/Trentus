@@ -3,24 +3,25 @@
     <!-- Ciclo sulle sezioni -->
     <div v-for="(section, sectionIndex) in sections" :key="sectionIndex" class="mb-6">
       <!-- Titolo sezione -->
-      <button class="text-lg font-semibold mb-2" @click="toggleSection(sectionIndex)">{{ section.title }}</button>
+      <button class="text-lg font-semibold mb-2 hover:text-purple-600 " @click="toggleSection(sectionIndex)">{{ section.title }}</button>
       <!-- Ciclo sui contenuti della sezione -->
       <div v-for="(item, itemIndex) of section.items" :key="itemIndex" class="mb-4" v-if="section.showItems">
         <button
           @click="toggleDetails(sectionIndex, itemIndex)"
-          class="w-full text-left font-medium text-gray-700"
+          class="w-full text-left font-medium hover:text-purple-600 hover:font-bold"
         >
           {{ item.label }}
         </button>
         <!-- Mostra i dettagli se la sezione è aperta -->
         <div
-          class="ml-4 mt-2 text-sm text-gray-600 space-y-1"
+          class="ml-4 mt-2 text-sm text-gray-600 space-y-1 flex flex-col"
           v-if="item.showDetails"
         >
           <router-link 
-            to="/alert"
+            :to="alertPath"
             v-for="(detail, detailIndex) in item.details" 
             :key="detailIndex"
+            class="hover:text-purple-600 hover:font-bold"
             @click.native = "getAlert(sectionIndex, itemIndex, detailIndex)"
           >
             {{ detail }}
@@ -52,6 +53,16 @@ export default {
       openSections: [], // Tiene traccia delle sezioni aperte
       openedItems: []
     };
+  },
+  computed: {
+    alertPath() {
+      const role = this.$store.getters['getRole'];
+      if(role === 'user') {
+        return '/alert';
+      } else if(role === 'gds') {
+        return '/gds/alert'
+      }
+    }
   },
   methods: {
     toggleSection(sectionIndex) {

@@ -13,15 +13,10 @@ export default {
         state.service_id = id;
     },
     logout(state) {
-        state.token = '';
-        state.titolo = '';
-        state.azienda = '';
-        state.url = '';
-        state.picture = null;
-        state.descrizione = '';
-        state.opzioniForm = [];
-        state.status = '';
-        state.isAuthenticated = false;
+        state.service = {};
+        state.service_id = "";
+        state.token = "";
+        state.isAuthenticated = "";
     }
     
 

@@ -7,15 +7,15 @@ export default{
 </script>
 
 <template>
-  <div id="error" class="rounded-lg">
+  <div id="success" class="rounded-lg">
     <p id="msg">{{ message }}</p>
   </div>
 </template>
 
-<style scoped>
-#error{
-  background-color: rgb(243, 197, 197);
-  color: red;
+<style>
+#success{
+  background-color: rgb(187, 255, 174);
+  color: green;
   padding: 10px;  
 }
 </style>
