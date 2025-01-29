@@ -28,11 +28,6 @@ const router = createRouter({
           component: ServicesView,
         },
         {
-          path:'alert',
-          component: AlertView,
-          props: true,
-        },
-        {
           path: 'service/:service_id',
           name: "service-details",
           component: ServiceView,
@@ -43,17 +38,14 @@ const router = createRouter({
           name: "service-report",
           component: ReportView,
           props: true
+        },
+        {
+          path: '/alert',
+          component: AlertView,
+          props:true,
         }
       ]
     },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue'),
-    // },
     {
       path: '/login',
       name: 'login',
@@ -115,9 +107,20 @@ const router = createRouter({
           path: ':service_id/sendalert',
           component: SendAlert,
           props: true
+        },
+        {
+          path: '/gds/alert',
+          component: AlertView,
+          props:true,
         }
       ]
-    }
+    },
+    {
+      path: '/alert',
+      component: AlertView,
+      props:true,
+      meta: { roles: ['user','gds']}
+    },
     
   ],
 })

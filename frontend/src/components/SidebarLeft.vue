@@ -18,7 +18,7 @@
           v-if="item.showDetails"
         >
           <router-link 
-            to="/alert"
+            :to="alertPath"
             v-for="(detail, detailIndex) in item.details" 
             :key="detailIndex"
             class="hover:text-purple-600 hover:font-bold"
@@ -53,6 +53,16 @@ export default {
       openSections: [], // Tiene traccia delle sezioni aperte
       openedItems: []
     };
+  },
+  computed: {
+    alertPath() {
+      const role = this.$store.getters['getRole'];
+      if(role === 'user') {
+        return '/alert';
+      } else if(role === 'gds') {
+        return '/gds/alert'
+      }
+    }
   },
   methods: {
     toggleSection(sectionIndex) {

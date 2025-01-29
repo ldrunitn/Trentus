@@ -6,6 +6,8 @@ import SidebarRight from '@/components/SidebarRight.vue';
 import { ref, onMounted, onBeforeMount, computed, reactive} from 'vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
+import axios from 'axios';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 // const sidebarSections = [ //prova sidebar
 //   {
 //     title: 'Sezione 1',
@@ -55,6 +57,13 @@ const SidebarSections = computed(()=>{
 });
 onMounted( async () => {
   console.log("Creata");
+  await initSideBarLeft();
+  
+})
+
+const avvisi = ref({});
+async function initSideBarLeftUser() {
+  console.log('sono iuser')
   try {
     //fetch dei servizi
     await store.dispatch('user/fetchServices')    
@@ -91,8 +100,64 @@ onMounted( async () => {
     
   } catch (error) {
     console.error(error)
+  } 
+}
+async function initSideBarLeftGdS() {
+  try {
+    let titoloServizio;
+    const service_id = route.params.service_id;
+    await axios.get(BACKEND_URL + `/servizi/${service_id}`)
+    .then(response => {
+      titoloServizio = response.data.titolo
+    })
+    await axios.get(BACKEND_URL + `/servizi/${service_id}/avvisi`)
+    .then(response => {
+    avvisi.value = response.data;
+    })
+    console.log('avvisis:')
+    console.log(avvisi.value);
+    //formatto gli alerts per la sidebar
+    let alertSection = {
+      title: "Avvisi mandati",
+    };
+    //guardo tutti i servizi che hanno mandato notifiche
+    let itemsArray = [];
+    let details = [];
+    let item = {};
+    item["label"] = ''; //item contenitore di tutti gli alerts
+    
+    for(const alert of avvisi.value){
+      console.log(alert);
+      details.push(alert.titolo);
+      //scorro gli alerts 
+    }
+    itemsArray.push(item);
+    item["details"] = details;
+
+
+
+    alertSection["items"] = itemsArray;
+
+    sidebarSections.push(alertSection);
+
+    console.log('poppa::')
+    console.log(sidebarSections);
   }
-})
+  catch (error) {
+    console.error(error);
+  }
+}
+
+
+async function initSideBarLeft() {
+  let role = store.getters['getRole'];
+  if(role === 'user') {
+    await initSideBarLeftUser();
+  } else if(role === 'gds') {
+    await initSideBarLeftGdS();
+  }
+}
+
 
 // onBeforeMount(async () => {
   
