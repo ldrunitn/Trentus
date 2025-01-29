@@ -1,21 +1,26 @@
 <script>
 export default{
   props:{
-    username: {
+    email: {
       type: String,
-      required: false,
-      default: ""
+      required: true,
     },
     text: {
       type: String,
       required: true
     }
+  },
+  computed: {
+    Username(){
+      return this.email.split('@')[0];
+    }
   }
 }
 </script>
 <template>
-<li>
-  <strong v-if="username != ''">{{ username }}</strong>
+
+<li class="bg-gray-50 p-3 shadow rounded-lg">
+  <p>@<strong>{{Username}}</strong></p>
   <p>{{ text }}</p>
 </li>
 </template>
