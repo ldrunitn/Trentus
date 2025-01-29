@@ -76,7 +76,7 @@ router.get('/commenti', checkServizioId, async (req, res) => {
 });
 
 // Restituisce dati per la creazione del grafico di frequenza segnalazioni
-router.get('/graficolinee', checkServizioId, async (req, res) => {
+router.get('/istogramma', checkServizioId, async (req, res) => {
   // #swagger.description = 'Restituisce dati per la creazione del grafico di frequenza segnalazioni'
   /* #swagger.responses[200] = {
       content: {
@@ -91,7 +91,7 @@ router.get('/graficolinee', checkServizioId, async (req, res) => {
   graficoLinee(req, res)
 });
 
-router.get('/graficotorta', checkServizioId, async (req, res) => {
+router.get('/aerogramma', checkServizioId, async (req, res) => {
   // #swagger.description = 'Restituisce dati per la creazione del grafico di problemi riscontrati'
   /* #swagger.responses[200] = {
       content: {
@@ -105,8 +105,5 @@ router.get('/graficotorta', checkServizioId, async (req, res) => {
   */
   graficoTorta(req, res)
 });
-
-
-
 
 module.exports = router;

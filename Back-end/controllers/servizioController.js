@@ -1,6 +1,6 @@
 // Models
-const GdS = require('../models/gds.model');
 const Servizio = require('../models/servizio.model');
+const Utente = require('../models/utente.model');
 
 // Crea un servizio
 exports.creaServizio = async (request, session) => {
@@ -50,6 +50,26 @@ exports.servizioFunzionante = async (req, res) => {
     await servizio.save();
 
     return res.status(201).json({message: 'servizio ora ' + servizio.stato});
+  } catch (error) {
+    return res.status(500).json({ message: "Errore nel modificare lo stato", error: error.message });
+  }
+};
+
+exports.preferito = async (req, res) => {
+  try {
+    let utente = await Utente.findById(req.user.id);
+    
+    let index = utente.preferiti.indexOf(req.servizio_id);
+
+    if (index !== -1) {
+      utente.preferiti.splice(index, 1);
+      await utente.save();
+      return res.status(200).json({ message: "Servizio eliminato" });
+    } else {
+      utente.preferiti.push(req.servizio_id);
+      await utente.save();
+      return res.status(200).json({ message: "Servizio salvato" });
+    }
   } catch (error) {
     return res.status(500).json({ message: "Errore nel modificare lo stato", error: error.message });
   }
