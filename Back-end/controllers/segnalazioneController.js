@@ -40,3 +40,39 @@ exports.getCommenti = async (req,res) => {
   }
 }
 
+exports.classificaSegnalazioni = async (req, res) => {
+  try {
+    const giorno = new Date();
+    giorno.setHours(giorno.getHours() - 24);
+
+    const classifica = await Segnalazione.aggregate([
+      {
+        $match: { createdAt: { $gte: ventiquattroOreFa } } 
+      },
+      {
+        $group: {
+          _id: "$servizio_id",
+          segnalazioni: { $sum: 1 } 
+        }
+      },
+      {
+        $sort: { segnalazioni: -1 } 
+      },
+      {
+        $limit: 5 // Limita il risultato ai primi 5 servizi
+      },
+      {
+        $project: {
+          _id: 0,
+          servizio_id: "$_id",
+          segnalazioni: 1
+        }
+      }
+    ]);
+
+    return res.status(200).json(classifica);
+  } catch (error) {
+    return res.status(500).json({ message: "Errore nel recupero della classifica", error: error.message });
+  }
+};
+
