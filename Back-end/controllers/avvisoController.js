@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 // Model
 const Avviso = require('../models/avviso.model');
-const { servizioOff } = require('../controllers/servizioController');
 
 // Crea un avviso
 exports.creaAvviso = async (req,  res) => {
@@ -17,7 +16,6 @@ exports.creaAvviso = async (req,  res) => {
       servizio_id: req.servizio_id
     });
     await avviso.save(); //salvo il servizio ottenendo l'id
-    servizioOff(req, res);
 }
 
 // Restituisce tutti gli avvisi di un servizio
