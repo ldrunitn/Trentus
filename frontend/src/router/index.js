@@ -113,13 +113,6 @@ const router = createRouter({
         }
       ]
     },
-    {
-      path: '/alert',
-      component: AlertView,
-      props:true,
-      meta: { roles: ['user','gds']}
-    },
-    
   ],
 })
 router.beforeEach((to, from, next) => {
