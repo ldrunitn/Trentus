@@ -40,14 +40,14 @@ exports.getCommenti = async (req,res) => {
   }
 }
 
-exports.classificaSegnalazioni = async (req, res) => {
+exports.classifica = async (req, res) => {
   try {
     const giorno = new Date();
     giorno.setHours(giorno.getHours() - 24);
 
     const classifica = await Segnalazione.aggregate([
       {
-        $match: { createdAt: { $gte: ventiquattroOreFa } } 
+        $match: { createdAt: { $gte: giorno } } 
       },
       {
         $group: {

@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
+var postmark = require("postmark");
+var client = new postmark.Client("b790e07c-63b5-4cb3-aeec-cd621242f6d5");
 
 // Model
 const Avviso = require('../models/avviso.model');
+const User = require('../models/utente.model');
 
 // Crea un avviso
 exports.creaAvviso = async (req,  res) => {
@@ -15,9 +18,16 @@ exports.creaAvviso = async (req,  res) => {
       fine: new Date(fine),
       servizio_id: req.servizio_id
     });
-    await avviso.save(); // salvo il servizio ottenendo l'id
-    // Invio la mail a tutti quelliche hanno questo servizio nei preferiti
-
+    try {
+      await avviso.save();  // Salva l'avviso nel database
+      console.log("Avviso creato e salvato");
+      
+      // Dopo aver creato l'avviso, invia l'email agli utenti interessati
+      await inviaEmailInteressati(req, res);
+      res.status(200).send('Avviso creato e email inviata!');
+    } catch (err) {
+      res.status(500).send('Errore nella creazione dell\'avviso');
+    }
 }
 
 // Restituisce tutti gli avvisi di un servizio
@@ -43,22 +53,48 @@ exports.getAvvisoById = async (req,  res) => {
   }
 }
 
-// Invio la mail a tutti quelliche hanno questo servizio nei preferiti
-inviaEmailInteressati = async (req,res) => {
-  // Imposta le opzioni dell'email
-  const mailOptions = {
-    from: 'noreply@Trentus.it', // La tua email
-    to: to,                     // L'email del destinatario
-    subject: subject,           // Oggetto dell'email
-    text: text                  // Corpo del messaggio
-  };
+// Invio la mail a tutti gli utenti che hanno questo servizio nei preferiti
+const inviaEmailInteressati = async (req, res) => {
+  try {
+    const utenti = await User.find({ preferiti: req.servizio_id });
 
-  // Invia l'email
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-      return res.status(500).send('Errore nell\'invio dell\'email');
+    if (utenti.length === 0) {
+      console.log("Nessun utente trovato con questo servizio nei preferiti");
+      return;
     }
-    res.status(200).send('Email inviata con successo: ' + info.response);
-  });
-}
+
+    // Creiamo l'array degli indirizzi email degli utenti
+    const destinatari = utenti.map(user => user.email);
+
+    utenti.forEach(async (user) => {
+      client.sendEmail({
+        from: 'no-reply@trentus.it',
+        to: user.email,
+        subject: 'Nuovo Avviso - Servizio Preferito',
+        html: `<p>Ciao Luca,</p>
+               <p>È stato creato un nuovo avviso per il tuo servizio preferito. Ecco i dettagli:</p>
+               <p><strong>Titolo:</strong> ${req.body.titolo}</p>
+               <p><strong>Descrizione:</strong> ${req.body.corpo}</p>
+               <p><strong>Periodo:</strong> ${new Date(req.body.inizio).toLocaleDateString()} - ${new Date(req.body.fine).toLocaleDateString()}</p>`
+      })
+    });
+
+    client.sendEmail({
+      from: 'no-reply@trentus.it',
+      to: 'luca.dariz-1@studenti.unitn.it',
+      subject: 'Nuovo Avviso - Servizio Preferito',
+      html: `<p>Ciao ${user.nome},</p>
+             <p>È stato creato un nuovo avviso per il tuo servizio preferito. Ecco i dettagli:</p>
+             <p><strong>Titolo:</strong> ${req.body.titolo}</p>
+             <p><strong>Descrizione:</strong> ${req.body.corpo}</p>
+             <p><strong>Periodo:</strong> ${new Date(req.body.inizio).toLocaleDateString()} - ${new Date(req.body.fine).toLocaleDateString()}</p>`
+    })
+
+    // Invio dell'email
+    inviaEmail(emailOptions);
+    console.log('Email inviata con successo a tutti gli utenti');
+  } catch (err) {
+    console.error('Errore durante l\'invio delle email:', err);
+    res.status(500).send('Errore nell\'invio delle email');
+  }
+};
