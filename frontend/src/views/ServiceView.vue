@@ -135,6 +135,11 @@ const chartOptionsDoughnut = {
             v-if="role === 'admin' || role === 'gds'"
             :to="`/gds/${service_id}/modify`"
           >Modifica</router-link>
+          <router-link
+            class="btn bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-center"
+            v-if="role === 'admin' || role === 'gds'"
+            :to="`/gds/${service_id}/sendalert`"
+          >Invia un avviso</router-link>
         </div>
       </div>
 
