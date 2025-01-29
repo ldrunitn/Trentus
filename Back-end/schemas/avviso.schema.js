@@ -21,14 +21,21 @@ const schemaAvviso = new mongoose.Schema({
   inizio: {
     type: Date,
     required: false,
+    validate:{
+      validator: function(value){ //controlla che la data inserita non sia nel passato
+        return value >= new Date();
+      },
+      message: "La data di inizio non deve essere nel passato"
+    }
   },
   fine: {
     type: Date,
     required: false,
-    validate:{
-      validator: function(value){ //controlla che la data inserita non sia nel passato
-        return value >= new Date();
-      }
+    validate: {
+      validator: function(value) {
+          return value > this.inizio; // Verifica che 'fine' sia dopo 'inizio'
+      },
+      message: "La data di fine deve essere successiva alla data di inizio."
     }
   },
   servizio_id: {
