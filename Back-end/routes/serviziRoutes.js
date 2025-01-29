@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Controllers
-const { getServizi, getServizio, servizioOn, preferito } = require('../controllers/servizioController');
+const { getServizi, getServizio, modificaServizio, preferito } = require('../controllers/servizioController');
 const { classifica } = require('../controllers/segnalazioneController');
 // const serviziController = require(process.cwd()+'/controllers/servizi/serviziController');
 
@@ -67,16 +67,16 @@ router.get('/:servizio_id', SIDSave, checkServizioId, async (req,res)=>{
   getServizio(req,res);
 });
 
-router.post('/:servizio_id/riabilita', SIDSave, usaToken, checkServizioId, checkRuolo(['gds']), CheckDirittiServizio, async (req,res)=>{
-  // #swagger.description = 'Servizio ON'
-  // #swagger.security = [{ "BearerAuth": ['gds'] }]  
-  servizioOn(req,res);
-});
-
 router.post('/:servizio_id/preferito', SIDSave, usaToken, checkServizioId, checkRuolo(['user']), async (req,res)=>{
   // #swagger.description = 'Servizio salvato nei preferiti dell'utente'
   // #swagger.security = [{ "BearerAuth": ['utente'] }]  
   preferito(req,res);
+});
+
+router.post('/:servizio_id/modifica', SIDSave, usaToken, checkServizioId, checkRuolo(['gds']), CheckDirittiServizio, async (req,res)=>{
+  // #swagger.description = 'Servizio ON'
+  // #swagger.security = [{ "BearerAuth": ['gds'] }]  
+  modificaServizio(req,res);
 });
 
 module.exports = router;

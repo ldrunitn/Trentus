@@ -40,21 +40,6 @@ exports.getServizi = async (req,res) => {
   }
 }
 
-// Modifica stato servizio
-exports.servizioFunzionante = async (req, res) => {
-  try {
-    let servizio = await Servizio.findById(req.servizio_id);
-    
-    servizio.stato = servizio.stato === "on" ? "off" : "on";
-
-    await servizio.save();
-
-    return res.status(201).json({message: 'servizio ora ' + servizio.stato});
-  } catch (error) {
-    return res.status(500).json({ message: "Errore nel modificare lo stato", error: error.message });
-  }
-};
-
 exports.preferito = async (req, res) => {
   try {
     let utente = await Utente.findById(req.user.id);
@@ -75,32 +60,19 @@ exports.preferito = async (req, res) => {
   }
 };
 
-exports.servizioOn = async (req, res) => {
+exports.modificaServizio = async (req, res) => {
   try {
-    let servizio = await Servizio.findById(req.servizio_id);
-    
-    servizio.stato = "on";
-    servizio.motivo = " ";
+    const { servizio_id } = req.params; 
+    const aggiornamenti = req.body; 
 
-    await servizio.save();
+    const servizio = await Servizio.findByIdAndUpdate(servizio_id, aggiornamenti, { new: true, runValidators: true });
 
-    return res.status(201).json({message: 'servizio ora ' + servizio.stato});
+    if (!servizio) {
+      return res.status(404).json({ message: "Servizio non trovato" });
+    }
+
+    return res.status(200).json({ message: "Servizio aggiornato con successo", servizio });
   } catch (error) {
-    return res.status(500).json({ message: "Errore nel modificare lo stato", error: error.message });
-  }
-};
-
-exports.servizioOff = async (req, res) => {
-  try {
-    let servizio = await Servizio.findById(req.servizio_id);
-    
-    servizio.stato = "off";
-    servizio.motivo = req.body.tipo;
-
-    await servizio.save();
-
-    return res.status(201).json({message: 'servizio ora ' + servizio.stato + ", motivo " +  servizio.motivo, avviso_id: req.avviso_id});
-  } catch (error) {
-    return res.status(500).json({ message: "Errore nel modificare lo stato", error: error.message });
+    return res.status(500).json({ message: "Errore nella modifica del servizio", error: error.message });
   }
 };
