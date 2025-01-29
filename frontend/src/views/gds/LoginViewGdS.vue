@@ -45,7 +45,7 @@ export default{
             alt="logo_trentus"
             class=""
         />
-        <h1>as a service</h1>
+        <h1 class="text-black">as a service</h1>
     </div>
   
   <div class="mt-12 place-self-center items-center justify-center min-h-screen bg-gray-100 ">
@@ -55,7 +55,7 @@ export default{
     <div class="flex flex-col grid-flow-col grid-cols-1 gap-2 mt-8">
         <input v-model="email" type="email" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Insert your Email">
         <input v-model="password" type="password" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Insert your Password">
-        <button @click="login" class="w-52 h-8 bg-gray-300 text-black border border-gray-400 shadow-md rounded-lg mt-8">Log in</button>
+        <button @click="login" class="w-52 h-8 bg-purple-600 hover:bg-purple-700 text-white border border-gray-400 shadow-md rounded-lg mt-8">Log in</button>
         <ErrorMessage :message="errore" class="rounded-lg" v-if="errore"></ErrorMessage>
     </div>
     <div class="relative flex items-center w-full my-6">

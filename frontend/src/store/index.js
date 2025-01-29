@@ -6,6 +6,8 @@ import App from "@/App.vue";
 import userModule from "./modules/user/userModule";
 import gdsModule from "./modules/gds/gdsModule";
 import adminModule from "./modules/admin/adminModule";
+import createPersistedState from "vuex-persistedstate";
+import Cookies from "js-cookie";
 
 
 export default createStore ({
@@ -22,4 +24,17 @@ export default createStore ({
     mutations,
     getters,
     actions,
+    plugins: [
+        createPersistedState({
+            getState: (key) => {
+                const cookie = Cookies.get(key);
+                return cookie ? JSON.parse(cookie) : undefined;
+            },
+            setState: (key, state) => {
+              Cookies.set(key, JSON.stringify(state), { expires: 3,
+                secure: process.env.NODE_ENV === "production"
+               });
+            },
+        })
+    ]
 })

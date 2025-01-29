@@ -7,46 +7,45 @@ import AdminHomeView from '@/views/AdminHomeView.vue'
 import RequestView from '@/views/admin/RequestView.vue'
 import ModifyView from '@/views/admin/ModifyView.vue'
 import AlertView from '@/views/user/AlertView.vue'
-import store from '@/store';
 import ServicesView from '@/views/user/ServicesView.vue'
 import ServicesViewAdmin from '@/views/admin/ServicesViewAdmin.vue'
 import LoginViewGdS from '@/views/gds/LoginViewGdS.vue'
-import EditForm from '@/views/gds/EditForm.vue'
 import ReportView from '@/views/ReportView.vue'
+import SendAlert from '@/views/gds/SendAlert.vue'
+import store from '@/store'
+import E404View from '@/views/E404View.vue'
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  //import.meta.env.BASE_URL
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
       name: 'home',
       component: HomeView,
-      beforeEnter: (to, from, next) => {
-        console.log(store.getters['user/getIsAuthenticated'])
-        if (store.getters['user/getIsAuthenticated']) {
-          next();
-        } else {
-          next('/login');
-        }
-      },
+      meta: { roles: ['user']},
       children: [
         {
           path: '',
-          component: ServicesView
+          component: ServicesView,
         },
         {
-          path:'alert',
-          component: AlertView,
-          props: true,
+          path: 'service/:service_id',
+          name: "service-details",
+          component: ServiceView,
+          props: true
         },
+        {
+          path: 'service/:service_id/report',
+          name: "service-report",
+          component: ReportView,
+          props: true
+        },
+        {
+          path: '/alert',
+          component: AlertView,
+          props:true,
+        }
       ]
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
     },
     {
       path: '/login',
@@ -62,11 +61,6 @@ const router = createRouter({
       path: '/register',
       name: 'registration',
       component: RegistrationView,
-    },
-    {
-      path: '/service',
-      name: 'service',
-      component: ServiceView,
     },
     {
       path: '/report',
@@ -98,6 +92,7 @@ const router = createRouter({
     {
       path: '/gds',
       name: 'GdS Homepage',
+      meta: { roles: ['gds']},
       component: HomeView,
       children: [
         {
@@ -109,11 +104,36 @@ const router = createRouter({
           path:':service_id/modify',
           component: ModifyView,
           props: true
+        },{
+          path: ':service_id/sendalert',
+          component: SendAlert,
+          props: true
+        },
+        {
+          path: '/gds/alert',
+          component: AlertView,
+          props:true,
         }
       ]
-    }
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: '404',
+      component: E404View,
+    },
     
   ],
 })
+router.beforeEach((to, from, next) => {
+  // const userRole = store.getters['getRole'];
+  const userRole = store.state.role;
+  const requiredRoles = to.meta.roles;
+
+  if (requiredRoles && !requiredRoles.includes(userRole)) {
+    next('/login'); //non permesso
+  } else {
+    next(); //permesso
+  }
+});
 
 export default router
