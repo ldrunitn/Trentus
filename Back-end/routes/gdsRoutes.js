@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
-
+const {v4:uuidv4} = require('uuid');
 // Define the directory for uploads
 const uploadDir = path.join(__dirname, '../public/images');
 

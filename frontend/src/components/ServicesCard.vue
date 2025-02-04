@@ -2,6 +2,8 @@
 import { defineProps } from 'vue'
 import { ref, onMounted} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 
 const props = defineProps({
     service: {
@@ -29,7 +31,7 @@ onMounted(() => {
         <div class="flex justify-between">
             <div class="basis-1/2">
                 <h3 class="text-lg font-bold justify-start">{{ service.titolo }}</h3>
-                <img :src="logo" alt="Service Logo" class="w-full h-full">
+                <img :src="BACKEND_URL + props.service.foto" alt="Service Logo" class="max-w-60 max-h-60">
             </div>
             <div class="justify-end items-center max-w-12 max-h-12 basis-1/2 ">
                 <img v-if="isFavourite" src="@/assets/favourite-toggled.svg" alt="Favourite Toggled" class="top-2 right-2 w-6 h-6 mb-8">

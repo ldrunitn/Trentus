@@ -14,6 +14,7 @@ import ReportView from '@/views/ReportView.vue'
 import SendAlert from '@/views/gds/SendAlert.vue'
 import store from '@/store'
 import E404View from '@/views/E404View.vue'
+import RegistrazioneGdS from '@/views/gds/RegistrazioneGdS.vue'
 const router = createRouter({
   //import.meta.env.BASE_URL
   history: createWebHistory(),
@@ -115,6 +116,10 @@ const router = createRouter({
           props:true,
         }
       ]
+    },
+    {
+      path: '/register/gds',
+      component: RegistrazioneGdS
     },
     {
       path: '/:catchAll(.*)',

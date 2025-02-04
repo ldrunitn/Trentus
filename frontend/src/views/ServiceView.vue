@@ -189,7 +189,7 @@ onMounted(async()=> {
       <!-- Informazioni Servizio -->
       <div class="bg-white p-4 rounded shadow flex items-center justify-between">
         <div class="flex-shrink-0 flex flex-col space-y-5">
-          <p>{{ service["foto"] }}</p>
+          <img :src="BACKEND_URL + service['foto']" alt="Logo" class="max-w-40 max-h-40">
           <p class="text-3xl">
             <span>{{ service["titolo"] }}</span><br>
             <span class="text-lg text-gray-400">Azienda: {{ service["azienda"] }}</span>

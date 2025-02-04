@@ -3,6 +3,9 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
+//rendere accessibile pubblicamente le immagini
+app.use(express.static("public"));
+
 //cors
 app.use(cors());
 
