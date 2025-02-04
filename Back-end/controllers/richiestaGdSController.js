@@ -8,9 +8,9 @@ const { creaServizio } = require('./servizioController');
 
 // Crea una richiesta di accettazione della creazione del gds ed il suo servizio
 exports.creaRichiesta = async (req,res) => {
-  const { email, password, titolo, azienda, url, foto, descrizione } = req.body.data;
+  const { email, password, titolo, azienda, url, descrizione } = JSON.parse(req.body.data);
 
-  console.log(req.body);
+  console.log(email);
 
   try {
     // Verifica se il GdS esiste già, devo verificare sia se c'è già un utente registrato, sia se c'è una richiesta
@@ -25,7 +25,7 @@ exports.creaRichiesta = async (req,res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Path immagine
-    const filePath = req.file.path; 
+    const filePath = "/images/" + req.file.filename; 
     console.log(filePath);
 
     // Crea richesta
