@@ -8,7 +8,7 @@ const { creaServizio } = require('./servizioController');
 
 // Crea una richiesta di accettazione della creazione del gds ed il suo servizio
 exports.creaRichiesta = async (req,res) => {
-  const { email, password, titolo, azienda, url, foto, descrizione } = req.body;
+  const { email, password, titolo, azienda, url, foto, descrizione } = req.body.data;
 
   console.log(req.body);
 
@@ -24,14 +24,18 @@ exports.creaRichiesta = async (req,res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Crea il nuovo utente con la password hashata
+    // Path immagine
+    const filePath = req.file.path; 
+    console.log(filePath);
+
+    // Crea richesta
     const richiesta = new richiestaGdS({ 
       email, 
       passwordHash: hashedPassword, // Salva l'hash della password
       titolo,
       azienda,
       url,
-      foto,
+      foto: filePath, 
       descrizione
     });
     console.log(richiesta);
