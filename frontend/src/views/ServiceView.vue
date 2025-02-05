@@ -9,6 +9,7 @@ import { useRoute, useRouter } from 'vue-router';
 import Comment from '@/components/services/Comment.vue';
 import { comment } from 'postcss';
 import { useStore } from 'vuex';
+import GoBackButton from '../components/GoBackButton.vue';
 import EditForm from './gds/EditForm.vue';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -167,10 +168,6 @@ if (istogrammaData.value) {
   }
 }
 
-
-function goBack(){
-  router.go(-1);
-}
 //le chiamo subito
 onMounted(async()=> {
   await fetchService();
@@ -251,7 +248,7 @@ onMounted(async()=> {
           :service="service"
           @update-form="fetchService"
         ></edit-form>
-        <button class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 col-end-4" @click="goBack()" v-if="role === 'user' || role === 'admin'">Indietro</button>
+        <GoBackButton class="col-end-4" v-if="role === 'user' || role === 'admin'"></GoBackButton>
       </div>
     </main>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-64 flex-col bg-gray-100 p-4 shadow-md mr-4 max-w-prose h-full">
+  <div class="w-64 flex-col bg-gray-100 p-4 shadow-md mr-4 max-w-prose h-full overflow-auto">
     <!-- Ciclo sulle sezioni -->
     <div v-for="(section, sectionIndex) in sections" :key="sectionIndex" class="mb-6">
       <!-- Titolo sezione -->
@@ -14,17 +14,16 @@
         </button>
         <!-- Mostra i dettagli se la sezione è aperta -->
         <div
-          class="ml-4 mt-2 text-sm text-gray-600 space-y-1 flex flex-col"
+          class="ml-4 mt-2 text-sm text-gray-600 space-y-1 flex flex-col items-left"
           v-if="item.showDetails"
         >
-          <router-link 
-            :to="alertPath"
+          <router-link
             v-for="(detail, detailIndex) in item.details" 
+            :to="`${alertPath}${detail['service_id']}/${detail['id']}`"
             :key="detailIndex"
             class="hover:text-purple-600 hover:font-bold"
-            @click.native = "getAlert(sectionIndex, itemIndex, detailIndex)"
           >
-            {{ detail }}
+            {{ detail['titolo'] }}
           </router-link>
         </div>
       </div>
@@ -58,9 +57,9 @@ export default {
     alertPath() {
       const role = this.$store.getters['getRole'];
       if(role === 'user') {
-        return '/alert';
+        return '/alert/';
       } else if(role === 'gds') {
-        return '/gds/alert'
+        return '/gds/alert/';
       }
     }
   },
@@ -72,18 +71,6 @@ export default {
       let item = this.sections[sectionIndex].items[itemIndex];
       item.showDetails = !item.showDetails;
     },
-    //imposta il current aler per farlo leggere alla view
-    getAlert(sectionIndex, itemIndex, detailIndex){
-      const service_id = this.sections[sectionIndex].items[itemIndex].label;
-      console.log("Service_id: " + service_id);
-
-      let alert = store.getters['user/getAlerts'][service_id][detailIndex];
-      console.log("Alert trovato: ")
-      console.log(alert);
-      
-      store.commit('user/setCurrentAlert',alert);
-
-    }
   },
 };
 </script>
