@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
+const {resizeImage, upload} = require('../middleware/imageMiddleware.js');
 
 // Controllers
 const { getServizi, getServizio, modificaServizio, preferito } = require('../controllers/servizioController');
@@ -73,7 +75,7 @@ router.post('/:servizio_id/preferito', SIDSave, usaToken, checkServizioId, check
   preferito(req,res);
 });
 
-router.post('/:servizio_id/modifica', SIDSave, usaToken, checkServizioId, checkRuolo(['gds']), CheckDirittiServizio, async (req,res)=>{
+router.post('/:servizio_id/modifica', SIDSave, usaToken, checkServizioId, checkRuolo(['gds','admin']), CheckDirittiServizio, upload.single('foto'),resizeImage, async (req,res)=>{
   // #swagger.description = 'Servizio ON'
   // #swagger.security = [{ "BearerAuth": ['gds'] }]  
   modificaServizio(req,res);
