@@ -4,6 +4,7 @@ import SidebarLeft from '@/components/SidebarLeft.vue';
 import SidebarRight from '@/components/SidebarRight.vue';
 import ErrorMessage from '@/components/ErrorMessage.vue';
 import SuccessMessage from '@/components/SuccessMessage.vue';
+import GoBackButton from '../components/GoBackButton.vue';
 import { onMounted, ref } from 'vue';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 import axios from 'axios';
@@ -71,9 +72,6 @@ async function submitForm(){
     successo.value = "";
   }
 }
-function goBack(){
-  router.go(-1);
-}
 onMounted(async()=>{
   await fetchService();
 })
@@ -107,7 +105,7 @@ onMounted(async()=>{
         <success-message :message="successo" v-if="successo"></success-message>
         <error-message :message="errore" v-if="errore"></error-message>
         <div class="flex justify-end space-x-4">
-          <button class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400" @click="goBack()">Annulla</button>
+          <GoBackButton class="col-end-3"></GoBackButton>
           <button class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700" @click="submitForm">Conferma</button> <!-- Pop-up di riuscita segnalazione o pagina? -->
         </div>
       </section>

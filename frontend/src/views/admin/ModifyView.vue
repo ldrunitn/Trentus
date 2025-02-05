@@ -1,5 +1,9 @@
 <script>
+import GoBackButton from '../../components/GoBackButton.vue';
 export default{
+  components:{
+    GoBackButton
+  },
   props:{
     service_id:{
       type: String,
@@ -22,9 +26,6 @@ export default{
       console.log(service);
       return service;
     },
-    goBack(){
-      this.$router.go(-1);
-    }
   },
   async created(){
     this.service = await this.findService();
@@ -46,7 +47,7 @@ export default{
   </ul>
   <!-- pulsanti di conferma o annulla -->
   <div class="flex flex-row flex-nowrap w-full justify-end space-x-4 mt-10">
-    <button class="hover:text-gray-600" @click="goBack">Annulla</button>
+    <GoBackButton></GoBackButton>
     <button class="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700">Conferma</button>
   </div>
 </div>

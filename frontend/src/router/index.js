@@ -42,7 +42,7 @@ const router = createRouter({
           props: true
         },
         {
-          path: '/alert',
+          path: '/alert/:service_id/:alert_id',
           component: AlertView,
           props:true,
         }
@@ -111,7 +111,7 @@ const router = createRouter({
           props: true
         },
         {
-          path: '/gds/alert',
+          path: '/gds/alert/:service_id/:alert_id',
           component: AlertView,
           props:true,
         }

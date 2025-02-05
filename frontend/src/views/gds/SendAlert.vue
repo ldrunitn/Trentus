@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 import ErrorMessage from '@/components/ErrorMessage.vue';
 import SuccessMessage from '@/components/SuccessMessage.vue';
+import GoBackButton from '../../components/GoBackButton.vue';
 import axios from 'axios'
 import { useStore } from 'vuex';
 const titolo = ref("");
@@ -22,9 +23,6 @@ const props = defineProps({
     required: true,
   }
 })
-function goBack(){
-  router.go(-1);
-}
 function submit(){
   if(titolo.value !== "" && corpo.value !== '' && tipo.value !== '' && inizio.value !== '' && fine.value !== ''){
     const data = {
@@ -80,7 +78,7 @@ function submit(){
   <success-message :message="successo" v-if="successo"></success-message>
   <error-message :message="errore" v-if="errore"></error-message>
   <div class="flex flex-row mt-4">
-    <button class="btn bg-gray-300 max-w-40 rounded-lg hover:bg-gray-400 col-end-4" @click="goBack()">Indietro</button>
+    <go-back-button></go-back-button>
     <button @click="submit" class=" btn ml-3 bg-purple-600 hover:bg-purple-700 text-white max-w-40">Invia</button>
   </div>
 

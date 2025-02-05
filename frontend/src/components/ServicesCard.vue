@@ -36,8 +36,10 @@ onMounted(() => {
             <div class="justify-end items-center max-w-12 max-h-12 basis-1/2 ">
                 <img v-if="isFavourite" src="@/assets/favourite-toggled.svg" alt="Favourite Toggled" class="top-2 right-2 w-6 h-6 mb-8">
                 <img v-else src="@/assets/favorite.svg" alt="Favourite" class="top-2 right-2 w-6 h-6 mb-8">
-                <p class="text-green-500 text-right mt-4">{{ service.status }}<i class="pi pi-circle-fill text-sm ml-1"></i>
-                </p>
+                <!-- <p class="text-green-500 text-right mt-4">{{ service.status }}<i class="pi pi-circle-fill text-sm ml-1"></i> -->
+                <!-- </p> -->
+                <h2 class="text-red-500 mr-4" v-if="service['stato'] == 'off'"><i class="pi pi-circle-fill text-sm/8"></i></h2>
+                <h2 class="text-green-500 mr-4" v-else><i class="pi pi-circle-fill text-sm/8"></i></h2>
             </div>
         </div>  
     </div>

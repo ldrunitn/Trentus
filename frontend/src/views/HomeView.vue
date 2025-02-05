@@ -87,7 +87,16 @@ async function initSideBarLeftUser() {
       //scorro gli alerts
       let details = [];
       for(const al of alerts[id]){
-        details.push(al.titolo);
+        console.log("ALERT")
+        console.log(al);
+        //trovo l'id del servizio corrispondente all'alert
+        const service_id = servizi.find(servizio => servizio['titolo'] === id)['_id'];
+        const o = {
+          id: al._id,
+          service_id: service_id,
+          titolo: al.titolo,
+        }
+        details.push(o);
       }
       item["details"] = details;
       itemsArray.push(item);
@@ -128,7 +137,12 @@ async function initSideBarLeftGdS() {
     
     for(const alert of avvisi.value){
       console.log(alert);
-      details.push(alert.titolo);
+      const o = {
+        id: alert._id,
+        service_id: service_id,
+        titolo: alert.titolo,
+      }
+      details.push(o);
       //scorro gli alerts 
     }
     itemsArray.push(item);
