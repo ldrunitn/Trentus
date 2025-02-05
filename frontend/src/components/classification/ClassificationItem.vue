@@ -1,22 +1,23 @@
-<template>
-<div class="flex items-center bg-pink-200 text-pink-800 rounded-lg px-4 py-2 shadow">
-  <!-- Immagine/Logo -->
-  <div class="flex-shrink-0 w-10 h-10 bg-white rounded-full overflow-hidden">
-    <img src="https://via.placeholder.com/40" alt="Logo" class="w-full h-full object-cover">
-  </div>
-  <!-- Testo -->
-  <span class="ml-3 font-medium text-lg">{{reportNumber}} segnalazioni</span>
-</div>
-</template>
 <script>
 export default{
   props: {
-    logo: File,
+    nome: String,
     reportNumber: Number,
+    logo: String,
   },
-    
-  
+  data(){
+    return{
+      BACKEND_URL: import.meta.env.VITE_BACKEND_URL,
+    }
+  },
 }
 </script>
 
+
+<template>
+<div class="flex flex-nowrap flex-w-grow items-center bg-pink-200 text-pink-800 rounded-lg px-4 py-2 shadow w-full">
+  <!-- Testo --> 
+  <span class="ml-3 font-medium text-lg w-full"><img :src="BACKEND_URL + logo" alt="logo" class="max-w-20 max-h-20">{{reportNumber}} segnalazioni</span>
+</div>
+</template>
 

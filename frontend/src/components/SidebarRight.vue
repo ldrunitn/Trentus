@@ -13,12 +13,25 @@ export default{
   methods:{
     async getClassifica(){
       try{
+        let classifica;
         await axios.get(BACKEND_URL + '/servizi/classifica')
         .then(response => {
           console.log("DATI CLASSIFICA");
           console.log(response.data);
-          this.services = response.data;
+          classifica = response.data;
         })
+        console.log("Classifica")
+        console.log(classifica);
+        for(let item of classifica){
+          await axios.get(BACKEND_URL + '/servizi/' + item['servizio_id'])
+          .then(response =>{
+            this.services.push({
+              nome: response.data['titolo'],
+              segnalazioni: item['segnalazioni'],
+              logo: response.data['foto']
+            })
+          })
+        }
       }
       catch(err){
         console.log(err);
@@ -34,12 +47,11 @@ export default{
 
 
 <template>
-  <div class="w-64 flex flex-col bg-gray-100 shadow-md p-4 h-full" id="navbar-right">
+  <div class="w-64 flex flex-col flex-w-grow bg-gray-100 shadow-md p-4 h-full" id="navbar-right">
     <div class="p-4">
       <h2 class="text-xl font-bold">Classifica</h2>
     </div>
-    <p v-for="service in services">{{service.servizio_id}} - {{ service.segnalazioni }}</p>
-    <ClassificationItem  />
+    <ClassificationItem v-for="item in services" :nome="item['nome']" :report-number="item['segnalazioni']" :logo="item['logo']"/>
   </div>
 </template>
 

@@ -33,6 +33,7 @@ function submitForm(){
     const data = {
       opzioni: options,
     }
+    console.log("DATAAAAAAAAAAa")
     console.log(data);
     const config = {
       headers: {
