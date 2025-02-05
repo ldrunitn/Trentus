@@ -22,7 +22,9 @@ onMounted( async () => {
 })
 </script>
 <template>
+  <div class="pb-36">
     <div class="services flex flex-col justify-start px-12 m-0" v-if="!loading"> <ServicesCard v-for="service in services" :service="service"/> </div>
+  </div>
 </template>
 
 <style scoped>
