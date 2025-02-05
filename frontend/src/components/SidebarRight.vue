@@ -39,8 +39,7 @@ export default{
     }
   },
   async mounted(){
-    console.log("SIDEBAR")
-    await this.getClassifica();
+    setInterval(this.getClassifica(), 30000)
   }
 }
 </script>
@@ -51,7 +50,7 @@ export default{
     <div class="p-4">
       <h2 class="text-xl font-bold">Classifica</h2>
     </div>
-    <ClassificationItem v-for="item in services" :nome="item['nome']" :report-number="item['segnalazioni']" :logo="item['logo']"/>
+    <ClassificationItem class="mt-4" v-for="item in services" :nome="item['nome']" :report-number="item['segnalazioni']" :logo="item['logo']"/>
   </div>
 </template>
 

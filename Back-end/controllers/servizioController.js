@@ -63,8 +63,13 @@ exports.preferito = async (req, res) => {
 exports.modificaServizio = async (req, res) => {
   try {
     const { servizio_id } = req.params; 
-    const aggiornamenti = req.body; 
+    const aggiornamenti = JSON.parse(req.body.data); 
 
+    // Se è stato postato anche un file lo includo nelle modifiche
+    if(req.file){
+      const filePath = "/images/" + req.file.filename; 
+      aggiornamenti['foto'] = filePath
+    }
     const servizio = await Servizio.findByIdAndUpdate(servizio_id, aggiornamenti, { new: true, runValidators: true });
 
     if (!servizio) {

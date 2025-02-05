@@ -24,7 +24,7 @@
       <label class="text-black">Sito web</label>
       <input type="text" class="input bg-gray-200 shadow-md rounded-lg text-black max-w-72" v-model="formData.url">
       <label class="text-black">Descrizione</label>
-      <input type="text" class="input bg-gray-200 shadow-md rounded-lg text-black max-w-72" v-model="descrizione">
+      <input type="text" class="input bg-gray-200 shadow-md rounded-lg text-black max-w-72" v-model="formData.descrizione">
       <label class="text-black">Logo</label>
       <input type="file" @change="handleFileChange">
       <button type="submit" class="btn m-4 bg-purple-600 text-white mb-16 max-w-60 hover:bg-purple-700">Aggiungi</button>
