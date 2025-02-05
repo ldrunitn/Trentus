@@ -28,7 +28,7 @@ const schemaServizio = new mongoose.Schema({
   },
   stato: {
     type: String,
-    enum:['on','manutenzione','problemi','down'],
+    enum:['on','manutenzione','problemi','down', 'off'],
     required: true
   },
   form: {
