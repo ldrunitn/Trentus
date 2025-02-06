@@ -2,9 +2,11 @@
 import { defineProps } from 'vue'
 import { ref, onMounted} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex';
+import StateIndicator from './StateIndicator.vue';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-
+const store = useStore();
 const props = defineProps({
     service: {
         type: Object,
@@ -12,13 +14,11 @@ const props = defineProps({
     }
 })
 
-const isFavourite = ref(false)
+const isFavourite = ref(store.getters['user/getFavourites'].includes(props.service['_id']));
 const toggleFavourite = () => {
     isFavourite.value = !isFavourite.value
+    store.dispatch('user/toggleFavourite',props.service['_id']);
 }
-onMounted(() => {
-    console.log(props.service)
-})
 
 </script>
 
@@ -28,18 +28,16 @@ onMounted(() => {
 <!-- {name: 'service-details'} -->
 <router-link :to="`/service/${props.service['_id']}`">
     <div class="bg-white rounded-lg shadow-md p-16 max-w-100 mt-4 w-full">
+        {{ store.getters['getRole'] }}
         <div class="flex justify-between">
             <div class="basis-1/2">
                 <h3 class="text-lg font-bold justify-start">{{ service.titolo }}</h3>
                 <img :src="BACKEND_URL + props.service.foto" alt="Service Logo" class="max-w-20 max-h-20">
             </div>
-            <div class="justify-end items-center max-w-12 max-h-12 basis-1/2 ">
-                <img v-if="isFavourite" src="@/assets/favourite-toggled.svg" alt="Favourite Toggled" class="top-2 right-2 w-6 h-6 mb-8">
-                <img v-else src="@/assets/favorite.svg" alt="Favourite" class="top-2 right-2 w-6 h-6 mb-8">
-                <!-- <p class="text-green-500 text-right mt-4">{{ service.status }}<i class="pi pi-circle-fill text-sm ml-1"></i> -->
-                <!-- </p> -->
-                <h2 class="text-red-500 mr-4" v-if="service['stato'] == 'off'"><i class="pi pi-circle-fill text-sm/8"></i></h2>
-                <h2 class="text-green-500 mr-4" v-else><i class="pi pi-circle-fill text-sm/8"></i></h2>
+            <div class="justify-end flex flex-col items-center max-w-12 max-h-12 basis-1/2 mt-12">
+                <img v-if="isFavourite" @click.prevent="toggleFavourite" src="@/assets/favourite-toggled.svg" alt="Favourite Toggled" class="top-2 right-2 w-6 h-6 mb-8">
+                <img v-else @click.prevent="toggleFavourite" src="@/assets/favorite.svg" alt="Favourite" class="top-2 right-2 w-6 h-6 mb-8">
+                <StateIndicator class="flex flex-row" :stato="service['stato']"></StateIndicator>
             </div>
         </div>  
     </div>

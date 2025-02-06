@@ -39,7 +39,8 @@ export default{
     }
   },
   async mounted(){
-    setInterval(this.getClassifica(), 30000)
+    await this.getClassifica();
+    // setInterval(this.getClassifica(), 30000)
   }
 }
 </script>

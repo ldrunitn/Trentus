@@ -11,6 +11,7 @@ import { comment } from 'postcss';
 import { useStore } from 'vuex';
 import GoBackButton from '../components/GoBackButton.vue';
 import EditForm from './gds/EditForm.vue';
+import StateIndicator from '../components/StateIndicator.vue';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const route = useRoute();
@@ -194,8 +195,7 @@ onMounted(async()=> {
           <p class="text-xs text-gray-700">Descrizione: {{ service["descrizione"] }}</p>
         </div>
         <div class="ml-4 flex-row space-x-4">
-          <h2 class="text-red-500 mr-4" v-if="service['stato'] == 'off'">Servizio Offline <i class="pi pi-circle-fill text-sm/8"></i></h2>
-          <h2 class="text-green-500 mr-4" v-else>Servizio Online <i class="pi pi-circle-fill text-sm/8"></i></h2>
+          <StateIndicator :stato="service['stato']"></StateIndicator>
           <router-link
             class="btn bg-red-500 text-white rounded-lg text-center mt-2"
             v-if="role === 'user'"

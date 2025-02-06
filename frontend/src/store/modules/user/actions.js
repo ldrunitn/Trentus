@@ -24,6 +24,14 @@ export default {
                 commit('setRole', "user", { root: true }); //imposto il ruolo globale
                 console.log(getters.getIsAuthenticated);
             })
+            await this.dispatch('user/fetchFavourites');
+        }
+        catch (err) {
+            throw new Error("Login non riuscito: " + err);
+        }
+    },
+    async fetchFavourites({commit,getters}){
+        try{
             await axios.get(BACKEND_URL + '/utente/preferiti',{
                 headers: {
                     authorization: getters.getToken,
@@ -32,10 +40,28 @@ export default {
                 // console.log("-----------LOGIN---------------\n");
                 // console.log(response.data.preferiti);
                 commit('setFavourites', response.data.preferiti)
-            })
+            })  
         }
-        catch (error) {
-            throw new Error("Login non riuscito");
+        catch(err){
+            console.error("Errore nell'ottenere i preferiti");
+        }
+    },
+    async toggleFavourite({commit, getters},service_id){
+        try{
+            console.log("TOKEN: " + getters.getToken);
+            //usa l'api per il toggle
+            await axios.post(BACKEND_URL + `/servizi/${service_id}/preferito`,{},{
+                headers: {
+                    authorization: getters.getToken
+                }
+            })
+            //rifetcha preferiti e alert
+            await this.dispatch('user/fetchFavourites');
+            await this.dispatch('user/fetchAlerts');
+            await this.dispatch('user/fetchServices');
+            
+        }catch(err){
+            console.error(err);
         }
     },
     async fetchServices({commit,getters}) {

@@ -48,10 +48,9 @@ const services = computed(() => {
   console.log("computed services");
   return store.getters['user/getServices'];
 });
-const alerts = computed(() => {
-  console.log("computed alerts");
+const alerts = computed(()=>{
   return store.getters['user/getAlerts'];
-});
+})
 const SidebarSections = computed(()=>{
   return sidebarSections;
 });
@@ -73,7 +72,6 @@ async function initSideBarLeftUser() {
 
     //fetch alerts dei preferiti
     await store.dispatch('user/fetchAlerts');
-    const alerts = store.getters['user/getAlerts'];
 
     //formatto gli alerts per la sidebar
     let alertSection = {
@@ -81,12 +79,12 @@ async function initSideBarLeftUser() {
     };
     //guardo tutti i servizi che hanno mandato notifiche
     let itemsArray = [];
-    for(const id in alerts){
+    for(const id in alerts.value){
       let item = {};
       item["label"] = id;
       //scorro gli alerts
       let details = [];
-      for(const al of alerts[id]){
+      for(const al of alerts.value[id]){
         console.log("ALERT")
         console.log(al);
         //trovo l'id del servizio corrispondente all'alert
