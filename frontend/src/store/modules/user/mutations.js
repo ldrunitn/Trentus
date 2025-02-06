@@ -1,3 +1,4 @@
+import { parseQuery } from "vue-router";
 import userModule from "./userModule";
 export default {
     setToken(state, token) {
@@ -5,7 +6,7 @@ export default {
         state.isAuthenticated = true;
     },
     setFavourites(state,favourites) {
-        state.favourites = favourites;
+        state.favourites = [...favourites]; //questa sintassi fa in modo che vue reagisca alla modifica
     },
     setServices(state,services) {
         state.services = services;

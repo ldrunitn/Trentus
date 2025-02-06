@@ -69,7 +69,7 @@ router.get('/:servizio_id', SIDSave, checkServizioId, async (req,res)=>{
   getServizio(req,res);
 });
 
-router.post('/:servizio_id/preferito', SIDSave, usaToken, checkServizioId, checkRuolo(['user']), async (req,res)=>{
+router.post('/:servizio_id/preferito', SIDSave, usaToken, checkServizioId, checkRuolo(['utente']), async (req,res)=>{
   // #swagger.description = 'Servizio salvato nei preferiti dell'utente'
   // #swagger.security = [{ "BearerAuth": ['utente'] }]  
   preferito(req,res);

@@ -22,12 +22,14 @@ export default{
         azienda: "",
         url: "",
         descrizione: "",
+        stato: ""
       },
       imgPath: "",
       message: ""
     }
   },
   methods:{
+    //fetcha il servizio e mette i campi in form data
     async fetchService(){
       try{
         await axios.get(BACKEND_URL + `/servizi/${this.service_id}`)
@@ -37,6 +39,7 @@ export default{
           this.formData.titolo = service['titolo'];
           this.formData.url = service['url'];
           this.formData.descrizione = service['descrizione'];
+          this.formData.stato = service['stato'];
           this.imgPath = BACKEND_URL + service['foto'];
         })  
       }
@@ -81,6 +84,14 @@ export default{
   <h1 class="text-5xl text-gray-600 mb-10">Modifica servizio</h1>
   <ul class="space-y-10 ml-5">
     <li><span>Immagine: </span><img :src="imgPath" alt="logo" class="max-w-32 max-h-32"><input type="file" @change="handleFileChange"></li>
+    <li><label for="status">Seleziona lo stato:</label>
+      <select v-model="formData.stato" id="status" name="status" class="mt-1 bg-gray-50 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        <option value="on">On</option>
+        <option value="manutenzione">Manutenzione</option>
+        <option value="problemi">Problemi</option>
+        <option value="down">Down</option>
+      </select>
+    </li>
     <li><span>Nome: </span><input class="text-gray-600 bg-white border rounded p-1" v-model="formData.titolo"></input></li>
     <li><span>Link: </span><span class="text-gray-600"><input class="text-gray-600 bg-white border rounded p-1" v-model="formData.url"></input></span></li>
     <li><span>Azienda: </span><span class="text-gray-600"><input class="text-gray-600 bg-white border rounded p-1" v-model="formData.azienda"></input></span></li>
