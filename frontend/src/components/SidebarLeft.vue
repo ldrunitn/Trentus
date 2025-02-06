@@ -44,8 +44,13 @@ export default {
   },
   created(){
     // faccio vedere gli elementi della prima sezione
-    this.sections[0].showItems = true; 
-    this.sections[0].items[0].showDetails = true;
+    try{
+      this.sections[0].showItems = true; 
+      this.sections[0].items[0].showDetails = true;
+    }
+    catch(err){
+      //easy
+    }
   },
   data() {
     return {
