@@ -23,5 +23,8 @@ export default {
     },
     getCurrentAlert(state,id) {
         return state.currentAlert;
+    },
+    getShowFavourites(state){
+        return state.showFavourites;
     }
 }

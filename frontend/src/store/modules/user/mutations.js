@@ -25,5 +25,9 @@ export default {
         state.isAuthenticated = false;
         state.favourites = [];
         state.alerts = {};
+        state.showFavourites = false;
+    },
+    toggleShowFavourites(state){
+        state.showFavourites = !state.showFavourites; 
     }
 }
