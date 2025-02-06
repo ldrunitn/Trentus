@@ -27,7 +27,7 @@ export default {
             await this.dispatch('user/fetchFavourites');
         }
         catch (err) {
-            throw new Error("Login non riuscito: " + err);
+            throw new Error("Login non riuscito: ");
         }
     },
     async fetchFavourites({commit,getters}){
@@ -40,10 +40,12 @@ export default {
                 // console.log("-----------LOGIN---------------\n");
                 // console.log(response.data.preferiti);
                 commit('setFavourites', response.data.preferiti)
+                console.log("___________DIOCANE___________")
+                console.log(getters.getFavourites);
             })  
         }
         catch(err){
-            console.error("Errore nell'ottenere i preferiti");
+            console.error("Errore nell'ottenere i preferiti " + err);
         }
     },
     async toggleFavourite({commit, getters},service_id){
@@ -58,7 +60,11 @@ export default {
             //rifetcha preferiti e alert
             await this.dispatch('user/fetchFavourites');
             await this.dispatch('user/fetchAlerts');
-            await this.dispatch('user/fetchServices');
+            console.log("MOMENTO DEL REFETCH")
+            console.log(getters.getFavourites)
+            // await this.dispatch('user/fetchServices');
+            console.log("MOMENTO DEL REFETCH")
+            console.log(getters['getFavourites'])
             
         }catch(err){
             console.error(err);

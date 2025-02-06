@@ -5,8 +5,9 @@ import ServicesCard from '@/components/ServicesCard.vue';
 const loading = ref(true);
 const store = useStore();
 const services = computed(() => {
-  console.log("computed services");
-  return store.getters['user/getServices'];
+  if(store.getters['user/getShowFavourites'])
+      return store.getters['user/getFavouritesServices'];
+  else return store.getters['user/getServices'];
 });
 onMounted( async () => {
   try {
@@ -23,7 +24,7 @@ onMounted( async () => {
 </script>
 <template>
   <div class="pb-36">
-    <div class="services flex flex-col justify-start px-12 m-0" v-if="!loading"> <ServicesCard v-for="service in services" :service="service"/> </div>
+    <div class="services flex flex-col justify-start px-12 m-0" v-if="!loading"> <ServicesCard v-for="service in services" :service="service" :key="service['_id']"/> </div>
   </div>
 </template>
 

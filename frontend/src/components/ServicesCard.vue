@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps } from 'vue'
+import { computed, defineProps } from 'vue'
 import { ref, onMounted} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex';
@@ -14,9 +14,11 @@ const props = defineProps({
     }
 })
 
-const isFavourite = ref(store.getters['user/getFavourites'].includes(props.service['_id']));
+const isFavouriteo = ref(store.getters['user/getFavourites'].includes(props.service['_id']));
+const isFavourite = computed(()=>{
+    return store.getters['user/getFavourites'].includes(props.service['_id']);
+})
 const toggleFavourite = () => {
-    isFavourite.value = !isFavourite.value
     store.dispatch('user/toggleFavourite',props.service['_id']);
 }
 

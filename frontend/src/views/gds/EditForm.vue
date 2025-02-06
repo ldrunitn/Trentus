@@ -33,8 +33,6 @@ function submitForm(){
     const data = {
       opzioni: options,
     }
-    console.log("DATAAAAAAAAAAa")
-    console.log(data);
     const config = {
       headers: {
         'Content-Type' : 'application/json',
@@ -45,6 +43,7 @@ function submitForm(){
       .then(response => {
         console.log(response.data);
         emit('updateForm'); //aggiorna la UI della  form
+        option.value = "";
         console.log("Evento emesso");
       })
 

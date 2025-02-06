@@ -31,6 +31,9 @@ export default{
         this.errore = error;
       }
     }
+  },
+  created(){
+    this.$store.commit('logout');
   }
 }
 
