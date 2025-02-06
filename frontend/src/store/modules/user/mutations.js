@@ -6,7 +6,7 @@ export default {
         state.isAuthenticated = true;
     },
     setFavourites(state,favourites) {
-        state.favourites = [...favourites]; //questa sintassi fa in modo che vue reagisca alla modifica
+        state.favourites =favourites; 
     },
     setServices(state,services) {
         state.services = services;
