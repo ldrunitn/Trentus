@@ -48,7 +48,7 @@
         }
       },
       "post": {
-        "description": "Crea un avviso e modifica lo stato del servizio!!!!!",
+        "description": "Crea un avviso e invia una mail a tutti gli utenti interessati",
         "parameters": [
           {
             "name": "servizio_id",
@@ -67,6 +67,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "400": {
             "description": "Bad Request"
           },
@@ -75,6 +78,9 @@
           },
           "403": {
             "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -625,7 +631,7 @@
         }
       }
     },
-    "/servizi/{servizio_id}/segnalazioni/graficolinee": {
+    "/servizi/{servizio_id}/segnalazioni/istogramma": {
       "get": {
         "description": "Restituisce dati per la creazione del grafico di frequenza segnalazioni",
         "parameters": [
@@ -640,22 +646,25 @@
         ],
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Segnalazione/properties/Grafico"
                 }
               }
-            },
-            "description": "OK"
+            }
           },
           "400": {
             "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
-    "/servizi/{servizio_id}/segnalazioni/graficotorta": {
+    "/servizi/{servizio_id}/segnalazioni/areogramma": {
       "get": {
         "description": "Restituisce dati per la creazione del grafico di problemi riscontrati",
         "parameters": [
@@ -670,17 +679,20 @@
         ],
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Segnalazione/properties/Grafico"
                 }
               }
-            },
-            "description": "OK"
+            }
           },
           "400": {
             "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -928,6 +940,36 @@
         }
       }
     },
+    "/servizi/classifica": {
+      "get": {
+        "description": "Classifica dei servizi più problematici",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "servizio_id": {
+                      "type": "string",
+                      "description": "Servizio_id"
+                    },
+                    "segnalazioni": {
+                      "type": "int",
+                      "description": "nnumero ci segnalazioni del servizio"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/servizi/{servizio_id}": {
       "get": {
         "description": "Restituisce servizio in base al suo id",
@@ -961,7 +1003,53 @@
         }
       }
     },
-    "/servizi/{servizio_id}/riabilita": {
+    "/servizi/{servizio_id}/preferito": {
+      "post": {
+        "description": "Servizio salvato nei preferiti dell",
+        "parameters": [
+          {
+            "name": "servizio_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [
+              "utente"
+            ]
+          }
+        ]
+      }
+    },
+    "/servizi/{servizio_id}/modifica": {
       "post": {
         "description": "Servizio ON",
         "parameters": [
@@ -982,8 +1070,8 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request"
@@ -993,6 +1081,9 @@
           },
           "403": {
             "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -1004,7 +1095,21 @@
               "gds"
             ]
           }
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/controlpanel/login": {
@@ -1075,7 +1180,7 @@
       }
     },
     "/controlpanel/confermagds/{richiesta_id}": {
-      "get": {
+      "post": {
         "description": "Conferma la richiesta di registrazione per un GdS",
         "parameters": [
           {
