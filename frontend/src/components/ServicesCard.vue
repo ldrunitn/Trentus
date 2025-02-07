@@ -7,14 +7,20 @@ import StateIndicator from './StateIndicator.vue';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const store = useStore();
+const ruolo = ref(store.getters['getRole']);
 const props = defineProps({
     service: {
         type: Object,
         required: true
     }
 })
+const routePrefix = computed(()=>{
+    if(store.getters['getRole'] === 'admin'){
+        return 'admin'
+    }
+    else return ''
+});
 
-const isFavouriteo = ref(store.getters['user/getFavourites'].includes(props.service['_id']));
 const isFavourite = computed(()=>{
     return store.getters['user/getFavourites'].includes(props.service['_id']);
 })
@@ -28,7 +34,7 @@ const toggleFavourite = () => {
 
 <!-- `/service/${props.service['_id']}` -->
 <!-- {name: 'service-details'} -->
-<router-link :to="`/service/${props.service['_id']}`">
+<router-link :to="`${routePrefix}/service/${props.service['_id']}`">
     <div class="bg-white rounded-lg shadow-md p-16 max-w-100 mt-4 w-full">
         <div class="flex justify-between">
             <div class="basis-1/2">
@@ -36,8 +42,10 @@ const toggleFavourite = () => {
                 <img :src="BACKEND_URL + props.service.foto" alt="Service Logo" class="max-w-20 max-h-20">
             </div>
             <div class="justify-end flex flex-col items-center max-w-12 max-h-12 basis-1/2 mt-12">
-                <img v-if="isFavourite" @click.prevent="toggleFavourite" src="@/assets/favourite-toggled.svg" alt="Favourite Toggled" class="top-2 right-2 w-6 h-6 mb-8">
-                <img v-else @click.prevent="toggleFavourite" src="@/assets/favorite.svg" alt="Favourite" class="top-2 right-2 w-6 h-6 mb-8">
+                <div v-if="ruolo === 'user'">
+                    <img v-if="isFavourite" @click.prevent="toggleFavourite" src="@/assets/favourite-toggled.svg" alt="Favourite Toggled" class="top-2 right-2 w-6 h-6 mb-8">
+                    <img v-else @click.prevent="toggleFavourite" src="@/assets/favorite.svg" alt="Favourite" class="top-2 right-2 w-6 h-6 mb-8">
+                </div>
                 <StateIndicator class="flex flex-row" :stato="service['stato']"></StateIndicator>
             </div>
         </div>  

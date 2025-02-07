@@ -19,7 +19,8 @@ export default createStore ({
     modules: {
         user: userModule,
         gds: gdsModule,
-        admin: adminModule
+        admin: adminModule,
+        token: ""
     },
     mutations,
     getters,

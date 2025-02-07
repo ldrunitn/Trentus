@@ -8,6 +8,7 @@ export default {
             .then(response => {
                 console.log(response.data);
                 commit('setToken', response.data.token)
+                commit('setToken', response.data.token, {root: true});
                 commit('setRole', "gds", { root: true }); //imposto il ruolo globale
                 console.log(getters.getIsAuthenticated);
             })

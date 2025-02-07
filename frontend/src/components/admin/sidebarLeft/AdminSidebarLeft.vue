@@ -46,7 +46,7 @@ export default {
     isSectionOpen(sectionIndex, itemIndex) {
       return this.openSections[`${sectionIndex}-${itemIndex}`] || false;
     },
-  },
+  }
 };
 </script>
 

@@ -19,13 +19,13 @@ export default{
         if(this.password.trim() === "" || this.email.trim() === ""){
           throw new Error("Invalid credentials");
         }
-        await this.$store.dispatch('gds/login', {
+        await this.$store.dispatch('admin/login', {
           email: this.email.trim(),
           password: this.password.trim(),
         });
-        if(this.$store.getters["gds/getIsAuthenticated"]){
+        if(this.$store.getters["admin/getIsAuthenticated"]){
           console.log("Entrato");
-          this.$router.push("/gds/"+this.$store.getters["gds/getServiceId"]);
+          this.$router.push("/admin");
         }
       } catch (error) {
         this.errore = error;
@@ -55,6 +55,7 @@ export default{
     <div
       class="inline-flex flex-col items-center justify-center w-[400px] max-w-md p-4 bg-white rounded-lg shadow-md"
     >
+    <h2 class="text-red-500 text-center"><strong>Attenzione</strong><br> Se non sei un admin, non dovresti essere qui</h2>
     <div class="flex flex-col grid-flow-col grid-cols-1 gap-2 mt-8">
         <input v-model="email" type="email" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Insert your Email">
         <input v-model="password" type="password" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Insert your Password">
@@ -70,42 +71,6 @@ export default{
       </div>
       <LoginWGoogle />
     </div>
-    <p class="place-self-center pt-4"><a href="" class="underline text-gray-800" >Forgot your Password?</a></p>
-    <p class="place-self-center pt-2">Don't have an account? <router-link to="/register/gds" class="underline text-gray-800">Register</router-link></p>
-    <p class="place-self-center pt-2">Sei un utente? <router-link to="/login" class="underline text-gray-800">clicca qui</router-link> </p>
+    <p class="place-self-center pt-2"><router-link to="/login" class="underline text-gray-800">Torna all'area di login</router-link></p>
   </div>
 </template>
-
-<!-- <template>
-    <div class="flex flex-col items-center min-h-screen bg-gray-100">
-
-      <div class="flex flex-col items-center mt-6">
-        <h1 class="text-2xl text-black font-bold">Login to</h1>
-        <img
-          src="/src/assets/trentus-text-logo.svg"
-          alt="logo_trentus"
-          class="mt-2"
-        />
-      </div>
-  
-
-      <div
-        class="flex flex-col items-center w-full max-w-md p-6 mt-8 bg-white rounded-lg shadow-md"
-      >
-        <LoginField />
-        <div class="relative flex items-center w-full my-6">
-          <hr class="w-full h-px bg-gray-300 border-0 dark:bg-gray-700" />
-          <span
-            class="absolute px-2 font-medium text-gray-900 text-sm bg-white left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            >or</span
-          >
-        </div>
-        <LoginWGoogle />
-      </div>
-    </div>
-  </template> -->
-  
-
-<style>
-
-</style>

@@ -35,7 +35,7 @@ function submit(){
     const config = {
       headers: {
         'Content-Type' : 'application/json',
-        'authorization' : store.getters['gds/getToken'],
+        'authorization' : store.getters['getToken'],
       }
     }
     try{

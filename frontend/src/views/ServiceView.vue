@@ -4,7 +4,7 @@ import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, Li
 import { data } from 'autoprefixer';
 import PopupReport from '@/components/PopupReport.vue';
 import axios from 'axios';
-import { onMounted, ref, useSSRContext } from 'vue';
+import { computed, onMounted, ref, useSSRContext } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Comment from '@/components/services/Comment.vue';
 import { comment } from 'postcss';
@@ -160,10 +160,6 @@ if (istogrammaData.value) {
   };
 }
 
-
-
-
-
   } catch (error) {
     console.error("Errore nel fetch dei grafici:", error);
   }
@@ -177,6 +173,7 @@ onMounted(async()=> {
   await fetchGraphs();
 
 });
+
 
 </script>
 
@@ -204,11 +201,11 @@ onMounted(async()=> {
           <router-link
             class="btn bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-center"
             v-if="role === 'admin' || role === 'gds'"
-            :to="`/gds/${service_id}/modify`"
+            :to="`/${role}/${service_id}/modify`"
           >Modifica</router-link>
           <router-link
             class="btn bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-center"
-            v-if="role === 'admin' || role === 'gds'"
+            v-if="role === 'gds'"
             :to="`/gds/${service_id}/sendalert`"
           >Invia un avviso</router-link>
         </div>

@@ -24,9 +24,9 @@ router.get('/form', checkServizioId, async (req, res) => {
   getForm(req, res);
 });
 
-router.post('/form', checkServizioId, usaToken, checkRuolo(['gds']), CheckDirittiServizio, async (req, res) => {
+router.post('/form', checkServizioId, usaToken, checkRuolo(['gds','SuperAdmin']), CheckDirittiServizio, async (req, res) => {
   // #swagger.description = 'Genera la form di segnalazione compilabile per un servizio'
-  // #swagger.security = [{ "BearerAuth": ['gds'] }]
+  // #swagger.security = [{ "BearerAuth": ['gds','SuperAdmin'] }]
   /* #swagger.requestBody = {
       content: {
         "application/json": {

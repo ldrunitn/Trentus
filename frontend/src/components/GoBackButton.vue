@@ -9,5 +9,5 @@ function goBack(){
 
 </script>
 <template>
-<button class="px-4 text-gray-700 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 max-w-42" @click="goBack()">Indietro</button>
+<button class="px-4 text-gray-700 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 max-w-42" @click.prevent="goBack()">Indietro</button>
 </template>

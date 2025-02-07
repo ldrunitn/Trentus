@@ -21,6 +21,7 @@ export default {
             .then(response => {
                 console.log(response.data);
                 commit('setToken', response.data.token)
+                commit('setToken', response.data.token, {root: true});
                 commit('setRole', "user", { root: true }); //imposto il ruolo globale
                 console.log(getters.getIsAuthenticated);
             })
@@ -40,8 +41,6 @@ export default {
                 // console.log("-----------LOGIN---------------\n");
                 // console.log(response.data.preferiti);
                 commit('setFavourites', response.data.preferiti)
-                console.log("___________DIOCANE___________")
-                console.log(getters.getFavourites);
             })  
         }
         catch(err){
