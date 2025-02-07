@@ -32,7 +32,7 @@ export default createStore ({
                 return cookie ? JSON.parse(cookie) : undefined;
             },
             setState: (key, state) => {
-              Cookies.set(key, JSON.stringify(state), { expires: 3,
+              Cookies.set(key, JSON.stringify(state), {
                 secure: process.env.NODE_ENV === "production"
                });
             },
