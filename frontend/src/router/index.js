@@ -15,10 +15,16 @@ import SendAlert from '@/views/gds/SendAlert.vue'
 import store from '@/store'
 import E404View from '@/views/E404View.vue'
 import RegistrazioneGdS from '@/views/gds/RegistrazioneGdS.vue'
+import LoginViewAdmin from '../views/admin/LoginViewAdmin.vue'
 const router = createRouter({
   //import.meta.env.BASE_URL
   history: createWebHistory(),
   routes: [
+    // {
+    //   path: '/service/:service_id',
+    //   component: ServiceView,
+    //   props: true
+    // },
     {
       path: '/',
       name: 'home',
@@ -26,12 +32,12 @@ const router = createRouter({
       meta: { roles: ['user']},
       children: [
         {
-          path: '',
+          path: '/',
           component: ServicesView,
         },
         {
-          path: 'service/:service_id',
-          name: "service-details",
+          path: '/service/:service_id',
+          name: "service-details-user",
           component: ServiceView,
           props: true
         },
@@ -69,28 +75,6 @@ const router = createRouter({
       component: ReportView,
     },
     {
-      path: '/admin',
-      name: 'Admin Homepage',
-      component: AdminHomeView,
-      children: [
-        {
-          path:'',
-          component: ServicesViewAdmin,
-          props: true
-        },
-        {
-          path: ':request_id/approve',
-          component: RequestView, 
-          props: true
-        },
-        {
-          path:':service_id/modify',
-          component: ModifyView,
-          props: true
-        }
-      ]
-    },
-    {
       path: '/gds',
       name: 'GdS Homepage',
       meta: { roles: ['gds']},
@@ -122,10 +106,49 @@ const router = createRouter({
       component: RegistrazioneGdS
     },
     {
+      path: '/admin/login',
+      component: LoginViewAdmin
+    },
+    {
+      path: '/admin',
+      name: 'Admin Homepage',
+      meta: { roles: ['admin']},
+      component: HomeView,
+      children: [
+        {
+          path: '',
+          component: ServicesView,
+          props: true
+        },
+        {
+          path: ':service_id',
+          component: ServiceView,
+          props: true,
+        },
+        {
+          path: ':request_id/approve',
+          component: RequestView,
+          props: true
+        },
+        {
+          path:':service_id/modify',
+          component: ModifyView,
+          props: true
+        },
+        {
+          path: 'service/:service_id',
+          name: "service-details-admin",
+          component: ServiceView,
+          props: true
+        },
+      ]
+    },
+    {
       path: '/:catchAll(.*)',
       name: '404',
       component: E404View,
     },
+    
     
   ],
 })

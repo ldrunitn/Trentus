@@ -55,7 +55,7 @@ async function submitForm(){
     const config = {
       headers: {
         'Content-Type' : 'application/json',
-        'authorization' : store.getters['user/getToken'],
+        'authorization' : store.getters['getToken'],
       }
     }
     axios.post(BACKEND_URL + `/servizi/${props.service_id}/segnalazioni/compila`,data,config)

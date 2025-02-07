@@ -3,6 +3,7 @@ import TheWelcome from '../components/TheWelcome.vue'
 import Navbar from '../components/Navbar.vue';
 import SidebarLeft from '@/components/SidebarLeft.vue';
 import SidebarRight from '@/components/SidebarRight.vue';
+import AdminSidebarLeft from '../components/admin/sidebarLeft/AdminSidebarLeft.vue';
 import { ref, onMounted, onBeforeMount, computed, reactive} from 'vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
@@ -54,11 +55,6 @@ const alerts = computed(()=>{
 const SidebarSections = computed(()=>{
   return sidebarSections;
 });
-onMounted( async () => {
-  console.log("Creata");
-  await initSideBarLeft();
-  
-})
 
 const avvisi = ref({});
 async function initSideBarLeftUser() {
@@ -169,7 +165,9 @@ async function initSideBarLeft() {
     await initSideBarLeftGdS();
   }
 }
-
+onMounted(async() => {
+  await initSideBarLeft();
+})
 
 // onBeforeMount(async () => {
   
@@ -184,7 +182,10 @@ async function initSideBarLeft() {
    <!-- vabbé in teoria è fatta basta copiaincollare il template di App.vue -->
   <Navbar />
    <div class="grid grid-cols-7 h-screen" >
-    <div class=" col-start-1 col-span-1 h-full"><SidebarLeft :sections="SidebarSections" v-if="sidebarSections.length >= 1"/></div>
+    <div class=" col-start-1 col-span-1 h-full">
+      <SidebarLeft :sections="SidebarSections" v-if="sidebarSections.length >= 1 && store.getters['getRole'] !=='admin'"/>
+      <AdminSidebarLeft v-else></AdminSidebarLeft>
+    </div>
       <router-view class="col-start-3 col-span-3 overflow-y-scroll" :key="route.fullPath"></router-view>
     <div class="flex h-full col-start-7 col-span-1"><SidebarRight/> </div>
   </div>

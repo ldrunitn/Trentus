@@ -4,38 +4,20 @@ export default{
   components:{
     RequestItem
   },
-  data(){
-    return {
-      services: [
-        {
-        _id: 1,
-        titolo: "La mia trento",
-        show: true
-        },
-        {
-        _id: 2,
-        titolo: "Trec+ cartella clinica",
-        show: true
-        },
-        {
-        _id:3,
-        titolo: "OnOff",
-        show: true
-        },
-        {
-        _id:4,
-        titolo: "Muoversi in Trentino",
-        show: true
-        },
-      ]
+  computed:{
+    requests(){
+      return this.$store.getters['admin/getRequests'];
     }
+  },
+  mounted(){
+    this.$store.dispatch('admin/fetchRequests') //per aggiornare le richieste
   }
 }
 </script>
 <template>
   <div class="flex flex-row text-gray-400">
     <ul class="">
-      <RequestItem v-for="service in services" :key="service._id" :id="service._id" :title="service.titolo"></RequestItem>
+      <RequestItem v-for="request in requests" :key="request._id" :id="request._id" :title="request.titolo"></RequestItem>
     </ul>
   </div>
 </template>

@@ -5,14 +5,26 @@ import ServicesCard from '@/components/ServicesCard.vue';
 const loading = ref(true);
 const store = useStore();
 const services = computed(() => {
-  if(store.getters['user/getShowFavourites'])
+  if(store.getters['getRole'] === 'user'){
+    if(store.getters['user/getShowFavourites'])
       return store.getters['user/getFavouritesServices'];
-  else return store.getters['user/getServices'];
+    else return store.getters['user/getServices'];
+  }
+  else if (store.getters['getRole'] === 'admin'){
+    return store.getters['user/getServices']
+  } 
 });
 onMounted( async () => {
   try {
     //fetch dei servizi
     await store.dispatch('user/fetchServices')    
+
+    if(store.getters['getRole'] ==='user'){
+      store.dispatch('user/fetchFavourites');
+      store.dispatch('user/fetchAlerts');
+      console.log("MOUNTED DEL SERVICES")
+      console.log(store.getters['user/getAlerts']);
+    }
     
     loading.value = false;
     const servizi = store.getters['user/getServices'];

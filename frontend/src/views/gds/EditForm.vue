@@ -20,6 +20,7 @@ const store = useStore();
 
 //chiama l'api per creare la form
 function submitForm(){
+  console.log("TOKENNNN: " + store.getters['getToken']);
   if(option.value.trim() === ""){
     errore.value = "Opzione non presente"
     return;
@@ -36,7 +37,7 @@ function submitForm(){
     const config = {
       headers: {
         'Content-Type' : 'application/json',
-        'authorization': store.getters['gds/getToken']
+        'authorization': store.getters['getToken']
       }
     }
     axios.post(BACKEND_URL + `/servizi/${props.service['_id']}/segnalazioni/form`,data,config)
@@ -70,7 +71,7 @@ function removeOption(op){
     const config = {
       headers: {
         'Content-Type' : 'application/json',
-        'authorization': store.getters['gds/getToken']
+        'authorization': store.getters['getToken']
       }
     }
     axios.post(BACKEND_URL + `/servizi/${props.service['_id']}/segnalazioni/form`,data,config)

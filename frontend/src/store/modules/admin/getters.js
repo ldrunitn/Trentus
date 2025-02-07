@@ -2,16 +2,6 @@ export default {
     getServices(state) {
         return state.services;
     },
-    getFilteredServices(state) {
-        return state.services.filter(service => service.show);
-    },
-    getAlerts(state) {
-        return state.alerts;
-    },
-    getFavouritesServices(state) {//array con servizi preferiti
-        return state.services.filter(service => state.favourites.includes(service._id));
-    },
-    getFavourites: (state) => state.favourites, 
     getToken(state) {
         return state.token;
     },
@@ -21,7 +11,8 @@ export default {
     getService(state,id) {
         return state.services.find(service => service._id === id); 
     },
-    getCurrentAlert(state,id) {
-        return state.currentAlert;
+    getRequests(state){
+        console.log("GETTER")
+        return state.requests;
     }
 }

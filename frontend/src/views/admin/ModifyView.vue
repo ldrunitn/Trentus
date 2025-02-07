@@ -56,7 +56,7 @@ export default{
 
       try {
         const response = await axios.post(BACKEND_URL + `/servizi/${this.service_id}/modifica`, formData, {
-          headers: { "Content-Type": "multipart/form-data", "authorization": this.$store.getters['gds/getToken']}
+          headers: { "Content-Type": "multipart/form-data", "authorization": this.$store.getters['getToken']}
         });
 
         this.message = response.data.message || "File caricato con successo!";

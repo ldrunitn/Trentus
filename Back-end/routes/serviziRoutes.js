@@ -75,9 +75,9 @@ router.post('/:servizio_id/preferito', SIDSave, usaToken, checkServizioId, check
   preferito(req,res);
 });
 
-router.post('/:servizio_id/modifica', SIDSave, usaToken, checkServizioId, checkRuolo(['gds','admin']), CheckDirittiServizio, upload.single('foto'),resizeImage, async (req,res)=>{
+router.post('/:servizio_id/modifica', SIDSave, usaToken, checkServizioId, checkRuolo(['gds','SuperAdmin']), CheckDirittiServizio, upload.single('foto'),resizeImage, async (req,res)=>{
   // #swagger.description = 'Servizio ON'
-  // #swagger.security = [{ "BearerAuth": ['gds'] }]  
+  // #swagger.security = [{ "BearerAuth": ['gds','SuperAdmin'] }]  
   modificaServizio(req,res);
 });
 
