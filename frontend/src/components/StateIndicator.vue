@@ -9,7 +9,7 @@ const textColor = computed(()=>{
     case "down":
       return "text-red-500";
     case "manutenzione":
-    case "probelemi":
+    case "problemi":
       return "text-yellow-500";
     case "on":
       return "text-green-500";

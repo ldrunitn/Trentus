@@ -27,7 +27,6 @@ const service = ref({});
 const comments = ref({});
 
 async function fetchService(){
-  console.log("fetch del servizio");
     try{
         await axios.get(BACKEND_URL + `/servizi/${service_id}`,)
         .then(response => {
@@ -38,17 +37,13 @@ async function fetchService(){
     catch(e){
         console.error(e);
     }
-    console.log(service.value);
 }
 //stessa cosa per i commenti
 async function fetchComments(){
-  console.log('protazzo')
   try{
     await axios.get(BACKEND_URL + `/servizi/${service_id}/segnalazioni/commenti`,)
     .then(response => {
         comments.value = response.data;
-        console.log("Commenti fetchati");
-        console.log(comments.value);
     })  
   }
   catch(e){
@@ -113,12 +108,10 @@ async function fetchGraphs() {
     // Fetch istogramma
     const istogrammaResponse = await axios.get(BACKEND_URL + `/servizi/${service_id}/segnalazioni/istogramma`);
     istogrammaData.value = istogrammaResponse.data;
-    console.log('Istogramma fetchato:', istogrammaData.value);
 
     // Fetch areogramma
     const areogrammaResponse = await axios.get(BACKEND_URL + `/servizi/${service_id}/segnalazioni/areogramma`);
     areogrammaData.value = areogrammaResponse.data;
-    console.log('Areogramma fetchato:', areogrammaData.value);
 
     // Aggiorna dati per il grafico a barre (istogramma)
     if (typeof istogrammaData.value === "object" && !Array.isArray(istogrammaData.value)) {

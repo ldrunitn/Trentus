@@ -41,14 +41,11 @@ function submit(){
     try{
       axios.post(BACKEND_URL + `/servizi/${props.service_id}/avvisi`,data,config)
       .then(response => {
-        console.log(response.data);
-        console.log("Avviso mandata")
         successo.value = "Avviso mandato con successo";
         errore.value = "";
       })
     }
     catch(error){
-      console.log(error);
       errore.value = "Errore: Non è stato possibile inviare l'avviso"
     }
   }

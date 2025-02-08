@@ -20,10 +20,8 @@ onMounted( async () => {
     await store.dispatch('user/fetchServices')    
 
     if(store.getters['getRole'] ==='user'){
-      store.dispatch('user/fetchFavourites');
-      store.dispatch('user/fetchAlerts');
-      console.log("MOUNTED DEL SERVICES")
-      console.log(store.getters['user/getAlerts']);
+      await store.dispatch('user/fetchFavourites');
+      await store.dispatch('user/fetchAlerts');
     }
     
     loading.value = false;

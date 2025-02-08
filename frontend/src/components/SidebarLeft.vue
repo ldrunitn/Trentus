@@ -42,6 +42,10 @@ export default {
       default: () => [],
     },
   },
+  async mounted(){
+    await this.$store.dispatch('user/fetchFavourites');
+    await this.$store.dispatch('user/fetchAlerts');
+  },
   created(){
     // faccio vedere gli elementi della prima sezione
     try{

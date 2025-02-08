@@ -28,7 +28,6 @@ export default{
         await axios.get(BACKEND_URL + `/servizi/${this.service_id}/avvisi/${this.alert_id}`)
         .then(response => {
           this.alert = response.data;
-          console.log(this.alert);
         })
       }catch(err){
         console.error(err);

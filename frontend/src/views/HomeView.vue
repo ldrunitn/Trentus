@@ -9,36 +9,7 @@ import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-// const sidebarSections = [ //prova sidebar
-//   {
-//     title: 'Sezione 1',
-//     items: [
-//       {
-//         label: 'Item 1',
-//         details: ['Dettaglio 1', 'Dettaglio 2'],
-//       },
-//       {
-//         label: 'Item 2',
-//         details: ['Dettaglio 1', 'Dettaglio 2'],
-//       },
-//     ],
-//   },
-//   {
-//     title: 'Sezione 2',
-//     items: [
-//       {
-//         label: 'Item 1',
-//         details: ['Dettaglio 1', 'Dettaglio 2'],
-//       },
-//       {
-//         label: 'Item 2',
-//         details: ['Dettaglio 1', 'Dettaglio 2'],
-//       },
-//     ],
-//   },
-// ]
-
-const sidebarSections = reactive([
+const sidebarSections = ref([
 ]); //per le sezioni della sidebar sinistra
 
 const loading = ref(true);
@@ -46,19 +17,17 @@ const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const services = computed(() => {
-  console.log("computed services");
   return store.getters['user/getServices'];
 });
 const alerts = computed(()=>{
   return store.getters['user/getAlerts'];
 })
 const SidebarSections = computed(()=>{
-  return sidebarSections;
+  return sidebarSections.value;
 });
 
 const avvisi = ref({});
 async function initSideBarLeftUser() {
-  console.log('sono iuser')
   try {
     //fetch dei servizi
     await store.dispatch('user/fetchServices')    
@@ -81,8 +50,6 @@ async function initSideBarLeftUser() {
       //scorro gli alerts
       let details = [];
       for(const al of alerts.value[id]){
-        console.log("ALERT")
-        console.log(al);
         //trovo l'id del servizio corrispondente all'alert
         const service_id = servizi.find(servizio => servizio['titolo'] === id)['_id'];
         const o = {
@@ -97,10 +64,7 @@ async function initSideBarLeftUser() {
     }
     alertSection["items"] = itemsArray;
 
-    sidebarSections.push(alertSection);
-
-    console.log(sidebarSections);
-    
+    sidebarSections.value.push(alertSection);
   } catch (error) {
     console.error(error)
   } 
@@ -117,8 +81,6 @@ async function initSideBarLeftGdS() {
     .then(response => {
     avvisi.value = response.data;
     })
-    console.log('avvisis:')
-    console.log(avvisi.value);
     //formatto gli alerts per la sidebar
     let alertSection = {
       title: "Avvisi mandati",
@@ -130,7 +92,6 @@ async function initSideBarLeftGdS() {
     item["label"] = ''; //item contenitore di tutti gli alerts
     
     for(const alert of avvisi.value){
-      console.log(alert);
       const o = {
         id: alert._id,
         service_id: service_id,
@@ -147,9 +108,6 @@ async function initSideBarLeftGdS() {
     alertSection["items"] = itemsArray;
 
     sidebarSections.push(alertSection);
-
-    console.log('poppa::')
-    console.log(sidebarSections);
   }
   catch (error) {
     console.error(error);
@@ -183,7 +141,7 @@ onMounted(async() => {
   <Navbar />
    <div class="grid grid-cols-7 h-screen" >
     <div class=" col-start-1 col-span-1 h-full">
-      <SidebarLeft :sections="SidebarSections" v-if="sidebarSections.length >= 1 && store.getters['getRole'] !=='admin'"/>
+      <SidebarLeft :sections="sidebarSections" v-if="sidebarSections.length >= 1 && store.getters['getRole'] !=='admin'"/>
       <AdminSidebarLeft v-else></AdminSidebarLeft>
     </div>
       <router-view class="col-start-3 col-span-3 overflow-y-scroll" :key="route.fullPath"></router-view>

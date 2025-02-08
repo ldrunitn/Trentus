@@ -25,7 +25,6 @@ const props = defineProps({
   }
 })
 async function fetchService(){
-  console.log("fetch del servizio");
     try{
         await axios.get(BACKEND_URL + `/servizi/${props.service_id}`,)
         .then(response => {
@@ -36,10 +35,8 @@ async function fetchService(){
     catch(e){
         console.error(e);
     }
-    console.log(service.value);
 }
 async function submitForm(){
-  console.log("Submit")
   if(selectedOptions.value.length == 0){
     errore.value = "Nessuna opzione selezionata";
     successo.value = "";
@@ -50,8 +47,6 @@ async function submitForm(){
       "risposte" : selectedOptions.value,
       "commento" : commento.value
     }
-    console.log("dati segnalazione");
-    console.log(data);
     const config = {
       headers: {
         'Content-Type' : 'application/json',
@@ -60,8 +55,6 @@ async function submitForm(){
     }
     axios.post(BACKEND_URL + `/servizi/${props.service_id}/segnalazioni/compila`,data,config)
       .then(response => {
-        console.log(response.data);
-        console.log("Segnalazione mandata")
         successo.value = "Segnalazione mandata con successo";
         errore.value = "";
       })

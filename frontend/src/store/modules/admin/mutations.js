@@ -12,8 +12,6 @@ export default {
         state.services = [];
     },
     setRequests(state, payload){
-        console.log("MUTATION PER DAVVERO")
-        console.log(payload);
         state.requests = payload;
     }
 }
