@@ -44,10 +44,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //impostazione frontend per il deploy
 app.use('/', express.static(process.env.FRONTEND || 'static'));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname,process.env.FRONTEND,'index.html'));
-})
-app.use('/api', indexRouter);
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname,process.env.FRONTEND,'index.html'));
+// })
+app.use('/', indexRouter);
 
 // Impostazione delle routes (l'ordinamento è importante)
 const { SIDSave } = require('./middleware/authMiddleware');
