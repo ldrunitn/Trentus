@@ -41,17 +41,15 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', indexRouter);
 
 //impostazione frontend per il deploy
 //proviamo!
-app.use('*', express.static(process.env.FRONTEND || 'static'));
-app.use('*', express.static('static'));
+app.use('/', express.static(process.env.FRONTEND || 'static'));
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'static', 'index.html'));
-// })
-
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'static', 'index.html'));
+})
+app.use('/', indexRouter);
 
 // Impostazione delle routes (l'ordinamento è importante)
 const { SIDSave } = require('./middleware/authMiddleware');
