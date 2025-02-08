@@ -81,4 +81,9 @@ export default {
 </script>
 
 <style>
+.scroll{
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 </style>

@@ -25,7 +25,7 @@ ChartJS.register(Title, ArcElement, Tooltip, /*Legend,*/ BarElement, CategorySca
 
 const service = ref({});
 const comments = ref({});
-//fetcha il servizio con id == service_id (prop)
+
 async function fetchService(){
   console.log("fetch del servizio");
     try{
@@ -82,14 +82,14 @@ const chartOptionsBar = {
     maintainAspectRatio: false,
     scales: {
         y: {
-            beginAtZero: true,  // Aggiungi questa riga
-            min: 0,             // Aggiungi questa riga
+            beginAtZero: true,  
+            min: 0,             
             grid: {
                 display: true
             },
             ticks: {
-                precision: 0,    // Aggiungi questa riga per mostrare solo numeri interi
-                stepSize: 1      // Aggiungi questa riga per avere step di 1
+                precision: 0,    
+                stepSize: 1    
             }
         },
         x: {
@@ -131,13 +131,6 @@ async function fetchGraphs() {
       console.error("Formato dati istogramma non valido:", istogrammaData.value);
     }
 
-    // Aggiorna dati per il grafico a ciambella (areogramma)
-    // Aggiorna dati per il grafico a ciambella (areogramma)
-
-  // chartDataAreogramma.value.labels = areogrammaData.value.map(item => item.risposta.risposta);
-  // chartDataAreogramma.value.datasets[0].data = areogrammaData.value.map(item => item.count);
-  // console.log("Dati per il grafico a ciambella:", chartDataAreogramma.value);
-  // chartDataAreogramma.value = { ...chartDataAreogramma.value };
   chartDataAreogramma.value = {
     labels: areogrammaData.value.map(item => item.risposta.risposta),
     datasets: [{
@@ -147,15 +140,14 @@ async function fetchGraphs() {
     }]
   };
 
-  // Aggiorna dati per il grafico a barre (istogramma)
-// Aggiorna dati per il grafico a barre (istogramma)
+
 if (istogrammaData.value) {
   chartDataIstogramma.value = {
-    labels: istogrammaData.value.map(item => item.date),  // Usa le date come labels
+    labels: istogrammaData.value.map(item => item.date),  
     datasets: [{
       label: 'Segnalazioni',
       backgroundColor: '#7e22ce',
-      data: istogrammaData.value.map(item => item.count)  // Usa i count come valori
+      data: istogrammaData.value.map(item => item.count)  
     }]
   };
 }
@@ -165,7 +157,7 @@ if (istogrammaData.value) {
   }
 }
 
-//le chiamo subito
+
 onMounted(async()=> {
   await fetchService();
   await fetchComments();
@@ -184,7 +176,7 @@ onMounted(async()=> {
       <!-- Informazioni Servizio -->
       <div class="bg-white p-4 rounded shadow flex items-center justify-between">
         <div class="flex-shrink-0 flex flex-col space-y-5">
-          <img :src="BACKEND_URL + service['foto']" alt="Logo" class="max-w-40 max-h-40">
+          <img :src="BACKEND_URL + service['foto']" alt="Logo" class="max-w-20 max-h-20">
           <p class="text-3xl">
             <span>{{ service["titolo"] }}</span><br>
             <span class="text-lg text-gray-400">Azienda: {{ service["azienda"] }}</span>
