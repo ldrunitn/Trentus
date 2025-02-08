@@ -7,29 +7,29 @@ const User = require('../models/utente.model');
 
 // Crea un avviso
 exports.creaAvviso = async (req,  res) => {
-    // creo il servizio
-    const { titolo, corpo, tipo, inizio, fine } = req.body;
-    const avviso = new Avviso({
-      titolo,
-      corpo,
-      tipo,
-      inizio: new Date(inizio),
-      fine: new Date(fine),
-      servizio_id: req.servizio_id
-    });
-    try {
-      await avviso.save();  // Salva l'avviso nel database
-      console.log("Avviso creato e salvato");
-      
-      // Dopo aver creato l'avviso, invia l'email agli utenti interessati
-      await inviaEmailInteressati(req, res);
-      res.status(200).send('Avviso creato e email inviata!');
-    } catch (err) {
-      if (err.name === "ValidationError") {
-        return res.status(400).json({ error: err.message });
-      }
-      res.status(500).send('Errore nella creazione dell\'avviso');
+  // creo il servizio
+  const { titolo, corpo, tipo, inizio, fine } = req.body;
+  const avviso = new Avviso({
+    titolo,
+    corpo,
+    tipo,
+    inizio: new Date(inizio),
+    fine: new Date(fine),
+    servizio_id: req.servizio_id
+  });
+  try {
+    await avviso.save();  // Salva l'avviso nel database
+    console.log("Avviso creato e salvato");
+    
+    // Dopo aver creato l'avviso, invia l'email agli utenti interessati
+    await inviaEmailInteressati(req, res);
+    res.status(200).send('Avviso creato e email inviata!');
+  } catch (err) {
+    if (err.name === "ValidationError") {
+      return res.status(400).json({ error: err.message });
     }
+    res.status(500).send('Errore nella creazione dell\'avviso');
+  }
 }
 
 // Restituisce tutti gli avvisi di un servizio
@@ -85,9 +85,7 @@ const inviaEmailInteressati = async (req, res) => {
     await Promise.all(emailPromises); // Attende tutte le email
 
     console.log("Email inviate con successo a tutti gli utenti");
-    res.status(200).send("Email inviate con successo");
   } catch (err) {
-    console.error("Errore durante l'invio delle email:", err);
-    res.status(500).send("Errore nell'invio delle email");
+      console.error("Errore durante l'invio delle email:", err);
   }
 };
