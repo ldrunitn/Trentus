@@ -43,6 +43,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 
+//impostazione frontend per il deploy
+app.use('/', express.static(process.env.FRONTEND || 'static'));
+app.use('/', express.static('static'));
+
+
 // Impostazione delle routes (l'ordinamento è importante)
 const { SIDSave } = require('./middleware/authMiddleware');
 app.use('/servizi/:servizio_id/avvisi', SIDSave, avvisiRoutes);
