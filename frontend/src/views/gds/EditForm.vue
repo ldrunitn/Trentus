@@ -20,7 +20,6 @@ const store = useStore();
 
 //chiama l'api per creare la form
 function submitForm(){
-  console.log("TOKENNNN: " + store.getters['getToken']);
   if(option.value.trim() === ""){
     errore.value = "Opzione non presente"
     return;
@@ -42,10 +41,8 @@ function submitForm(){
     }
     axios.post(BACKEND_URL + `/servizi/${props.service['_id']}/segnalazioni/form`,data,config)
       .then(response => {
-        console.log(response.data);
         emit('updateForm'); //aggiorna la UI della  form
         option.value = "";
-        console.log("Evento emesso");
       })
 
   } catch (error) {
@@ -56,9 +53,6 @@ function submitForm(){
 function removeOption(op){
   let form = props.service['form'];
   form = form.filter(item => item['opzione'] !== op);
-  console.log("Nuova form");
-  console.log(form);
-
   try {
     let options = [];
     for(let item of form){
@@ -67,7 +61,6 @@ function removeOption(op){
     const data = {
       opzioni: options,
     }
-    console.log(data);
     const config = {
       headers: {
         'Content-Type' : 'application/json',
@@ -76,9 +69,7 @@ function removeOption(op){
     }
     axios.post(BACKEND_URL + `/servizi/${props.service['_id']}/segnalazioni/form`,data,config)
       .then(response => {
-        console.log(response.data);
         emit('updateForm'); //aggiorna la UI della  form
-        console.log("Evento emesso");
       })
 
   } catch (error) {

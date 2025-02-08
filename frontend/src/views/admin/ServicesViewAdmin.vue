@@ -7,7 +7,6 @@ const router = useRouter();
 const loading = ref(true);
 const store = useStore();
 const services = computed(() => {
-  console.log("computed services");
   return store.getters['user/getServices'];
 });
 const redirect = (service_id)=>{

@@ -1,5 +1,4 @@
 <script>
-import LoginWGoogle from "@/components/login/LoginWGoogle.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 export default{
   components: {
@@ -24,11 +23,10 @@ export default{
           password: this.password.trim(),
         });
         if(this.$store.getters["gds/getIsAuthenticated"]){
-          console.log("Entrato");
           this.$router.push("/gds/"+this.$store.getters["gds/getServiceId"]);
         }
       } catch (error) {
-        this.errore = error;
+        this.errore = "Errore nel login";
       }
     }
   },
@@ -68,44 +66,9 @@ export default{
           >or</span
         >
       </div>
-      <LoginWGoogle />
     </div>
     <p class="place-self-center pt-4"><a href="" class="underline text-gray-800" >Forgot your Password?</a></p>
     <p class="place-self-center pt-2">Don't have an account? <router-link to="/register/gds" class="underline text-gray-800">Register</router-link></p>
     <p class="place-self-center pt-2">Sei un utente? <router-link to="/login" class="underline text-gray-800">clicca qui</router-link> </p>
   </div>
 </template>
-
-<!-- <template>
-    <div class="flex flex-col items-center min-h-screen bg-gray-100">
-
-      <div class="flex flex-col items-center mt-6">
-        <h1 class="text-2xl text-black font-bold">Login to</h1>
-        <img
-          src="/src/assets/trentus-text-logo.svg"
-          alt="logo_trentus"
-          class="mt-2"
-        />
-      </div>
-  
-
-      <div
-        class="flex flex-col items-center w-full max-w-md p-6 mt-8 bg-white rounded-lg shadow-md"
-      >
-        <LoginField />
-        <div class="relative flex items-center w-full my-6">
-          <hr class="w-full h-px bg-gray-300 border-0 dark:bg-gray-700" />
-          <span
-            class="absolute px-2 font-medium text-gray-900 text-sm bg-white left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            >or</span
-          >
-        </div>
-        <LoginWGoogle />
-      </div>
-    </div>
-  </template> -->
-  
-
-<style>
-
-</style>

@@ -12,7 +12,6 @@ export default {
         return state.services.find(service => service._id === id); 
     },
     getRequests(state){
-        console.log("GETTER")
         return state.requests;
     }
 }

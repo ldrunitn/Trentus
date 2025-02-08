@@ -46,7 +46,6 @@ const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const services = computed(() => {
-  console.log("computed services");
   return store.getters['user/getServices'];
 });
 const alerts = computed(()=>{
@@ -58,7 +57,6 @@ const SidebarSections = computed(()=>{
 
 const avvisi = ref({});
 async function initSideBarLeftUser() {
-  console.log('sono iuser')
   try {
     //fetch dei servizi
     await store.dispatch('user/fetchServices')    
@@ -81,8 +79,6 @@ async function initSideBarLeftUser() {
       //scorro gli alerts
       let details = [];
       for(const al of alerts.value[id]){
-        console.log("ALERT")
-        console.log(al);
         //trovo l'id del servizio corrispondente all'alert
         const service_id = servizi.find(servizio => servizio['titolo'] === id)['_id'];
         const o = {
@@ -99,10 +95,9 @@ async function initSideBarLeftUser() {
 
     sidebarSections.push(alertSection);
 
-    console.log(sidebarSections);
     
   } catch (error) {
-    console.error(error)
+    console.error("Errore nell'inizializzazione della sidebar");
   } 
 }
 async function initSideBarLeftGdS() {
@@ -117,8 +112,6 @@ async function initSideBarLeftGdS() {
     .then(response => {
     avvisi.value = response.data;
     })
-    console.log('avvisis:')
-    console.log(avvisi.value);
     //formatto gli alerts per la sidebar
     let alertSection = {
       title: "Avvisi mandati",
@@ -130,7 +123,6 @@ async function initSideBarLeftGdS() {
     item["label"] = ''; //item contenitore di tutti gli alerts
     
     for(const alert of avvisi.value){
-      console.log(alert);
       const o = {
         id: alert._id,
         service_id: service_id,
@@ -147,12 +139,9 @@ async function initSideBarLeftGdS() {
     alertSection["items"] = itemsArray;
 
     sidebarSections.push(alertSection);
-
-    console.log('poppa::')
-    console.log(sidebarSections);
   }
   catch (error) {
-    console.error(error);
+    console.error("Errore nell'inizializzazione della sidebar");
   }
 }
 

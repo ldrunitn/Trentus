@@ -1,5 +1,4 @@
 <script>
-import LoginWGoogle from "@/components/login/LoginWGoogle.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 export default{
   components: {
@@ -24,7 +23,6 @@ export default{
           password: this.password.trim(),
         });
         if(this.$store.getters["admin/getIsAuthenticated"]){
-          console.log("Entrato");
           this.$router.push("/admin");
         }
       } catch (error) {
@@ -69,7 +67,6 @@ export default{
           >or</span
         >
       </div>
-      <LoginWGoogle />
     </div>
     <p class="place-self-center pt-2"><router-link to="/login" class="underline text-gray-800">Torna all'area di login</router-link></p>
   </div>

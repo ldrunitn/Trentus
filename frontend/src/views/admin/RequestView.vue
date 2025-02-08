@@ -19,9 +19,11 @@ export default{
   },
   async created(){
     const request = store.getters['admin/getRequests'].find(request => request._id === this.request_id);
-    console.log("AUTHENTICATED: " + store.getters['admin/getIsAuthenticated'])
-    console.log("DENTRO LA CREATED")
-    console.log(request);
+  },
+  data(){
+    return{
+      BACKEND_URL: import.meta.env.VITE_BACKEND_URL
+    }
   },
   methods:{
     submit(){
@@ -38,7 +40,6 @@ export default{
           })
 
       } catch (error) {
-        console.log(error);
         window.alert("Errore, non è stato possibile accettare la richiesta")
       }
     }

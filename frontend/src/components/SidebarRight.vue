@@ -16,12 +16,8 @@ export default{
         let classifica;
         await axios.get(BACKEND_URL + '/servizi/classifica')
         .then(response => {
-          console.log("DATI CLASSIFICA");
-          console.log(response.data);
           classifica = response.data;
         })
-        console.log("Classifica")
-        console.log(classifica);
         for(let item of classifica){
           await axios.get(BACKEND_URL + '/servizi/' + item['servizio_id'])
           .then(response =>{
@@ -34,7 +30,7 @@ export default{
         }
       }
       catch(err){
-        console.log(err);
+        console.error("Errore nel fetch della classifica");
       }
     }
   },
