@@ -16,6 +16,7 @@ import store from '@/store'
 import E404View from '@/views/E404View.vue'
 import RegistrazioneGdS from '@/views/gds/RegistrazioneGdS.vue'
 import LoginViewAdmin from '../views/admin/LoginViewAdmin.vue'
+import MakeSurvery from '@/views/gds/MakeSurvery.vue'
 const router = createRouter({
   //import.meta.env.BASE_URL
   history: createWebHistory(),
@@ -92,6 +93,11 @@ const router = createRouter({
         },{
           path: ':service_id/sendalert',
           component: SendAlert,
+          props: true
+        },
+        {
+          path: ':service_id/sendsurvey',
+          component: MakeSurvery,
           props: true
         },
         {

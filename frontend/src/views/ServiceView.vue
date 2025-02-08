@@ -176,7 +176,7 @@ onMounted(async()=> {
           </p>
           <p class="text-xs text-gray-700">Descrizione: {{ service["descrizione"] }}</p>
         </div>
-        <div class="ml-4 flex-row space-x-4">
+        <div class="ml-4 flex-row space-x-4 space-y-4">
           <StateIndicator :stato="service['stato']"></StateIndicator>
           <router-link
             class="btn bg-red-500 text-white rounded-lg text-center mt-2"
@@ -193,6 +193,11 @@ onMounted(async()=> {
             v-if="role === 'gds'"
             :to="`/gds/${service_id}/sendalert`"
           >Invia un avviso</router-link>
+          <router-link
+            class="btn bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-center"
+            v-if="role === 'gds'"
+            :to="`/gds/${service_id}/sendsurvey`"
+          >Invia un sondaggio</router-link>
         </div>
       </div>
 
