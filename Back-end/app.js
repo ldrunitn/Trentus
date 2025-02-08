@@ -44,6 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 
 //impostazione frontend per il deploy
+//proviamo!
 app.use('/', express.static(process.env.FRONTEND || 'static'));
 app.use('/', express.static('static'));
 
