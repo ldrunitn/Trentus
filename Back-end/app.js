@@ -43,11 +43,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //impostazione frontend per il deploy
-//proviamo!
 app.use('/', express.static(process.env.FRONTEND || 'static'));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'static', 'index.html'));
+  res.sendFile(path.join(__dirname,process.env.FRONTEND,'index.html'));
 })
 app.use('/', indexRouter);
 
