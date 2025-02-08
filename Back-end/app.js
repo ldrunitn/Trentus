@@ -45,12 +45,12 @@ app.use('/', indexRouter);
 
 //impostazione frontend per il deploy
 //proviamo!
-app.use('/', express.static(process.env.FRONTEND || 'static'));
-app.use('/', express.static('static'));
+app.use('*', express.static(process.env.FRONTEND || 'static'));
+app.use('*', express.static('static'));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'static', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'static', 'index.html'));
+// })
 
 
 // Impostazione delle routes (l'ordinamento è importante)
