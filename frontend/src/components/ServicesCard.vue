@@ -39,7 +39,7 @@ const toggleFavourite = () => {
         <div class="flex justify-between">
             <div class="basis-1/2">
                 <h3 class="text-lg font-bold justify-start">{{ service.titolo }}</h3>
-                <img :src="BACKEND_URL + props.service.foto" alt="Service Logo" class="max-w-20 max-h-20">
+                <img :src="BACKEND_URL + props.service.foto" alt="Service Logo" class="max-w-16 max-h-16">
             </div>
             <div class="justify-end flex flex-col items-center max-w-12 max-h-12 basis-1/2 mt-12">
                 <div v-if="ruolo === 'user'">
