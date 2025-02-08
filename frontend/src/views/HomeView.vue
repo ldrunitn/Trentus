@@ -107,7 +107,7 @@ async function initSideBarLeftGdS() {
 
     alertSection["items"] = itemsArray;
 
-    sidebarSections.push(alertSection);
+    sidebarSections.value.push(alertSection);
   }
   catch (error) {
     console.error(error);
@@ -141,7 +141,7 @@ onMounted(async() => {
   <Navbar />
    <div class="grid grid-cols-7 h-screen" >
     <div class=" col-start-1 col-span-1 h-full">
-      <SidebarLeft :sections="sidebarSections" v-if="sidebarSections.length >= 1 && store.getters['getRole'] !=='admin'"/>
+      <SidebarLeft :sections="SidebarSections" v-if="sidebarSections.length >= 1 && store.getters['getRole'] !=='admin'"/>
       <AdminSidebarLeft v-else></AdminSidebarLeft>
     </div>
       <router-view class="col-start-3 col-span-3 overflow-y-scroll" :key="route.fullPath"></router-view>
