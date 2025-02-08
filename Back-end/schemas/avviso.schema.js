@@ -22,8 +22,10 @@ const schemaAvviso = new mongoose.Schema({
     type: Date,
     required: false,
     validate:{
-      validator: function(value){ //controlla che la data inserita non sia nel passato
-        return value >= new Date();
+      validator: function(value){ 
+        const today = new Date(); 
+        today.setHours(0, 0, 0, 0);  
+        return value >= today;
       },
       message: "La data di inizio non deve essere nel passato"
     }
@@ -33,7 +35,7 @@ const schemaAvviso = new mongoose.Schema({
     required: false,
     validate: {
       validator: function(value) {
-          return value > this.inizio; // Verifica che 'fine' sia dopo 'inizio'
+          return value >= this.inizio; 
       },
       message: "La data di fine deve essere successiva alla data di inizio."
     }
