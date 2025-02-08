@@ -31,7 +31,7 @@ const doc = {
 }
 
 const fs = require('fs');
-const schemas = JSON.parse(fs.readFileSync('./doc.schema.json', 'utf-8'));
+const schemas = JSON.parse(fs.readFileSync('./obj.json', 'utf-8'));
 
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
   console.log('Swagger documentation generated!');
