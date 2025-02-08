@@ -66,6 +66,7 @@ export default{
     <p class="place-self-center pt-4"><a href="" class="underline text-gray-800" >Forgot your Password?</a></p>
     <p class="place-self-center pt-2">Don't have an account? <router-link to="/register" class="underline text-gray-800">Register</router-link></p>
     <p class="place-self-center pt-2">Gestisci un servizio? <router-link to="/gds/login" class="underline text-gray-800">clicca qui per fare il login</router-link></p>
+    <p class="place-self-center pt-2"><router-link to="/admin/login">admin</router-link></p>
 
   </div>
 </template>

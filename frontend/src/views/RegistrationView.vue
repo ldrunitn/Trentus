@@ -55,7 +55,7 @@ export default{
       </div>
     </div>
     <p class="place-self-center pt-4">Do you manage a service?</p>
-    <p class="place-self-center"><a href="" class="underline text-gray-800" >Register your service to Trentus</a></p>
+    <p class="place-self-center"><router-link to="/register/gds" class="underline text-gray-800" >Register your service to Trentus</router-link></p>
     <p class="place-self-center pt-2">Already have an account? <router-link to="/login" class="underline text-gray-800">Login</router-link></p>
   </div>
     
