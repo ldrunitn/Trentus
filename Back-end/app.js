@@ -76,8 +76,8 @@ app.use(function (err, req, res, next) {
 });
 
 // Apro la connessione in locale
-const server = app.listen(8080, function () {
-  console.log("App attiva sulla porta 8080");
+const server = app.listen(process.env.PORT, function () {
+  console.log("App attiva sulla porta " + process.env.PORT);
 });
 
 // Rotte attive
