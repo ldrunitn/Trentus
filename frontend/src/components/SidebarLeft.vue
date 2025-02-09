@@ -19,7 +19,7 @@
         >
           <router-link
             v-for="(detail, detailIndex) in item.details" 
-            :to="section.title === 'Notifiche' ? `${alertPath}${detail['service_id']}/${detail['id']}` : `/service/${detail['service_id']}/survey/${detail['id']}`"
+            :to="section.title === 'Notifiche' || section.title === 'Avvisi' ? `${alertPath}${detail['service_id']}/${detail['id']}` : `${surveryPath}${detail['service_id']}/survey/${detail['id']}`"
             :key="detailIndex"
             class="hover:text-purple-600 hover:font-bold"
           >
@@ -69,6 +69,14 @@ export default {
         return '/alert/';
       } else if(role === 'gds') {
         return '/gds/alert/';
+      }
+    },
+    surveryPath(){
+      const role = this.$store.getters['getRole'];
+      if(role === 'user') {
+        return '/service/';
+      } else if(role === 'gds') {
+        return '/gds/service/';
       }
     }
   },

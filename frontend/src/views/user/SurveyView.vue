@@ -42,16 +42,13 @@ function getService(){
 }
 
 async function fetchSurvey() {
-  console.log("FETCH SURVEY");
   try {
     const url = BACKEND_URL + `/servizi/${props.service_id}/sondaggi/${props.survey_id}`;
-    console.log("URL: " + url);
     const response = await axios.get(url, {
       headers: {
         authorization: store.getters['getToken']
       }
     });
-    console.log("Risposta:", response.data);
     survey.value = response.data;
     corpo.value = response.data.corpo || [];
   } catch (err) {
@@ -72,7 +69,7 @@ function submit() {
       domanda: key,
       risposte: []
     }
-    for(let item in raccolteRisposte.value[key])
+    for(let item of raccolteRisposte.value[key])
       o.risposte.push({risposta: item});
     formData.risposte.push(o);
   }
@@ -84,8 +81,6 @@ function submit() {
       risposta: aperteRisposte.value[key]
     })
   }
-  console.log("SUBMITTATO")
-  console.log(formData);
 
   const config = {
     headers: {
@@ -103,7 +98,6 @@ function submit() {
 }
 
 onMounted(async () => {
-  console.log("Mounted");
   getService();
   await fetchSurvey();
 

@@ -18,6 +18,7 @@ import E404View from '@/views/E404View.vue'
 import RegistrazioneGdS from '@/views/gds/RegistrazioneGdS.vue'
 import LoginViewAdmin from '../views/admin/LoginViewAdmin.vue'
 import MakeSurvery from '@/views/gds/MakeSurvery.vue'
+import SurveyResultView from '@/views/gds/SurveyResultView.vue'
 const router = createRouter({
   //import.meta.env.BASE_URL
   history: createWebHistory(),
@@ -104,6 +105,11 @@ const router = createRouter({
         {
           path: ':service_id/sendsurvey',
           component: MakeSurvery,
+          props: true
+        },
+        {
+          path: 'service/:service_id/survey/:survey_id',
+          component: SurveyResultView,
           props: true
         },
         {

@@ -38,26 +38,12 @@ async function fetchSurveys(){
           authorization: store.getters['getToken']
         }
       });
-      // for(item in response.data){
-      //   surveys.push({service_id: id, servey_id: item['_id']})
-      // }
-      // surveys.push({service_id: id, survey_id: response.data})
       surveys.value = surveys.value.concat(response.data)
     })
     await Promise.all(promises);
-    console.log(surveys.value);
   }catch(err){
-
+    console.errro(err);
   }
-
-  // await axios.get(BACKEND_URL + '/servizi/',{
-  //   headers:{
-  //     authorization: store.getters['getToken']
-  //   }
-  // }).then(response => {
-  //   console.log("SONDAGGI UTENTE")
-  //   console.log(response.data);
-  // })
 }
 async function initSideBarLeftUser() {
   try {
@@ -119,13 +105,6 @@ async function initSideBarLeftUser() {
     surveysSection['items'] = itemsSurveys;
     sidebarSections.value.push(surveysSection);
 
-    console.log("SUERVEYS")
-    console.log(surveys.value)
-
-    console.log("SURVEY SECTION")
-    console.log(surveysSection);
-
-
   } catch (error) {
     console.error(error)
   } 
@@ -144,13 +123,13 @@ async function initSideBarLeftGdS() {
     })
     //formatto gli alerts per la sidebar
     let alertSection = {
-      title: "Avvisi mandati",
+      title: "Avvisi",
     };
     //guardo tutti i servizi che hanno mandato notifiche
     let itemsArray = [];
     let details = [];
     let item = {};
-    item["label"] = ''; //item contenitore di tutti gli alerts
+    item["label"] = "mandati"; //item contenitore di tutti gli alerts
     
     for(const alert of avvisi.value){
       const o = {
@@ -164,11 +143,37 @@ async function initSideBarLeftGdS() {
     itemsArray.push(item);
     item["details"] = details;
 
-
-
     alertSection["items"] = itemsArray;
 
     sidebarSections.value.push(alertSection);
+    //sondaggi
+    let surveySection = {
+      title: "Sondaggi"
+    };
+    let itemsArray2 = []
+    let surveryItem = {};
+    surveryItem["label"] = 'Mandati'
+    let detailsSurvey = [];
+
+    const response = await axios.get(BACKEND_URL + `/servizi/${service_id}/sondaggi`,{
+      headers:{
+        authorization: store.getters['getToken']
+      }
+    })
+    let surveys = response.data;
+    for(let survey of surveys){
+      detailsSurvey.push({
+        id: survey._id,
+        service_id: service_id,
+        titolo: survey.titolo
+      })
+    }
+    surveryItem['details'] = detailsSurvey;
+    itemsArray2.push(surveryItem);
+
+    surveySection['items'] = itemsArray2;
+    sidebarSections.value.push(surveySection);
+
   }
   catch (error) {
     console.error(error);
