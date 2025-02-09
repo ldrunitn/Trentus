@@ -19,7 +19,7 @@
         >
           <router-link
             v-for="(detail, detailIndex) in item.details" 
-            :to="`${alertPath}${detail['service_id']}/${detail['id']}`"
+            :to="section.title === 'Notifiche' ? `${alertPath}${detail['service_id']}/${detail['id']}` : `/service/${detail['service_id']}/survey/${detail['id']}`"
             :key="detailIndex"
             class="hover:text-purple-600 hover:font-bold"
           >

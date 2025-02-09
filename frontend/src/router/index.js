@@ -11,6 +11,7 @@ import ServicesView from '@/views/user/ServicesView.vue'
 import ServicesViewAdmin from '@/views/admin/ServicesViewAdmin.vue'
 import LoginViewGdS from '@/views/gds/LoginViewGdS.vue'
 import ReportView from '@/views/ReportView.vue'
+import SurveyView from '@/views/user/SurveyView.vue'
 import SendAlert from '@/views/gds/SendAlert.vue'
 import store from '@/store'
 import E404View from '@/views/E404View.vue'
@@ -46,6 +47,11 @@ const router = createRouter({
           path: 'service/:service_id/report',
           name: "service-report",
           component: ReportView,
+          props: true
+        },
+        {
+          path: 'service/:service_id/survey/:survey_id',
+          component: SurveyView,
           props: true
         },
         {

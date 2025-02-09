@@ -27,6 +27,38 @@ const SidebarSections = computed(()=>{
 });
 
 const avvisi = ref({});
+const surveys = ref([]);
+async function fetchSurveys(){
+  try{
+    let fav = store.getters['user/getFavourites'];
+
+    const promises = fav.map(async id =>{
+      const response = await axios.get(BACKEND_URL + `/servizi/${id}/sondaggi`,{
+        headers:{
+          authorization: store.getters['getToken']
+        }
+      });
+      // for(item in response.data){
+      //   surveys.push({service_id: id, servey_id: item['_id']})
+      // }
+      // surveys.push({service_id: id, survey_id: response.data})
+      surveys.value = surveys.value.concat(response.data)
+    })
+    await Promise.all(promises);
+    console.log(surveys.value);
+  }catch(err){
+
+  }
+
+  // await axios.get(BACKEND_URL + '/servizi/',{
+  //   headers:{
+  //     authorization: store.getters['getToken']
+  //   }
+  // }).then(response => {
+  //   console.log("SONDAGGI UTENTE")
+  //   console.log(response.data);
+  // })
+}
 async function initSideBarLeftUser() {
   try {
     //fetch dei servizi
@@ -65,6 +97,35 @@ async function initSideBarLeftUser() {
     alertSection["items"] = itemsArray;
 
     sidebarSections.value.push(alertSection);
+
+    //sezione sondaggi
+    await fetchSurveys();
+    let surveysSection = {
+      title: 'Sondaggi',
+    }
+    let itemsSurveys = [{
+      label: 'In arrivo',
+      details: [],
+    }]
+    let detailsSurveys = [];
+    for(const sur of surveys.value){
+      detailsSurveys.push({
+        id: sur['_id'],
+        service_id: sur['servizio_id'],
+        titolo: sur['titolo']
+      })
+    }
+    itemsSurveys[0].details = detailsSurveys;
+    surveysSection['items'] = itemsSurveys;
+    sidebarSections.value.push(surveysSection);
+
+    console.log("SUERVEYS")
+    console.log(surveys.value)
+
+    console.log("SURVEY SECTION")
+    console.log(surveysSection);
+
+
   } catch (error) {
     console.error(error)
   } 

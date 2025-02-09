@@ -6,17 +6,9 @@ export default {
       state.token = token;
     },
     logout(state){
-      switch(state.role){
-        case "user":
-          this.commit('user/logout');
-          break;
-        case "gds":
-          this.commit('gds/logout');
-          break;
-        case "admin":
-          this.commit('admin/logout');
-          break;
-      }
+      this.commit('user/logout');
+      this.commit('gds/logout');
+      this.commit('admin/logout');
       state.role = "";
       state.token = "";
     }

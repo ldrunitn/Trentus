@@ -10,7 +10,8 @@ export default{
     }
   },
   mounted(){
-    this.$store.dispatch('admin/fetchRequests') //per aggiornare le richieste
+    if(this.$store.getters['getRole'] === 'admin')
+      this.$store.dispatch('admin/fetchRequests') //per aggiornare le richieste
   }
 }
 </script>

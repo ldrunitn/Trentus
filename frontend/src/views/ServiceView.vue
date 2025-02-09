@@ -28,7 +28,7 @@ const comments = ref({});
 
 async function fetchService(){
     try{
-        await axios.get(BACKEND_URL + `/servizi/${service_id}`,)
+        await axios.get(BACKEND_URL + `/servizi/${service_id}`)
         .then(response => {
             service.value = response.data;
             store.commit("gds/setService",response.data);
@@ -242,14 +242,14 @@ onMounted(async()=> {
 </template>
 
   
-  <style scoped>
-  main::-webkit-scrollbar{
-    display: none;
-  }
-  main{
-    overflow: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    margin-bottom: 50px;
-  }
-  </style>
+<style scoped>
+main::-webkit-scrollbar{
+  display: none;
+}
+main{
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  margin-bottom: 50px;
+}
+</style>

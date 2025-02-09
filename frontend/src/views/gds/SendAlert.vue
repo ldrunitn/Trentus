@@ -58,9 +58,9 @@ function submit(){
 <template>
 <div class="flex flex-col p-16 space-y-4">
   <label for="titolo" class="font-medium">Titolo</label>
-  <input v-model="titolo" type="text" id="titolo" class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <input v-model="titolo" type="text" id="titolo" class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-white text-base">
   <label>Messaggio</label>
-  <input v-model="corpo" type="text" id="messaggio" class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <input v-model="corpo" type="text" id="messaggio" class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-white text-base">
   <label>Tipo</label>
   <select class="bg-white px-4 py-2 rounded-lg shadow max-w-fit " v-model="tipo">
     <option value="manutenzione">Manutenzione</option>
