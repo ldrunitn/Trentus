@@ -522,7 +522,8 @@
         "security": [
           {
             "BearerAuth": [
-              "gds"
+              "gds",
+              "SuperAdmin"
             ]
           }
         ],
@@ -1092,7 +1093,8 @@
         "security": [
           {
             "BearerAuth": [
-              "gds"
+              "gds",
+              "SuperAdmin"
             ]
           }
         ],

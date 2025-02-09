@@ -25,6 +25,15 @@ exports.creaFeedback = async (req,res) => {
     return res.status(400).json({message: "Il sondaggio non è stato compilato"});
   }
   try {
+    //controllo che non esista già l coppia sondaggio-utente nei feedback
+    const existingFeedback = await Feedback.findOne({
+      utente_id: req.user.id,
+      sondaggio_id: req.params.sondaggio_id
+    });
+    if (existingFeedback) {
+      return res.status(400).json({ message: "Hai già compilato questo sondaggio" });
+    }
+
     const risposteOggetto = risposte.map(rp => {
       const { type, ...rest } = rp;
       switch (type) {
