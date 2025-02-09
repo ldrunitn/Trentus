@@ -23,16 +23,10 @@ const router = createRouter({
   //import.meta.env.BASE_URL
   history: createWebHistory(),
   routes: [
-    // {
-    //   path: '/service/:service_id',
-    //   component: ServiceView,
-    //   props: true
-    // },
     {
       path: '/',
       name: 'home',
       component: HomeView,
-      meta: { roles: ['user']},
       children: [
         {
           path: '/',
@@ -47,16 +41,19 @@ const router = createRouter({
         {
           path: 'service/:service_id/report',
           name: "service-report",
+          meta: { roles: ['user']},
           component: ReportView,
           props: true
         },
         {
           path: 'service/:service_id/survey/:survey_id',
+          meta: { roles: ['user']},
           component: SurveyView,
           props: true
         },
         {
           path: '/alert/:service_id/:alert_id',
+          meta: { roles: ['user']},
           component: AlertView,
           props:true,
         }

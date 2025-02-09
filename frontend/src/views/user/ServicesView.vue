@@ -10,7 +10,7 @@ const services = computed(() => {
       return store.getters['user/getFavouritesServices'];
     else return store.getters['user/getServices'];
   }
-  else if (store.getters['getRole'] === 'admin'){
+  else if (store.getters['getRole'] === 'admin' || store.getters['getRole'] === ''){
     return store.getters['user/getServices']
   } 
 });

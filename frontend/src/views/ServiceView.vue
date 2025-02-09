@@ -235,7 +235,7 @@ onMounted(async()=> {
           :service="service"
           @update-form="fetchService"
         ></edit-form>
-        <GoBackButton class="col-end-4" v-if="role === 'user' || role === 'admin'"></GoBackButton>
+        <GoBackButton class="col-end-4" v-if="role === 'user' || role === 'admin' || role === ''"></GoBackButton>
       </div>
     </main>
   </div>

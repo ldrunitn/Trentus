@@ -5,10 +5,7 @@ export default {
     setToken(state, token){
       state.token = token;
     },
-    logout(state){
-      this.commit('user/logout');
-      this.commit('gds/logout');
-      this.commit('admin/logout');
+    resetState(state){
       state.role = "";
       state.token = "";
     }

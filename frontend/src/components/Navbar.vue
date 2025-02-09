@@ -1,4 +1,5 @@
 <script>
+import store from '@/store';
 import navButton from './navbar/navButton.vue';
 import SearchButton from './navbar/searchButton.vue';
 export default{
@@ -21,7 +22,7 @@ export default{
             this.dropdown = !this.dropdown;
         },
         logout() {
-            this.$store.commit('logout');
+            this.$store.dispatch('logout');
             this.$router.push('/login');
         }
     },   
@@ -61,7 +62,12 @@ export default{
                     <nav-button v-else-if="showFavouritesFilter" @click="toggleFavorites"><img class="size-9" src="/src/assets/favourite-toggled.svg" alt="Preferiti"></nav-button>
                 </li>
                 
-                <li><nav-button to="/settings" @click.prevent="toggleDropdown"><img class="size-9 hover:bg-purple-400 hover:rounded-full" src="/src/assets/settings.svg" alt=""></nav-button></li>
+                <li>
+                    <nav-button @click.prevent="toggleDropdown" v-if="this.$store.getters['getRole'] !== ''"><img class="size-9 hover:bg-purple-400 hover:rounded-full" src="/src/assets/settings.svg" alt="settings"></nav-button>
+                    <nav-button @click.prevent="this.$router.push('/login')" v-else><img class="size-9 hover:bg-purple-400 hover:rounded-full" src="/src/assets/user.png" alt="user"></nav-button>
+                    
+                </li>
+                
                 <button v-if="dropdown" @click="logout" class="bg-gray-100 absolute mt-15 w-20 ml-9 border border-black font-normal text-black text-center">logout</button>
             </ul>
         </div>

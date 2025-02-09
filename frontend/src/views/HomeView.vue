@@ -191,6 +191,7 @@ async function initSideBarLeft() {
 }
 onMounted(async() => {
   await initSideBarLeft();
+  await store.dispatch('user/fetchServices');
 })
 
 // onBeforeMount(async () => {
@@ -208,7 +209,7 @@ onMounted(async() => {
    <div class="grid grid-cols-7 h-screen" >
     <div class=" col-start-1 col-span-1 h-full">
       <SidebarLeft :sections="SidebarSections" v-if="sidebarSections.length >= 1 && store.getters['getRole'] !=='admin'"/>
-      <AdminSidebarLeft v-else></AdminSidebarLeft>
+      <AdminSidebarLeft v-else-if="store.getters['getRole'] === 'admin'"></AdminSidebarLeft>
     </div>
       <router-view class="col-start-3 col-span-3 overflow-y-scroll" :key="route.fullPath"></router-view>
     <div class="flex h-full col-start-7 col-span-1"><SidebarRight/> </div>
