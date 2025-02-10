@@ -31,8 +31,6 @@ const surveys = ref([]);
 async function fetchSurveys(){
   try{
     let fav = store.getters['user/getFavourites'];
-    console.log("Fav")
-    console.log(fav);
     const promises = fav.map(async id =>{
       const response = await axios.get(BACKEND_URL + `/servizi/${id}/sondaggi`,{
         headers:{
@@ -191,17 +189,10 @@ async function initSideBarLeft() {
   }
 }
 onMounted(async() => {
-  console.log("MOUNTED HOME")
   await store.dispatch('user/fetchFavourites');
-  console.log("FAVOURITES: " + store.getters['user/getFavourites']);
   await initSideBarLeft();
   
   await fetchSurveys();
-
-  console.log("Surveys")
-  console.log(surveys.value);
-
-  console.log(surveys.value);
   await store.dispatch('user/fetchServices');
 })
 

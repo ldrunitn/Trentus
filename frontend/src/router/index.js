@@ -180,12 +180,8 @@ router.beforeEach((to, from, next) => {
   const userRole = store.getters['getRole'];
   const isAuth = store.getters['getToken'] ? true : false;
   const requiredRoles = to.meta.roles;
-  console.log("Ruolo: "+ store.getters['getRole']);
-  console.log("Token: " + store.getters['getToken'])
-  console.log("IsAuth: " + isAuth);
   if(isAuth){
     if(!requiredRoles){
-      console.log("Loggato ma non serve");
       if(userRole === 'gds'){
         store.dispatch('logout');
         next()
@@ -207,21 +203,7 @@ router.beforeEach((to, from, next) => {
       return;
     }
     else next('login')
-  }
-  // next();
-  // if(!requiredRoles && !isAuth){
-  //   next();
-  //   console.log("Permesso")
-  // }
-  // else if (!requiredRoles && isAuth){
-  //   next('/login');
-  //   store.dispatch('logout');
-  // }
-  // if (!requiredRoles.includes(userRole) && isAuth) {
-  //   next('/login'); //non permesso
-  //   console.log('Non permesso');
-  // }
-  // next(); 
+  } 
 });
 
 export default router
