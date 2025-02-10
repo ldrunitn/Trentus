@@ -40,13 +40,13 @@ export default{
 <template>
 
     <div class="flex flex-col items-center">
-        <h1 class="text-3xl text-black font-bold mt-4">Login to</h1>
+        <h1 class="text-3xl text-black font-bold mt-4">Login</h1>
         <img
             src="/src/assets/trentus-text-logo.svg"
             alt="logo_trentus"
             class=""
         />
-        <h1 class="text-black">as a service</h1>
+        <h1 class="text-black">superadmin</h1>
     </div>
   
   <div class="mt-12 place-self-center items-center justify-center min-h-screen bg-gray-100 ">
@@ -60,13 +60,7 @@ export default{
         <button @click="login" class="w-52 h-8 bg-purple-600 hover:bg-purple-700 text-white border border-gray-400 shadow-md rounded-lg mt-8">Log in</button>
         <ErrorMessage :message="errore" class="rounded-lg" v-if="errore"></ErrorMessage>
     </div>
-    <div class="relative flex items-center w-full my-6">
-        <hr class="w-full h-px bg-gray-300 border-0 dark:bg-gray-700" />
-        <span
-          class="absolute px-2 font-medium text-gray-900 text-sm bg-white left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4"
-          >or</span
-        >
-      </div>
+    
     </div>
     <p class="place-self-center pt-2"><router-link to="/login" class="underline text-gray-800">Torna all'area di login</router-link></p>
   </div>

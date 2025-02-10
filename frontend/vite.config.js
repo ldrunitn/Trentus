@@ -9,7 +9,7 @@ import tailwindcss from 'tailwindcss'
 export default defineConfig({
   plugins: [
     vue(),
-    vueDevTools(),
+    //vueDevTools(),
   ],
   css: {
     postcss: {

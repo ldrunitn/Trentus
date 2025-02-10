@@ -37,7 +37,7 @@ export default{
 <template>
 
     <div class="flex flex-col items-center">
-        <h1 class="text-3xl text-black font-bold mt-4">Login to</h1>
+        <h1 class="text-3xl text-black font-bold mt-4">Login</h1>
         <img
             src="/src/assets/trentus-text-logo.svg"
             alt="logo_trentus"
@@ -50,23 +50,17 @@ export default{
       class="inline-flex flex-col items-center justify-center w-[400px] max-w-md p-4 bg-white rounded-lg shadow-md"
     >
     <div class="flex flex-col grid-flow-col grid-cols-1 gap-2 mt-8">
-        <input v-model="email" type="email" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Insert your Email">
-        <input v-model="password" type="password" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Insert your Password">
+        <input v-model="email" type="email" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Inserisci la tua E-mail">
+        <input v-model="password" type="password" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Inserisci la tua Password">
         <button @click="login" class="w-52 h-8 bg-purple-600 text-white rounded-lg hover:bg-purple-700 mt-8">Log in</button>
         <ErrorMessage :message="errore" class="rounded-lg" v-if="errore"></ErrorMessage>
     </div>
-    <div class="relative flex items-center w-full my-6">
-        <hr class="w-full h-px bg-gray-300 border-0 dark:bg-gray-700" />
-        <span
-          class="absolute px-2 font-medium text-gray-900 text-sm bg-white left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4"
-          >or</span
-        >
-      </div>
+    
     </div>
-    <p class="place-self-center pt-4"><a href="" class="underline text-gray-800" >Forgot your Password?</a></p>
-    <p class="place-self-center pt-2">Don't have an account? <router-link to="/register" class="underline text-gray-800">Register</router-link></p>
+    <!-- <p class="place-self-center pt-4"><a href="" class="underline text-gray-800" >Hai dimenticato la password?</a></p> -->
+    <p class="place-self-center pt-2">Non hai un account? <router-link to="/register" class="underline text-gray-800">Registrati</router-link></p>
     <p class="place-self-center pt-2">Gestisci un servizio? <router-link to="/gds/login" class="underline text-gray-800">clicca qui per fare il login</router-link></p>
-    <p class="place-self-center pt-2"><router-link to="/admin/login">admin</router-link></p>
+    <!-- <p class="place-self-center pt-2"><router-link to="/admin/login">admin</router-link></p> -->
 
   </div>
 </template>
