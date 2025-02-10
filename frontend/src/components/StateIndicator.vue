@@ -18,5 +18,5 @@ const textColor = computed(()=>{
   
 </script>
 <template>
-  <h2 :class="textColor + ' mr-4 text-right mb-4 '"><span class="mr-3 text-2xl">{{ props.stato }}</span> <i class="pi pi-circle-fill text-sm/8"></i></h2>
+  <h2 :class="textColor + ' mr-4 text-right mb-4 place-self-end'"><span class="mr-3 text-2xl">{{ props.stato }}</span> <i class="pi pi-circle-fill text-sm/8"></i></h2>
 </template>
