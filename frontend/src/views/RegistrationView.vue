@@ -24,6 +24,7 @@ export default{
           email: this.email.trim(),
           password: this.password.trim(),
         });
+        window.alert("Registrazione avvenuta con successo");
       } catch (error) {
         this.errore = error;
       }
@@ -50,7 +51,7 @@ export default{
         <input v-model="email" type="email" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Insert your Email">
         <input v-model="password" type="password" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Insert your Password">
         <input v-model="passwordRepeat" type="password" class="w-52 h-8 bg-gray-200 shadow-md rounded-lg text-black flex placeholder:ml-4 placeholder:p-2" placeholder="Repeat your Password">
-        <ErrorMessage :message="errore" class="rounded-lg" v-if="errore"></ErrorMessage>
+        <ErrorMessage :message="errore" class="rounded-lg w-52" v-if="errore"></ErrorMessage>
         <button @click="register" class="w-52 h-8 bg-purple-600 text-white rounded-lg hover:bg-purple-700 mt-8">Register</button>
       </div>
     </div>
