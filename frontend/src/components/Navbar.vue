@@ -63,13 +63,13 @@ export default{
 
 <template> 
     <nav class="border-b border-gray-500 w-full p-2 flex items-center" id="navbar">
-        <router-link :to="homeLink" class="ml-2" id="logo"><img class="w-28" src="/src/assets/logo.svg" alt="logo_trentus"></router-link>
+        <router-link :to="homeLink" class="ml-2" id="logo"><img class="w-28" src="/src/assets/trentusextlogo.svg" alt="logo_trentus"></router-link>
         <search-button></search-button>
         <div class="flex flex-nowrap ml-auto place-content-evenly" id="buttons">
             <ul class="flex space-x-4 flex-nowrap items-center mr-4">
                 <li>
                     <nav-button v-if="showFavouritesFilter && !getShowFavourites" @click="toggleFavorites"><img class="size-9" src="/src/assets/favorite.svg" alt="Preferiti"></nav-button>
-                    <nav-button v-else-if="showFavouritesFilter" @click="toggleFavorites"><img class="size-9" src="/src/assets/favourite-toggled.svg" alt="Preferiti"></nav-button>
+                    <nav-button v-else-if="showFavouritesFilter" @click="toggleFavorites"><img class="size-9 hover:rounded-full" src="/src/assets/favourite-toggled.svg" alt="Preferiti"></nav-button>
                 </li>
                 
                 <li>
