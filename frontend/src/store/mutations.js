@@ -4,9 +4,11 @@ export default {
     },
     setToken(state, token){
       state.token = token;
+      state.isAuthenticated = true;
     },
     resetState(state){
       state.role = "";
       state.token = "";
+      state.isAuthenticated = false;
     }
 }

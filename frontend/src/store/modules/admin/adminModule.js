@@ -5,8 +5,6 @@ import mutations from "./mutations";
 
 export default {
     state: () => ({
-        token: localStorage.getItem('token') || '',
-        isAuthenticated: !!localStorage.getItem('token'),
         services: [],
         requests : [],
     }),

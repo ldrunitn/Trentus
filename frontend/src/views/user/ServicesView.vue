@@ -25,8 +25,6 @@ onMounted( async () => {
     }
     
     loading.value = false;
-    const servizi = store.getters['user/getServices'];
-    
   } catch (error) {
     console.error(error)
   }

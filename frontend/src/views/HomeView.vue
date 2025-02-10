@@ -31,18 +31,19 @@ const surveys = ref([]);
 async function fetchSurveys(){
   try{
     let fav = store.getters['user/getFavourites'];
-
+    console.log("Fav")
+    console.log(fav);
     const promises = fav.map(async id =>{
       const response = await axios.get(BACKEND_URL + `/servizi/${id}/sondaggi`,{
         headers:{
           authorization: store.getters['getToken']
         }
       });
-      surveys.value = surveys.value.concat(response.data)
+      surveys.value = surveys.value.concat(response.data);
     })
     await Promise.all(promises);
   }catch(err){
-    console.errro(err);
+    console.error(err);
   }
 }
 async function initSideBarLeftUser() {
@@ -77,7 +78,7 @@ async function initSideBarLeftUser() {
         }
         details.push(o);
       }
-      item["details"] = details;
+      item["details"] = details.reverse();
       itemsArray.push(item);
     }
     alertSection["items"] = itemsArray;
@@ -101,7 +102,7 @@ async function initSideBarLeftUser() {
         titolo: sur['titolo']
       })
     }
-    itemsSurveys[0].details = detailsSurveys;
+    itemsSurveys[0].details = detailsSurveys.reverse();
     surveysSection['items'] = itemsSurveys;
     sidebarSections.value.push(surveysSection);
 
@@ -109,7 +110,7 @@ async function initSideBarLeftUser() {
     console.error(error)
   } 
 }
-async function initSideBarLeftGdS() {
+async function initSideBarLeftGdS() { 
   try {
     let titoloServizio;
     const service_id = route.params.service_id;
@@ -141,7 +142,7 @@ async function initSideBarLeftGdS() {
       //scorro gli alerts 
     }
     itemsArray.push(item);
-    item["details"] = details;
+    item["details"] = details.reverse();
 
     alertSection["items"] = itemsArray;
 
@@ -168,7 +169,7 @@ async function initSideBarLeftGdS() {
         titolo: survey.titolo
       })
     }
-    surveryItem['details'] = detailsSurvey;
+    surveryItem['details'] = detailsSurvey.reverse();
     itemsArray2.push(surveryItem);
 
     surveySection['items'] = itemsArray2;
@@ -190,7 +191,17 @@ async function initSideBarLeft() {
   }
 }
 onMounted(async() => {
+  console.log("MOUNTED HOME")
+  await store.dispatch('user/fetchFavourites');
+  console.log("FAVOURITES: " + store.getters['user/getFavourites']);
   await initSideBarLeft();
+  
+  await fetchSurveys();
+
+  console.log("Surveys")
+  console.log(surveys.value);
+
+  console.log(surveys.value);
   await store.dispatch('user/fetchServices');
 })
 
@@ -206,7 +217,7 @@ onMounted(async() => {
   <!-- sidebars (a destra bisogna fare un v-for con dellle mini schede api, a sinistra dei paragrafi che si possano collassare )  -->
    <!-- vabbé in teoria è fatta basta copiaincollare il template di App.vue -->
   <Navbar />
-   <div class="grid grid-cols-7 h-screen" >
+   <div class="grid grid-cols-7 h-screen overflow-auto" >
     <div class=" col-start-1 col-span-1 h-full">
       <SidebarLeft :sections="SidebarSections" v-if="sidebarSections.length >= 1 && store.getters['getRole'] !=='admin'"/>
       <AdminSidebarLeft v-else-if="store.getters['getRole'] === 'admin'"></AdminSidebarLeft>

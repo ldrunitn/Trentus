@@ -14,7 +14,7 @@
         </button>
         <!-- Mostra i dettagli se la sezione è aperta -->
         <div
-          class="ml-4 mt-2 text-sm text-gray-600 space-y-1 flex flex-col items-left"
+          class="ml-4 mt-2 text-sm text-gray-600 space-y-1 flex flex-col items-left max-h-40 overflow-auto"
           v-if="item.showDetails"
         >
           <router-link

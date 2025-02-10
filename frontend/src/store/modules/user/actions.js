@@ -16,7 +16,6 @@ export default {
         try{
             await axios.post(BACKEND_URL + '/utente/login', credentials)
             .then(response => {
-                commit('setToken', response.data.token)
                 commit('setToken', response.data.token, {root: true});
                 commit('setRole', "user", { root: true }); //imposto il ruolo globale
             })
@@ -26,11 +25,11 @@ export default {
             throw new Error("Login non riuscito: ");
         }
     },
-    async fetchFavourites({commit,getters}){
+    async fetchFavourites({commit,rootGetters}){
         try{
             await axios.get(BACKEND_URL + '/utente/preferiti',{
                 headers: {
-                    authorization: getters.getToken,
+                    authorization: rootGetters['getToken'],
                 }
             }).then(response => {
                 commit('setFavourites', response.data.preferiti)
@@ -40,17 +39,15 @@ export default {
             console.error("Errore nell'ottenere i preferiti " + err);
         }
     },
-    async toggleFavourite({commit, getters},service_id){
+    async toggleFavourite({commit, getters, rootGetters},service_id){
         try{
             //usa l'api per il toggle
             await axios.post(BACKEND_URL + `/servizi/${service_id}/preferito`,{},{
                 headers: {
-                    authorization: getters.getToken
+                    authorization: rootGetters.getToken
                 }
             })
-            //rifetcha preferiti e alert
-            await this.dispatch('user/fetchFavourites');
-            await this.dispatch('user/fetchAlerts');
+            commit('toggleFromFavourites', service_id);
         }catch(err){
             console.error(err);
         }

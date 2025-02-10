@@ -22,7 +22,7 @@ export default{
           email: this.email.trim(),
           password: this.password.trim(),
         });
-        if(this.$store.getters["gds/getIsAuthenticated"]){
+        if(this.$store.getters["getIsAuthenticated"]){
           this.$router.push("/gds/"+this.$store.getters["gds/getServiceId"]);
         }
       } catch (error) {
@@ -30,9 +30,6 @@ export default{
       }
     }
   },
-  created(){
-    this.$store.commit('logout');
-  }
 }
 
 </script>

@@ -56,7 +56,7 @@ async function fetchSurvey() {
   }
 }
 
-function submit() {
+async function submit() {
   let formData = {risposte: []};
   //risposte singole
   for(let item of singoleRisposte.value){
@@ -89,11 +89,10 @@ function submit() {
     }
   }
   try{
-    axios.post(BACKEND_URL + `/servizi/${props.service_id}/sondaggi/${props.survey_id}`,formData,config)
-    window.alert("Sondaggio inviato con successo");
-  }
-  catch(err){
-    window.alert(err);
+    await axios.post(BACKEND_URL + `/servizi/${props.service_id}/sondaggi/${props.survey_id}`,formData,config)
+    window.alert("Sondaggio compilato con successo");
+  }catch(err){
+    window.alert("Errore nella compilazione del sondaggio, potresti averlo gia' compilato");
   } 
 }
 

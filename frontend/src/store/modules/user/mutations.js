@@ -1,10 +1,6 @@
 import { parseQuery } from "vue-router";
 import userModule from "./userModule";
 export default {
-    setToken(state, token) {
-        state.token = token;
-        state.isAuthenticated = true;
-    },
     setFavourites(state,favourites) {
         state.favourites =favourites; 
     },
@@ -21,13 +17,16 @@ export default {
         state.currentAlert = payload;
     },
     logout(state) {
-        state.token = "";
-        state.isAuthenticated = false;
         state.favourites = [];
         state.alerts = {};
         state.showFavourites = false;
     },
     toggleShowFavourites(state){
         state.showFavourites = !state.showFavourites; 
+    },
+    toggleFromFavourites(state, service_id){
+        if(state.favourites.includes(service_id))
+            state.favourites = state.favourites.filter(id => id != service_id)
+        else state.favourites.push(service_id);
     }
 }

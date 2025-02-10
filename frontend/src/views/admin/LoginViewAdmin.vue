@@ -22,7 +22,7 @@ export default{
           email: this.email.trim(),
           password: this.password.trim(),
         });
-        if(this.$store.getters["admin/getIsAuthenticated"]){
+        if(this.$store.getters["getIsAuthenticated"]){
           this.$router.push("/admin");
         }
       } catch (error) {

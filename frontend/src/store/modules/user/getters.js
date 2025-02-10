@@ -12,12 +12,6 @@ export default {
         return state.services.filter(service => state.favourites.includes(service._id));
     },
     getFavourites: (state) => state.favourites, 
-    getToken(state) {
-        return state.token;
-    },
-    getIsAuthenticated(state) {
-        return state.isAuthenticated;
-    },
     getService(state,id) {
         return state.services.find(service => service._id === id); 
     },

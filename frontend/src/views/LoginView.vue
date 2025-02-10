@@ -15,6 +15,7 @@ export default{
     async login(){
       //dispatch dell'action
       try {
+        console.log('isAuth: ' + this.$store.getters['getIsAuthenticated'])
         if(this.password.trim() === "" || this.email.trim() === ""){
           throw new Error("Invalid credentials");
         }
@@ -22,7 +23,7 @@ export default{
           email: this.email.trim(),
           password: this.password.trim(),
         });
-        if(this.$store.getters["user/getIsAuthenticated"]){
+        if(this.$store.getters["getIsAuthenticated"]){
           this.$router.push("/");
         }
       } catch (error) {

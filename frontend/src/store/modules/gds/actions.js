@@ -2,17 +2,16 @@ import axios from "axios";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default {
-    async login({commit,getters},credentials) {
+    async login({commit,getters, rootGetters},credentials) {
         try{
             await axios.post(BACKEND_URL + '/gds/login', credentials)
             .then(response => {
-                commit('setToken', response.data.token)
                 commit('setToken', response.data.token, {root: true});
                 commit('setRole', "gds", { root: true }); //imposto il ruolo globale
             })
             await axios.get(BACKEND_URL + '/gds/servizio/',{
                 headers: {
-                    authorization: getters.getToken,
+                    authorization: rootGetters.getToken,
                 }
             }).then(response => {
                 commit('setServiceId', response.data["servizio_id"]);
@@ -24,7 +23,6 @@ export default {
     },
 
     logout({commit}) {
-        localStorage.removeItem('token');
         commit('logout');
     }
 }
