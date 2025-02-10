@@ -47,6 +47,7 @@ async function submitForm(){
       "risposte" : selectedOptions.value,
       "commento" : commento.value
     }
+    console.log(data);
     const config = {
       headers: {
         'Content-Type' : 'application/json',

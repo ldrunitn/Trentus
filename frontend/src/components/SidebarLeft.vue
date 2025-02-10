@@ -1,5 +1,5 @@
 <template>
-  <div class="w-64 flex-col bg-gray-100 p-4 shadow-md mr-4 max-w-prose h-full overflow-auto">
+  <div class="w-64 flex-col bg-gray-100 p-4 max-w-prose h-full overflow-auto">
     <!-- Ciclo sulle sezioni -->
     <div v-for="(section, sectionIndex) in sections" :key="sectionIndex" class="mb-6">
       <!-- Titolo sezione -->
@@ -14,7 +14,7 @@
         </button>
         <!-- Mostra i dettagli se la sezione è aperta -->
         <div
-          class="ml-4 mt-2 text-sm text-gray-600 space-y-1 flex flex-col items-left max-h-40 overflow-auto"
+          class="mt-2 text-sm text-gray-600 space-y-1 flex flex-col items-left max-h-40 overflow-auto"
           v-if="item.showDetails"
         >
           <router-link
@@ -98,4 +98,5 @@ export default {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 </style>

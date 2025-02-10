@@ -196,24 +196,16 @@ onMounted(async() => {
   await store.dispatch('user/fetchServices');
 })
 
-// onBeforeMount(async () => {
-  
-// })
 </script>
 
 <template>
-<!-- scheletro homepage: -->
-  <!-- homecards (servizi) (v-for con tutte le api dei servizi) -->
-  <!-- navbar superiore  (abbastanza statico, basta che reindirizzi dove deve)-->
-  <!-- sidebars (a destra bisogna fare un v-for con dellle mini schede api, a sinistra dei paragrafi che si possano collassare )  -->
-   <!-- vabbé in teoria è fatta basta copiaincollare il template di App.vue -->
   <Navbar />
    <div class="grid grid-cols-7 h-screen overflow-auto" >
     <div class=" col-start-1 col-span-1 h-full">
       <SidebarLeft :sections="SidebarSections" v-if="sidebarSections.length >= 1 && store.getters['getRole'] !=='admin'"/>
       <AdminSidebarLeft v-else-if="store.getters['getRole'] === 'admin'"></AdminSidebarLeft>
     </div>
-      <router-view class="col-start-3 col-span-3 overflow-y-scroll" :key="route.fullPath"></router-view>
+      <router-view class="col-start-2 col-span-5 px-40 overflow-y-scroll border-x shadow-md" :key="route.fullPath"></router-view>
     <div class="flex h-full col-start-7 col-span-1"><SidebarRight/> </div>
   </div>
 </template>
