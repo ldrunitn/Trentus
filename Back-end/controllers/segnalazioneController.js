@@ -10,6 +10,18 @@ exports.compilaForm = async (req,res) => {
     return res.status(400).json({message: "La form non è stata compilata"});
   }
   try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const existingSegnalazione = await Segnalazione.findOne({
+      utente_id: req.user.id,
+      createdAt: { $gte: today } 
+    });
+
+    if (existingSegnalazione) {
+      return res.status(400).json({ message: "Hai già compilato una segnalazione oggi." });
+    }
+
     const risposteOggetto = risposte.map(testo => ({
       risposta: testo
     }));
