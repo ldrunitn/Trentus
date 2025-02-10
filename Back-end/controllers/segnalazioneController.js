@@ -15,6 +15,7 @@ exports.compilaForm = async (req,res) => {
 
     const existingSegnalazione = await Segnalazione.findOne({
       utente_id: req.user.id,
+      servizio_id: req.servizio_id,
       createdAt: { $gte: today } 
     });
 
