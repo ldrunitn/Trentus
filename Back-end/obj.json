@@ -291,5 +291,29 @@
                 "description": "Elenco dei servizi preferiti dell'utente"
             }
         }
+    },
+    "GdS": {
+        "type": "object",
+        "required": [
+            "email",
+            "passwordHash",
+            "servizio"
+        ],
+        "properties": {
+            "email": {
+                "type": "string",
+                "format": "email",
+                "uniqueItems": true,
+                "description": "Indirizzo email"
+            },
+            "passwordHash": {
+                "type": "string",
+                "description": "Hash della password"
+            },
+            "servizio": {
+                "type": "string",
+                "description": "id del servizio gestito"
+            }
+        }
     }
 }
