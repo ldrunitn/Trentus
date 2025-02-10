@@ -188,7 +188,7 @@ router.beforeEach((to, from, next) => {
       console.log("Loggato ma non serve");
       if(userRole === 'gds'){
         store.dispatch('logout');
-        next('/unauthorized')
+        next()
       }
       next();
       return;

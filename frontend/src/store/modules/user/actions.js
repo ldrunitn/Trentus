@@ -80,7 +80,6 @@ export default {
             commit('setAlerts', alerts);
         } catch (error) {
             console.error(error);
-            throw new Error("Impossibile trovare i servizi");
         }
     }
 }

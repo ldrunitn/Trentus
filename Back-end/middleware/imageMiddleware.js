@@ -42,8 +42,7 @@ exports.resizeImage = async (req, res, next) => {
     // Ridimensiona l'immagine e salvala temporaneamente
     await sharp(inputPath)
       .resize(150)  // Modifica le dimensioni come desideri
-      .toFormat('jpeg')   // Converte in formato JPEG
-      .jpeg({ quality: 80 })  // Imposta la qualità dell'immagine
+      .toFormat('png')   // Converte in formato JPEG
       .toFile(tempPath);  // Salva il file ridimensionato temporaneamente
 
     // Sovrascrivi il file originale con l'immagine ridimensionata

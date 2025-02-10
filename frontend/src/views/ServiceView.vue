@@ -174,7 +174,8 @@ onMounted(async()=> {
             <span>{{ service["titolo"] }}</span><br>
             <span class="text-lg text-gray-400">Azienda: {{ service["azienda"] }}</span>
           </p>
-          <p class="text-xs text-gray-700">Descrizione: {{ service["descrizione"] }}</p>
+          <p class="text-xs text-gray-700 max-w-32"><strong>Descrizione: </strong>{{ service["descrizione"] }}</p>
+          <a :href="service['url']" target="_blank" class="underline text-xs text-blue-600">Sito web</a>
         </div>
         <div class="ml-4 flex-row space-x-4 space-y-4">
           <StateIndicator :stato="service['stato']"></StateIndicator>
