@@ -2,10 +2,10 @@ import axios from "axios"
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default {
-    async fetchRequests({commit,getters}){
+    async fetchRequests({commit,getters, rootGetters}){
         await axios.get(BACKEND_URL + '/controlpanel/confermagds/lista',{
             headers: {
-                authorization: getters["getToken"],
+                authorization: rootGetters["getToken"],
             }
         }).then(response => {
             commit('setRequests', response.data)
@@ -15,7 +15,6 @@ export default {
         try{
             await axios.post(BACKEND_URL + '/controlpanel/login', credentials)
             .then(response => {
-                commit('setToken', response.data.token)
                 commit('setToken', response.data.token, {root: true});
                 commit('setRole', "admin", { root: true }); //imposto il ruolo globale
             })

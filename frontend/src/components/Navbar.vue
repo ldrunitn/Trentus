@@ -24,6 +24,11 @@ export default{
         logout() {
             this.$store.dispatch('logout');
             this.$router.push('/login');
+        },
+        settingsAction(){
+            if(this.actionValue === 'Logout')
+                this.logout();
+            else this.$router.push('/login')
         }
     },   
     computed: {
@@ -45,7 +50,12 @@ export default{
             if(this.$store.getters['getRole'] === 'user')
                 return true;
             else return false;
-        }
+        },
+        actionValue(){
+            if(this.$store.getters['getRole'] === '')
+                return "Login"
+            else return "Logout"
+        }   
     }
 }
 
@@ -63,13 +73,12 @@ export default{
                 </li>
                 
                 <li>
-                    <nav-button @click.prevent="toggleDropdown" v-if="this.$store.getters['getRole'] !== ''"><img class="size-9 hover:bg-purple-400 hover:rounded-full" src="/src/assets/settings.svg" alt="settings"></nav-button>
-                    <nav-button @click.prevent="this.$router.push('/login')" v-else><img class="size-9 hover:bg-purple-400 hover:rounded-full" src="/src/assets/user.png" alt="user"></nav-button>
+                    <nav-button @click.prevent="toggleDropdown"><img class="size-9 hover:bg-purple-400 hover:rounded-full" src="/src/assets/settings.svg" alt="settings"></nav-button>
                     
-                </li>
-                
-                <button v-if="dropdown" @click="logout" class="bg-gray-100 absolute mt-15 w-20 ml-9 border border-black font-normal text-black text-center">logout</button>
+                </li>                
+                <button v-if="dropdown" @click="settingsAction" class="bg-gray-100 absolute mt-15 w-20 mx-auto mr-10 border border-black font-normal text-black text-center">{{ actionValue }}</button>
             </ul>
+
         </div>
     </nav>
 </template>

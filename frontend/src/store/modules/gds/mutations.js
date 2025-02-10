@@ -2,10 +2,6 @@ export default {
     // setOptionsForm(state,newOptionsForm) {
     //     state.opzioniForm = newOptionsForm;
     // },
-    setToken(state,newToken) {
-        state.token = newToken;
-        state.isAuthenticated = true;
-    },
     setService(state,service) {
         state.service = service;
     },
@@ -15,8 +11,6 @@ export default {
     logout(state) {
         state.service = {};
         state.service_id = "";
-        state.token = "";
-        state.isAuthenticated = "";
     }
     
 

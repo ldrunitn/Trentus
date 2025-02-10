@@ -9,8 +9,6 @@ export default {
         favourites: [],
         alerts: {},
         currentAlert: {},
-        token: localStorage.getItem('token') || '',
-        isAuthenticated: !!localStorage.getItem('token'),
         showFavourites: false, //true quando il filtro dei preferiti è attivato
     }),
     namespaced: true,

@@ -4,6 +4,10 @@ export default {
   },
   getToken(state){
     return state.token;
+  },
+  getIsAuthenticated(state){
+    return state.isAuthenticated;
   }
+
     
 }

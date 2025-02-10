@@ -13,28 +13,34 @@ import Cookies from "js-cookie";
 export default createStore ({
     state() {
         return {
-            role: ""
+            role: '',
+            token: '',
+            isAuthenticated: false,
         }
     },
     modules: {
         user: userModule,
         gds: gdsModule,
         admin: adminModule,
-        token: ""
     },
     mutations,
     getters,
     actions,
     plugins: [
         createPersistedState({
+            paths: ['token', "role"],
             getState: (key) => {
                 const cookie = Cookies.get(key);
                 return cookie ? JSON.parse(cookie) : undefined;
             },
             setState: (key, state) => {
-              Cookies.set(key, JSON.stringify(state), {
-                secure: process.env.NODE_ENV === "production"
-               });
+                const filteredState = {
+                    role: state.role, 
+                    token: state.token
+                };
+                Cookies.set(key, JSON.stringify(filteredState), {
+                    secure: process.env.NODE_ENV === "production"
+                });
             },
         })
     ]

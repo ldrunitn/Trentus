@@ -124,6 +124,7 @@ onMounted(async () => {
     <main class="flex-1 p-6 overflow-y-auto bg-white m-4 rounded-lg">
       <!-- Area principale -->
       <h2 class="text-black text-3xl" >{{ survey['titolo'] }}</h2>
+      <h3 class="text-gray-600 mb-4">Numero risposte: {{ results.length }} </h3>
       <!-- Mostra il corpo -->
       <div class="space-y-4">
         <!-- Singole -->

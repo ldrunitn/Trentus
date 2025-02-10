@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, useRoute } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegistrationView from '@/views/RegistrationView.vue'
@@ -19,6 +19,10 @@ import RegistrazioneGdS from '@/views/gds/RegistrazioneGdS.vue'
 import LoginViewAdmin from '../views/admin/LoginViewAdmin.vue'
 import MakeSurvery from '@/views/gds/MakeSurvery.vue'
 import SurveyResultView from '@/views/gds/SurveyResultView.vue'
+import { useStore } from 'vuex'
+import UnauthorizedView from '@/views/UnauthorizedView.vue'
+import { nextTick } from 'vue'
+// const store = useStore();
 const router = createRouter({
   //import.meta.env.BASE_URL
   history: createWebHistory(),
@@ -159,6 +163,10 @@ const router = createRouter({
       ]
     },
     {
+      path: '/unauthorized',
+      component: UnauthorizedView
+    },
+    {
       path: '/:catchAll(.*)',
       name: '404',
       component: E404View,
@@ -169,14 +177,51 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
   // const userRole = store.getters['getRole'];
-  const userRole = store.state.role;
+  const userRole = store.getters['getRole'];
+  const isAuth = store.getters['getToken'] ? true : false;
   const requiredRoles = to.meta.roles;
-
-  if (requiredRoles && !requiredRoles.includes(userRole)) {
-    next('/login'); //non permesso
-  } else {
-    next(); //permesso
+  console.log("Ruolo: "+ store.getters['getRole']);
+  console.log("Token: " + store.getters['getToken'])
+  console.log("IsAuth: " + isAuth);
+  if(isAuth){
+    if(!requiredRoles){
+      console.log("Loggato ma non serve");
+      if(userRole === 'gds'){
+        store.dispatch('logout');
+        next('/unauthorized')
+      }
+      next();
+      return;
+    }
+    else if (requiredRoles.includes(userRole)){
+      next();
+      return;
+    }
+    //non autorizzato
+    next('/unauthorized');
+    return;
   }
+  else{
+    if(!requiredRoles){
+      next();
+      return;
+    }
+    else next('login')
+  }
+  // next();
+  // if(!requiredRoles && !isAuth){
+  //   next();
+  //   console.log("Permesso")
+  // }
+  // else if (!requiredRoles && isAuth){
+  //   next('/login');
+  //   store.dispatch('logout');
+  // }
+  // if (!requiredRoles.includes(userRole) && isAuth) {
+  //   next('/login'); //non permesso
+  //   console.log('Non permesso');
+  // }
+  // next(); 
 });
 
 export default router

@@ -35,7 +35,7 @@ const toggleFavourite = () => {
 <!-- `/service/${props.service['_id']}` -->
 <!-- {name: 'service-details'} -->
 <router-link :to="`${routePrefix}/service/${props.service['_id']}`">
-    <div class="bg-white rounded-lg shadow-md p-16 max-w-100 mt-4 w-full">
+    <div class="hover:shadow-2xl  bg-white rounded-lg shadow-md p-16 max-w-100 mt-4 w-full">
         <div class="flex justify-between">
             <div class="basis-1/2">
                 <h3 class="text-lg font-bold justify-start">{{ service.titolo }}</h3>
@@ -51,7 +51,5 @@ const toggleFavourite = () => {
         </div>  
     </div>
 </router-link>
-
-
 
 </template>

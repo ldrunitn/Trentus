@@ -164,9 +164,9 @@ onMounted(async()=> {
 
 <template>
   <div class="flex h-screen bg-gray-100 service overflow-hidden">
-    <!-- Area principale -->
+    <!-- area principale -->
     <main class="flex-1 p-6 overflow-y-auto">
-      <!-- Informazioni Servizio -->
+      <!-- informazioni Servizio -->
       <div class="bg-white p-4 rounded shadow flex items-center justify-between">
         <div class="flex-shrink-0 flex flex-col space-y-5">
           <img :src="BACKEND_URL + service['foto']" alt="Logo" class="max-w-20 max-h-20">
@@ -201,15 +201,15 @@ onMounted(async()=> {
         </div>
       </div>
 
-      <!-- Grafico e commenti -->
+      <!-- grafico e commenti -->
       <div class="grid grid-cols-3 gap-4 pt-4">
-        <!-- Grafico a barre -->
+        <!-- grafico a barre -->
         <div class="col-span-3 bg-white p-4 rounded shadow">
           <h3 class="font-semibold mb-4">Segnalazioni negli ultimi 10 giorni</h3>
           <div class="h-40"><Bar :options="chartOptionsBar" :data="chartDataIstogramma" /></div>
         </div>
 
-        <!-- Commenti -->
+        <!-- commenti -->
         <div class="bg-white p-4 rounded shadow comments-container max-h-72 overflow-y-scroll col-span-2">
           <h3 class="font-semibold mb-4">Commenti</h3>
           <ul class="space-y-3">
@@ -222,13 +222,13 @@ onMounted(async()=> {
           </ul>
         </div>
 
-        <!-- Grafico a ciambella -->
+        <!-- grafico a ciambella -->
         <div class="bg-white p-4 rounded shadow col-span-1">
           <h3 class="font-semibold mb-2">Motivo delle segnalazioni</h3>
           <div class="h-40"><Doughnut :options="chartOptionsDoughnut" :data="chartDataAreogramma" /></div>
         </div>
 
-        <!-- Form di segnalazione -->
+        <!-- form di segnalazione -->
         <edit-form
           class="col-start-1 col-span-3"
           v-if="role === 'admin' || role === 'gds'"
