@@ -32,6 +32,8 @@
             <button type="submit" class="btn m-4 bg-purple-600 text-white mb-16 max-w-60 hover:bg-purple-700">Aggiungi</button>
           </form>
         </div>
+      <p class="place-self-center pt-2">Hai già registrato il tuo servizio? <router-link to="/gds/login" class="text-gray-800 underline hover:text-black">Fai il Login</router-link> </p>
+
       </div>
     </main>
   </div>
@@ -80,7 +82,7 @@ export default {
 
         this.message = response.data.message || "File caricato con successo!";
       } catch (error) {
-        this.message = "Errore durante il caricamento.";
+        this.message = "Impossibile effettuare la registrazione.";
       } finally {
         this.loading = false;
         window.alert(this.message);
