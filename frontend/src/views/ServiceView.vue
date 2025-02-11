@@ -180,7 +180,7 @@ onMounted(async()=> {
         <div class="ml-4 flex-row space-x-4 space-y-4">
           <StateIndicator :stato="service['stato']"></StateIndicator>
           <router-link
-            class="btn bg-red-500 text-white rounded-lg text-center mt-2"
+            class="btn bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-center mt-2 w-24"
             v-if="role === 'user'"
             :to="`/service/${service_id}/report`"
           >Segnala</router-link>
