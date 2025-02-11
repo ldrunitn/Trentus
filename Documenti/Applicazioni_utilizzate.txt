@@ -1,6 +1,0 @@
-https://figma.com
-https://draw.io
-https://trello.com
-https://docs.google.com
-https://app.swaggerhub.com/
-https://www.mongodb.com/
